@@ -9,17 +9,18 @@ console.log('minify.js loaded...');
 var fs = require('fs');
 var path=require('path');
 
-var MinFolder='./min/';
+var MinFolder='min/';
 /* function clear MinFolder
  * if we could not create
  * directory and it is
  * not exist
  */
-var folderExist = function(pError){
+var folderExist = function(pError, pStat){
     "use strict";
-    if(!pError)
+    /*file found and it's directory */
+    if(!pError && pStat.isDirectory())
         console.log('folder exist: ' + MinFolder);
-    else MinFolder='';    
+    else MinFolder='/';
 };
 
 /*
@@ -29,6 +30,7 @@ var folderExist = function(pError){
  */
 var makeFolder = function(pError){
     "use strict";
+    /*folder created successfully*/
     if(!pError)
         console.log('folder created: min');
     else fs.stat(MinFolder,folderExist);    
@@ -41,16 +43,15 @@ var makeFolder = function(pError){
  */
 fs.mkdir(MinFolder,511,makeFolder);
 
-/* CONSTANTS */
-/* dir contains css-files */
-var CSSDIR      = 'css/';    
-
-
 exports.MinFolder = MinFolder;
 
-exports.jsScripts=function jsScripts(){
-    'use strict';    
-    
+/* function which minificate js-files
+ * @pJSFiles_a - varible, wich contain array
+ * of js file names or string, if name
+ * single
+ */
+exports.jsScripts=function jsScripts(pJSFiles_a){
+    'use strict';
     /* подключаем модуль uglify-js
      * если его нет - дальнейшая 
      * работа функции не имеет смысла
@@ -67,9 +68,11 @@ exports.jsScripts=function jsScripts(){
     }
     /* Константы */        
     var CLIENT_JS='client.js';
-    var CLOUDFUNC_JS='lib/cloudfunc.js';
-    var CLIENT_KEYBINDING_JS='lib/client/keyBinding.js';
-      
+    var CLOUDFUNC_JS='lib/cloudfunc.js';        
+    
+    if(typeof pJSFiles_a === "string")
+        pJSFiles_a=[pJSFiles_a];
+    
     var dataReaded_f=function(pFileName, pData){
             console.log('file ' + pFileName + ' readed');
             
@@ -87,6 +90,7 @@ exports.jsScripts=function jsScripts(){
             var final_code=uglify_js(pData);
             
             var minFileName=pFileName.replace('.js','.min.js');
+            
             /* если мы сжимаем client.js -
              * меняем строку cloudfunc.js на
              * cloudfunc.min.js и выводим сообщение
@@ -113,38 +117,37 @@ exports.jsScripts=function jsScripts(){
                     (final_code=final_code
                         .replace('cloudfunc.js','cloudfunc.min.js')
                             .replace('keyBinding.js','keyBinding.min.js')
-                                .replace('/lib', MinFolder)
-                                    .replace('/lib/client', MinFolder)).length);
+                                .replace('/lib/', MinFolder)
+                                    .replace('/lib/client/', MinFolder)).length);
             
             
             /* minimized file will be in min file
              * if it's possible if not -
              * in root
              */
-            minFileName = MinFolder+path.basename(minFileName);
+            minFileName = MinFolder + path.basename(minFileName);
             /* записываем сжатый js-скрипт*/
             fs.writeFile(minFileName, final_code, fileWrited(minFileName));
         };
-     console.log('reading file ' + CLIENT_JS+'...');
-    fs.readFile(CLIENT_JS,fileReaded(CLIENT_JS,dataReaded_f));
     
-    console.log('reading file ' + CLOUDFUNC_JS+'...');
-    fs.readFile(CLOUDFUNC_JS,fileReaded(CLOUDFUNC_JS,dataReaded_f));    
-    
-    console.log('reading file ' + CLIENT_KEYBINDING_JS+'...');
-    fs.readFile(CLIENT_KEYBINDING_JS, fileReaded(CLIENT_KEYBINDING_JS,dataReaded_f));
-    
-    
+    /* moving thru all elements of js files array */
+    for(var i=0;pJSFiles_a[i];i++){
+        console.log('reading file ' + pJSFiles_a[i]+'...');
+        fs.readFile(pJSFiles_a[i],fileReaded(pJSFiles_a[i],dataReaded_f));
+    }
+        
     return true;
 };
 
 /* функция сжимает css-стили 
  * и сохраняет их с именем .min.css
  * @pImgConvertToBase64_b - булевый признак,
- * который отвечает за то, что быконвертировать
- * картинки в base64 и поместить в выходной css файл
+ *                          который отвечает за то, что быконвертировать
+ *                          картинки в base64 и поместить в выходной css файл
+ * @pCSSFiles_a           - масив имен css файлов или строка,
+ *                          если имя одно
  */
-exports.cssStyles=function cssStyles(pImgConvertToBase64_b){
+exports.cssStyles=function cssStyles(pCSSFiles_a, pImgConvertToBase64_b){
     'use strict';
     
      /* connecting cleanCSS,
@@ -161,14 +164,16 @@ exports.cssStyles=function cssStyles(pImgConvertToBase64_b){
                 'https://github.com/GoalSmashers/clean-css');
         return false;
     }
-    
-    /* Константы */
-    var STYLE_CSS   = CSSDIR+'style.css';
-    var RESET_CSS   = CSSDIR+'reset.css';
+            
+    if(typeof pCSSFiles_a === "string")
+        pCSSFiles_a=[pCSSFiles_a];
+    /* Varible contains information
+     * about readed css file
+     */
+    var lCSSFiles_doneCount=0;
     
     var lAllStyle='';
-    var lResetCssDone=false;
-    var lStyleCssDone=false;
+    
     var dataReaded_f=function(pFileName, pData){
         console.log('file ' + pFileName + ' readed');                
         /*********************************/
@@ -184,13 +189,13 @@ exports.cssStyles=function cssStyles(pImgConvertToBase64_b){
         
         var minFileName=pFileName.replace('.css','.min.css');           
            
-        if(pFileName===STYLE_CSS)lStyleCssDone=true;
-        if(pFileName===RESET_CSS)lResetCssDone=true;
+        ++lCSSFiles_doneCount;
+        
         /* if all files writed we
          * save all minimized css 
          * to one file all.min.css
          */                
-        if(lStyleCssDone && lResetCssDone){
+        if(pCSSFiles_a.length === lCSSFiles_doneCount){
             /* если включена конвертация картинок в base64
              * вызываем её
              */
@@ -206,19 +211,21 @@ exports.cssStyles=function cssStyles(pImgConvertToBase64_b){
         }
     };
     
-    console.log('reading file ' + STYLE_CSS+'...');
-    fs.readFile(STYLE_CSS,fileReaded(STYLE_CSS,dataReaded_f));
-    
-    console.log('reading file ' + RESET_CSS+'...');
-    fs.readFile(RESET_CSS,fileReaded(RESET_CSS,dataReaded_f));    
-    
+   /* moving thru all elements of css files array */
+    for(var i=0;pCSSFiles_a[i];i++){
+        console.log('reading file ' + pCSSFiles_a[i]+'...');
+        fs.readFile(pCSSFiles_a[i],fileReaded(pCSSFiles_a[i],dataReaded_f));
+    }
+        
     return true;
 };
 
-/* функция сжимает css-стили 
- * и сохраняет их с именем .min.css
+/* функция сжимает html файлы
+ * и сохраняет их с именем .min.html
+ * @pHTMLFiles_a - массим имен html
+ * файлов, или строка если имя одно
  */
-exports.html=function(){
+exports.html=function(pHTMLFiles_a){
     'use strict';
     
      /* connecting cleanCSS,
@@ -235,9 +242,9 @@ exports.html=function(){
                 'https://github.com/kangax/html-minifier');
         return false;
     }
-    
-    /* Константы */
-    var INDEX_HTML='index.html';
+        
+    if(typeof pHTMLFiles_a === "string")
+        pHTMLFiles_a=[pHTMLFiles_a];
     
     var dataReaded_f=function(pFileName, pData){
         console.log('file ' + pFileName + ' readed');                
@@ -280,8 +287,12 @@ exports.html=function(){
         fs.writeFile(minFileName, final_code, fileWrited(minFileName));
     };
     
-    console.log('reading file ' + INDEX_HTML+'...');
-    fs.readFile(INDEX_HTML,fileReaded(INDEX_HTML,dataReaded_f));
+    
+     /* moving thru all elements of css files array */
+    for(var i=0;pHTMLFiles_a[i];i++){
+        console.log('reading file ' + pHTMLFiles_a[i]+'...');
+        fs.readFile(pHTMLFiles_a[i],fileReaded(pHTMLFiles_a[i],dataReaded_f));
+    }
     
     return true;
 };
