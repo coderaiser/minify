@@ -1,4 +1,4 @@
-Minify
+Minify [![Build Status](https://secure.travis-ci.org/coderaiser/cloudcmd.png?branch=master)](http://travis-ci.org/coderaiser/cloudcmd)
 ======
 
 **Minify** - a minifier of js, css, html and img files,
