@@ -49,11 +49,14 @@ fs.mkdir(MinFolder,511,makeFolder);
 exports.MinFolder = MinFolder;
 
 /* function which minificate js-files
- * @pJSFiles_a - varible, wich contain array
- * of js file names or string, if name
- * single
+ * @pJSFiles_a              - varible, wich contain array
+ *                            of js file names or string, if name
+ *                            single
+ * @pMoreProcessing_o - function thet will be executed
+ *                            after js-file processed
+ * pMoreProcessing_o Example: { Name:'1.js', Func: function(pFinalCode){} }
  */
-exports.jsScripts=function jsScripts(pJSFiles_a){
+exports.jsScripts=function jsScripts(pJSFiles_a, pMoreProcessing_o){
     'use strict';
     /* подключаем модуль uglify-js
      * если его нет - дальнейшая 
@@ -102,27 +105,18 @@ exports.jsScripts=function jsScripts(pJSFiles_a){
              * keyBinding.min.js
              * если другой файл - ничего не деалем
              */             
-            /*                            
-             * temporary changed dir path,
-             * becouse directory lib is write
-             * protected by others by default
-             * so if node process is started
-             * from other user (root for example
-             * in nodester) we can not write
-             * minified versions
-             */
-            if(pFileName===CLIENT_JS)
-                console.log('file name of ' +
-                    CLOUDFUNC_JS            +
-                    ' in '                  +
-                    CLIENT_JS               +
-                    ' changed. size:',
-                    (final_code=final_code
-                        .replace('cloudfunc.js','cloudfunc.min.js')
-                            .replace('keyBinding.js','keyBinding.min.js')
-                                .replace('/lib/', MinFolder)
-                                    .replace('/lib/client/', MinFolder)).length);
             
+            /* if pMoreProcessing_o seeted up 
+             * and function associated with
+             * current file name exists -
+             * run it
+             */
+            if(pMoreProcessing_o                    &&    
+                pMoreProcessing_o.Name===pFileName  && 
+                pMoreProcessing_o.Func              &&
+                typeof pMoreProcessing_o.Func === "function"){
+                    pMoreProcessing_o.Func(final_code);
+            }                   
             
             /* minimized file will be in min file
              * if it's possible if not -
