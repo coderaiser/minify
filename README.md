@@ -5,6 +5,13 @@ Minify [![Build Status](https://secure.travis-ci.org/coderaiser/cloudcmd.png?bra
 used in [Cloud Commander](http://github.com/coderaiser/cloudcmd "Cloud Commander")
 project.
 
+Examples of using
+---------------
+    var minify=require('minify');
+    minify.jsScripts('client.js');
+    minify.cssStyles('style.css');
+    minify.html('index.html');
+
 Additional modules:
 ---------------
 - [UglifyJS] (https://github.com/mishoo/UglifyJS)
