@@ -60,9 +60,6 @@ if post image converting needed
 **html****(***pHTMLFiles_a***)** - function which minificate html-files.
  - **pJSFiles_a**                   - varible, wich contain array of html-file names or string, if name single
 
-**MinFolder** - varible thet contains folder name, where minimized files stored.
-                (could not be changed for now).
-
 **Examples**:
 
     minify.html('index.html');
@@ -70,7 +67,10 @@ if a couple files:
 
     minify.html(['index.html','about.htm']);
 
-Examples of using
+**MinFolder** - varible thet contains folder name, where minimized files stored.
+                (could not be changed for now).
+                
+Easy Examples of using
 ---------------
     var minify=require('minify');
     minify.jsScripts('client.js');
