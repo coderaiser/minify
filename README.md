@@ -5,6 +5,13 @@ Minify [![Build Status](https://secure.travis-ci.org/coderaiser/cloudcmd.png?bra
 used in [Cloud Commander](http://github.com/coderaiser/cloudcmd "Cloud Commander")
 project.
 
+Install
+---------------
+You can install minify just like that:
+    npm i minify
+or
+    git clone git://github.com/coderaiser/minify
+
 API
 ---------------
 **Minify** module contains some api for interacting from another js files.
