@@ -138,11 +138,11 @@ exports.jsScripts=function jsScripts(pJSFiles_a, pMoreProcessing_o){
 
 /* функция сжимает css-стили 
  * и сохраняет их с именем .min.css
+ * @pCSSFiles_a           - масив имен css файлов или строка,
+ *                          если имя одно
  * @pImgConvertToBase64_b - булевый признак,
  *                          который отвечает за то, что быконвертировать
  *                          картинки в base64 и поместить в выходной css файл
- * @pCSSFiles_a           - масив имен css файлов или строка,
- *                          если имя одно
  */
 exports.cssStyles=function cssStyles(pCSSFiles_a, pImgConvertToBase64_b){
     'use strict';

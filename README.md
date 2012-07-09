@@ -14,19 +14,54 @@ To use **Minify** functions it sould be connected first. It's doing like always.
     minify=require('minify');
 
 **jsScripts**(*pJSFiles_a*, *pMoreProcessing_o*) - function which minificate js-files
- - **pJSFiles_a**                   - varible, wich contain array of js file names or string, if name single
- - **pMoreProcessing_o**(optional)  - object, thet contain function thet will be executed after js-file processed and file name
+ - **pJSFiles_a**                   - varible, wich contain array of js file
+names or string, if name single
+ - **pMoreProcessing_o**(optional)  - object, thet contain function thet will
+be executed after js-file processed and file name
 
 **Examples**:
 
     minify.jsScripts('client.js');
 if a couple files:
 
-    minify.jsScripts(['client.js','keyBinding.js']);
+    minify.jsScripts(['client.js',
+        'keyBinding.js']);
 
-if post processing neaded 
+if post processing needed 
 
-    minify.jsScripts('client.js');{ Name:'1.js', Func: function(pFinalCode){} }
+    minify.jsScripts('client.js', {
+        Name:'1.js',
+        Func: function(pFinalCode){}
+    });
+
+**cssStyles****(***pCSSFiles_a*,*pImgConvertToBase64_b***)** - function
+which minificate css-files.
+ - **pJSFiles_a**                   - varible, wich contain array of js file
+names or string, if name single
+ - **pImgConvertToBase64_b**(optional)  - boolean vrarible wich is responsible
+for converting images to base64 and save them in outer css-files.
+
+**Examples**:
+
+    minify.cssStyles('style.css');
+if a couple files:
+
+    minify.cssStyles(['style.css',
+        'reset.css']);
+
+if post image converting needed
+
+    minify.cssStyles('client.js', true);
+    
+**html****(***pHTMLFiles_a***)** - function which minificate html-files.
+ - **pJSFiles_a**                   - varible, wich contain array of html-file names or string, if name single
+
+**Examples**:
+
+    minify.html('index.html');
+if a couple files:
+
+    minify.html(['index.html','about.htmk']);
 
 Examples of using
 ---------------
