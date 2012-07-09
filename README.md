@@ -70,9 +70,14 @@ if a couple files:
 **MinFolder** - varible thet contains folder name, where minimized files stored.
                 (could not be changed for now).
                 
+<<<<<<< HEAD
 Easy Examples of using
+=======
+Easy examples of using
+>>>>>>> 587417471bd7c9b91e71d80421767ae749b80cff
 ---------------
     var minify=require('minify');
+    
     minify.jsScripts('client.js');
     minify.cssStyles('style.css');
     minify.html('index.html');
