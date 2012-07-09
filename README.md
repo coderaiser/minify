@@ -13,6 +13,10 @@ To use **Minify** functions it sould be connected first. It's doing like always.
 
     minify=require('minify');
 
+All of minification functions save files in **./min** directory with extension **.min**
+(*.min.js, *.min.css, *.min.html). If directory could be created **minify.MinFolder**
+would countain stirng 'min/', in any other case - '/'.
+
 **jsScripts**(*pJSFiles_a*, *pMoreProcessing_o*) - function which minificate js-files
  - **pJSFiles_a**                   - varible, wich contain array of js file
 names or string, if name single
@@ -55,6 +59,9 @@ if post image converting needed
     
 **html****(***pHTMLFiles_a***)** - function which minificate html-files.
  - **pJSFiles_a**                   - varible, wich contain array of html-file names or string, if name single
+
+**MinFolder** - varible thet contains folder name, where minimized files stored.
+                (could not be changed for now).
 
 **Examples**:
 
