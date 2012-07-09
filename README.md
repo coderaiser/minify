@@ -73,6 +73,7 @@ if a couple files:
 Easy examples of using
 ---------------
     var minify=require('minify');
+    
     minify.jsScripts('client.js');
     minify.cssStyles('style.css');
     minify.html('index.html');
