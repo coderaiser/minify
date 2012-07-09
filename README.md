@@ -8,6 +8,7 @@ project.
 API
 ---------------
 **Minify** module contains some api for interacting from another js files.
+
     jsScripts(pJSFiles_a, pMoreProcessing_o)
     /* function which minificate js-files
      * @pJSFiles_a              - varible, wich contain array
