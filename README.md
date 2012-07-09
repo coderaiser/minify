@@ -38,7 +38,7 @@ if post processing needed
 which minificate css-files.
  - **pJSFiles_a**                   - varible, wich contain array of js file
 names or string, if name single
- - **pImgConvertToBase64_b**(optional)  - boolean vrarible wich is responsible
+ - **pImgConvertToBase64_b**(optional)  - boolean varible wich is responsible
 for converting images to base64 and save them in outer css-files.
 
 **Examples**:
@@ -61,7 +61,7 @@ if post image converting needed
     minify.html('index.html');
 if a couple files:
 
-    minify.html(['index.html','about.htmk']);
+    minify.html(['index.html','about.htm']);
 
 Examples of using
 ---------------
