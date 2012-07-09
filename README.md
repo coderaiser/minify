@@ -9,15 +9,24 @@ API
 ---------------
 **Minify** module contains some api for interacting from another js files.
 
-    jsScripts(pJSFiles_a, pMoreProcessing_o)
-    /* function which minificate js-files
-     * @pJSFiles_a              - varible, wich contain array
-     *                            of js file names or string, if name
-     *                            single
-     * @pMoreProcessing_o - object, thet contain function thet will be executed
-     *                            after js-file processed and file name
-     * pMoreProcessing_o Example: { Name:'1.js', Func: function(pFinalCode){} }
-     */
+To use **Minify** functions it sould be connected first. It's doing like always.
+
+    minify=require('minify');
+
+**jsScripts**(*pJSFiles_a*, *pMoreProcessing_o*) - function which minificate js-files
+ - **pJSFiles_a**                   - varible, wich contain array of js file names or string, if name single
+ - **pMoreProcessing_o**(optional)  - object, thet contain function thet will be executed after js-file processed and file name
+
+**Examples**:
+
+    minify.jsScripts('client.js');
+if a couple files:
+
+    minify.jsScripts(['client.js','keyBinding.js']);
+
+if post processing neaded 
+
+    minify.jsScripts('client.js');{ Name:'1.js', Func: function(pFinalCode){} }
 
 Examples of using
 ---------------
