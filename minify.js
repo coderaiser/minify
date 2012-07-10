@@ -112,10 +112,9 @@ exports.jsScripts=function jsScripts(pJSFiles_a, pMoreProcessing_o){
              * run it
              */
             if(pMoreProcessing_o                    &&    
-                pMoreProcessing_o.Name===pFileName  && 
-                pMoreProcessing_o.Func              &&
-                typeof pMoreProcessing_o.Func === "function"){
-                    final_code=pMoreProcessing_o.Func(final_code);
+                pMoreProcessing_o[pFileName]        &&
+                typeof pMoreProcessing_o[pFileName] === "function"){
+                    final_code = pMoreProcessing_o[pFileName](final_code);
             }                   
             
             /* minimized file will be in min file

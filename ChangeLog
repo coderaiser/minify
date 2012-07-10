@@ -1,4 +1,7 @@
 Version v0.1.1
 
-* In jsScripts, bug with function MoreProcessing_o.Func fixed, now changed final_code saving,
+* In jsScripts, bug with function MoreProcessing_o.Func fixed, now changed final_code savings,
 not losing.
+
+* In jsScripts, fixed bug, when only one js-file can be post-processed, from now
+every js-file could be post-processed.
