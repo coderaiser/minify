@@ -28,7 +28,9 @@ would countain stirng 'min/', in any other case - '/'.
  - **pJSFiles_a**                   - varible, wich contain array of js file
 names or string, if name single
  - **pMoreProcessing_o**(optional)  - object, thet contain function thet will
-be executed after js-file processed and file name
+be executed after js-file processed and file name, where pMoreProcessing_o it's
+    
+    {'js_file_name' : function(){}}
 
 **Examples**:
 ```js
@@ -42,8 +44,7 @@ minify.jsScripts(['client.js',
 if post processing needed 
 ```js
 minify.jsScripts('client.js', {
-    Name:'1.js',
-    Func: function(pFinalCode){}
+    'client.js' : function(pFinalCode){}
 });
 ```
 **cssStyles****(***pCSSFiles_a*,*pImgConvertToBase64_b***)** - function
