@@ -29,9 +29,10 @@ would countain stirng 'min/', in any other case - '/'.
 names or string, if name single
  - **pMoreProcessing_o**(optional)  - object, thet contain function thet will
 be executed after js-file processed and file name, where pMoreProcessing_o it's
-    
-    {'js_file_name' : function(){}}
 
+```js
+    {'js_file_name' : function(){}}
+```
 **Examples**:
 ```js
 minify.jsScripts('client.js');
