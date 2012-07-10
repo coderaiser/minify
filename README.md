@@ -33,7 +33,10 @@ be executed after js-file processed and file name, where pMoreProcessing_o it's
 ```js
     {'js_file_name' : function(){}}
 ```
+ - **pCache_b**(optional)           - if true files do not writes on disk, just saves
+in Minify Cache.
 **Examples**:
+
 ```js
 minify.jsScripts('client.js');
 ```
@@ -47,6 +50,16 @@ if post processing needed
 minify.jsScripts('client.js', {
     'client.js' : function(pFinalCode){}
 });
+```
+if no need to write on disk
+```js
+minify.jsScripts('client.js', {
+    'client.js' : function(pFinalCode){}
+},true);
+```
+Then we can work with js data just like this:
+```js
+console.log(minify.Cache['client.js']);
 ```
 **cssStyles****(***pCSSFiles_a*,*pImgConvertToBase64_b***)** - function
 which minificate css-files.
