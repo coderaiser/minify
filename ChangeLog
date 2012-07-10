@@ -1,4 +1,4 @@
-Minify v0.0.2
+Version v0.1.1
 
 * In jsScripts, bug with function MoreProcessing_o.Func fixed, now changed final_code saving,
 not losing.
