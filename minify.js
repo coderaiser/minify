@@ -47,16 +47,19 @@ var makeFolder = function(pError){
 fs.mkdir(MinFolder,511,makeFolder);
 
 exports.MinFolder = MinFolder;
+exports.Cache    = {};
 
 /* function which minificate js-files
  * @pJSFiles_a              - varible, wich contain array
  *                            of js file names or string, if name
  *                            single
- * @pMoreProcessing_o - object, thet contain function thet will be executed
+ * @pMoreProcessing_o       - object, thet contain function thet will be executed
  *                            after js-file processed and file name
  * pMoreProcessing_o Example: { Name:'1.js', Func: function(pFinalCode){} }
+ * @pCache_b                - if true files do not writes on disk, just saves
+ *                              in Minify Cache
  */
-exports.jsScripts=function jsScripts(pJSFiles_a, pMoreProcessing_o){
+exports.jsScripts=function jsScripts(pJSFiles_a, pMoreProcessing_o, pCache_b){
     'use strict';
     /* подключаем модуль uglify-js
      * если его нет - дальнейшая 
@@ -116,14 +119,25 @@ exports.jsScripts=function jsScripts(pJSFiles_a, pMoreProcessing_o){
                 typeof pMoreProcessing_o[pFileName] === "function"){
                     final_code = pMoreProcessing_o[pFileName](final_code);
             }                   
-            
-            /* minimized file will be in min file
-             * if it's possible if not -
-             * in root
+                        
+            minFileName = path.basename(minFileName);
+            /* записываем сжатый js-скрипт
+             * в кэш если установлен pCache_b
+             * или на диск, если не установлен
              */
-            minFileName = MinFolder + path.basename(minFileName);
-            /* записываем сжатый js-скрипт*/
-            fs.writeFile(minFileName, final_code, fileWrited(minFileName));
+            if(pCache_b){
+                exports.Cache[minFileName] = final_code;
+                console.log('file ' + minFileName + ' saved to cache...');
+            }
+            else{
+                /* minimized file will be in min file
+                 * if it's possible if not -
+                 * in root
+                 */
+                minFileName = MinFolder + minFileName;
+                
+                fs.writeFile(minFileName, final_code, fileWrited(minFileName));
+            }
         };
     
     /* moving thru all elements of js files array */

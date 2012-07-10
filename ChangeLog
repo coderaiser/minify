@@ -5,3 +5,5 @@ not losing.
 
 * In jsScripts, fixed bug, when only one js-file can be post-processed, from now
 every js-file could be post-processed.
+
+* Added ability to save files in Minify Cache, without writing to disk.
