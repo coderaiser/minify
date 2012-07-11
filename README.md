@@ -24,15 +24,20 @@ All of minification functions save files in **./min** directory with extension *
 (*.min.js, *.min.css, *.min.html). If directory could be created **minify.MinFolder**
 would countain stirng 'min/', in any other case - '/'.
 
-**jsScripts**(*pJSFiles_a*, *pMoreProcessing_o*) - function which minificate js-files
+**jsScripts**(*pJSFiles_a*, *pCache_b*) - function which minificate js-files
  - **pJSFiles_a**                   - varible, wich contain array of js file
-names or string, if name single
- - **pMoreProcessing_o**(optional)  - object, thet contain function thet will
-be executed after js-file processed and file name, where pMoreProcessing_o it's
+names or string, if name single.
+
+**Examples:**
 
 ```js
-    {'js_file_name' : function(){}}
+'client.js', 
+['client.js','cloudfunc.js']
+{'client.js':'function postProcessing(pFinalCode){ return pFinalCode}}
 ```
+postProcessing  - function, thet will be executed after
+js-file processed and file name.
+
  - **pCache_b**(optional)           - if true files do not writes on disk, just saves
 in Minify Cache.
 **Examples**:
@@ -47,7 +52,7 @@ minify.jsScripts(['client.js',
 ```
 if post processing needed 
 ```js
-minify.jsScripts('client.js', {
+minify.jsScripts({
     'client.js' : function(pFinalCode){}
 });
 ```
