@@ -27,6 +27,9 @@ would countain stirng 'min/', in any other case - '/'.
 **jsScripts**(*pJSFiles_a*, *pCache_b*) - function which minificate js-files
  - **pJSFiles_a**                   - varible, wich contain array of js file
 names or string, if name single.
+ - **pCache_b**(optional)           - if true files do not writes on disk, just saves
+in Minify Cache.
+
 
 **Examples:**
 
@@ -36,9 +39,6 @@ names or string, if name single.
 {'client.js':'function postProcessing(pFinalCode){ return pFinalCode}}
 ```
 **postProcessing**  - function, thet will be executed after
-
- - **pCache_b**(optional)           - if true files do not writes on disk, just saves
-in Minify Cache.
 **Examples**:
 
 ```js
