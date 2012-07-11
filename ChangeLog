@@ -10,3 +10,5 @@ every js-file could be post-processed.
 
 * Changed the more processing agrument, no it passes with a file name and js file name
 writing only once.
+
+* Fixed bug with passing not array argument ot jsScripts function
