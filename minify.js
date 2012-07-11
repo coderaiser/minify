@@ -82,9 +82,8 @@ exports.jsScripts=function jsScripts(pJSFiles_a, pMoreProcessing_o, pCache_b){
     /* if passed string, or object 
      * putting it to array
      */
-    if(typeof pJSFiles_a !== "array")
+    if(!pJSFiles_a[0])
         pJSFiles_a=[pJSFiles_a];
-    
     var dataReaded_f=function(pFileName, pData){
         /*
          * if postProcessing function exist
@@ -160,10 +159,10 @@ exports.jsScripts=function jsScripts(pJSFiles_a, pMoreProcessing_o, pCache_b){
         /* if postProcessing function exist
          * getting file name and passet next
          */
+        var lMoreProcessing_o = pJSFiles_a[i];
         var lName;
-        if(typeof pJSFiles_a[i] === 'object'){
-            for(lName in pJSFiles_a[i]){
-                break;
+        if(typeof lMoreProcessing_o === 'object'){
+            for(lName in lMoreProcessing_o){
             }
         }else lName = pJSFiles_a[i];
         console.log('reading file ' + lName + '...');        
