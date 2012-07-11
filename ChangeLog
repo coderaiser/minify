@@ -7,3 +7,6 @@ not losing.
 every js-file could be post-processed.
 
 * Added ability to save files in Minify Cache, without writing to disk.
+
+* Changed the more processing agrument, no it passes with a file name and js file name
+writing only once.
