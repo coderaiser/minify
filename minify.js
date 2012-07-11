@@ -52,14 +52,12 @@ exports.Cache    = {};
 /* function which minificate js-files
  * @pJSFiles_a              - varible, wich contain array
  *                            of js file names or string, if name
- *                            single
- * @pMoreProcessing_o       - object, thet contain function thet will be executed
- *                            after js-file processed and file name
- * pMoreProcessing_o Example: { Name:'1.js', Func: function(pFinalCode){} }
+ *                            single, or object if postProcessing neaded
+ *                              { Name:'1.js', Func: function(pFinalCode){} }
  * @pCache_b                - if true files do not writes on disk, just saves
  *                              in Minify Cache
  */
-exports.jsScripts=function jsScripts(pJSFiles_a, pMoreProcessing_o, pCache_b){
+exports.jsScripts=function jsScripts(pJSFiles_a, pCache_b){
     'use strict';
     /* подключаем модуль uglify-js
      * если его нет - дальнейшая 
