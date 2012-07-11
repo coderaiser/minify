@@ -35,8 +35,7 @@ names or string, if name single.
 ['client.js','cloudfunc.js']
 {'client.js':'function postProcessing(pFinalCode){ return pFinalCode}}
 ```
-postProcessing  - function, thet will be executed after
-js-file processed and file name.
+**postProcessing**  - function, thet will be executed after
 
  - **pCache_b**(optional)           - if true files do not writes on disk, just saves
 in Minify Cache.
