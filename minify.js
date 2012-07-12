@@ -80,8 +80,9 @@ exports.jsScripts=function jsScripts(pJSFiles_a, pCache_b){
     /* if passed string, or object 
      * putting it to array
      */
-    if(!pJSFiles_a[0])
-        pJSFiles_a=[pJSFiles_a];
+    if (typeof pJSFiles_a === 'string' ||
+        !pJSFiles_a[0])
+            pJSFiles_a=[pJSFiles_a];
     var dataReaded_f=function(pFileName, pData){
         /*
          * if postProcessing function exist
@@ -275,9 +276,12 @@ exports.html=function(pHTMLFiles_a){
         return false;
     }
         
-    if(typeof pHTMLFiles_a === "string")
-        pHTMLFiles_a=[pHTMLFiles_a];
-    
+    /* if html file names is not array
+     * making it array
+     */
+    if (typeof pHTMLFiles_a === 'string' || 
+        !pHTMLFiles_a[0])
+            pHTMLFiles_a=[pHTMLFiles_a];
     var dataReaded_f=function(pFileName, pData){
         console.log('file ' + pFileName + ' readed');                
         /*********************************/

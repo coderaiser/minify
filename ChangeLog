@@ -3,6 +3,8 @@
 * In jsScripts, bug with function jsScripts fixed, from now 
 jsScripts taking 2 parameters: file names and neaded_cache bolean.
 
+* Fixed bug in jsScripts and html functions in type convertions
+(from string to array).
 
 2012.07.11, Version v0.1.1
 
