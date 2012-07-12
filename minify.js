@@ -11,6 +11,9 @@ console.log('minify.js loaded...');
  
 var fs = require('fs');
 var path=require('path');
+var crypto = require('crypto');
+
+var Hashes;
 
 var MinFolder='min/';
 /* function clear MinFolder
@@ -82,8 +85,9 @@ exports.jsScripts=function jsScripts(pJSFiles_a, pCache_b){
      */
     if (typeof pJSFiles_a === 'string' ||
         !pJSFiles_a[0])
-            pJSFiles_a=[pJSFiles_a];
-    var dataReaded_f=function(pFileName, pData){
+            pJSFiles_a=[pJSFiles_a];                
+    
+    var dataReaded_f=function(pFileName, pData){        
         /*
          * if postProcessing function exist
          * getting it from pFileName object
@@ -98,6 +102,11 @@ exports.jsScripts=function jsScripts(pJSFiles_a, pCache_b){
             pFileName = lName;
         }
         console.log('file ' + pFileName + ' readed');
+        
+        if (!isFileChanged(pFileName, pData)) {
+            console.log('file: ' + pFileName + ' do not changed...');
+            return;
+        }
         
         /*********************************/
         /* сжимаем код через uglify-js */
@@ -132,8 +141,9 @@ exports.jsScripts=function jsScripts(pJSFiles_a, pCache_b){
             typeof lMoreProcessing_f === "function"){
                 final_code = lMoreProcessing_f(final_code);
         }                   
-                    
+        
         minFileName = path.basename(minFileName);
+                
         /* записываем сжатый js-скрипт
          * в кэш если установлен pCache_b
          * или на диск, если не установлен
@@ -168,7 +178,7 @@ exports.jsScripts=function jsScripts(pJSFiles_a, pCache_b){
         
         fs.readFile(lName, fileReaded(pJSFiles_a[i],dataReaded_f));
     }
-        
+            
     return true;
 };
 
@@ -382,4 +392,49 @@ function fileWrited(pFileName){
     return function(error){
         console.log(error?error:('file '+pFileName+' writed...'));
     };
+}
+
+/*
+ * Function reads hach table of files
+ * checks is file changed or not
+ * and return result.
+ * @pFileName - name of file
+ * @pFileData - data of file
+ * result: boolean
+ */
+function isFileChanged(pFileName, pFileData){
+        var lReadedHash;
+        
+        if(!Hashes)
+            try {
+                /* try to read file with hashes */
+                Hashes = require('hashes.json');            
+                for(var lFileName in Hashes)
+                    /* if founded row with file name
+                     * saving hash
+                     */
+                    if (lFileName === pFileName) {
+                        lReadedHash = Hashes[pFileName];
+                        break;
+                    }
+            }catch(pError) {
+                Hashes={};
+            }
+        /* create md5 hash of file data */ 
+        var lFileHash = crypto.createHash('sha1');
+        lFileHash.update(pFileData);
+        lFileHash = lFileHash.digest('hex');
+        
+        console.log(pFileName + ': ' + lFileHash);
+        
+        if(lReadedHash && 
+            lReadedHash === lFileHash){
+                /* file did not change */
+                return false;
+        }else{
+            Hashes[pFileName] = lFileHash;
+            console.log(Hashes);
+            
+            return true;
+        }        
 }
