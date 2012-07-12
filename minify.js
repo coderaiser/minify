@@ -318,9 +318,8 @@ exports.html=function(pHTMLFiles_a){
          /* записываем сжатый html файл*/
         fs.writeFile(minFileName, final_code, fileWrited(minFileName));
     };
-    
-    
-     /* moving thru all elements of css files array */
+        
+     /* moving thru all elements of html files array */
     for(var i=0;pHTMLFiles_a[i];i++){
         console.log('reading file ' + pHTMLFiles_a[i]+'...');
         fs.readFile(pHTMLFiles_a[i],fileReaded(pHTMLFiles_a[i],dataReaded_f));
