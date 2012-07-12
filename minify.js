@@ -76,9 +76,7 @@ exports.jsScripts=function jsScripts(pJSFiles_a, pCache_b){
                 'https://github.com/mishoo/UglifyJS');
         return false;
     }
-    /* Константы */        
-    var CLIENT_JS='client.js';
-    var CLOUDFUNC_JS='lib/cloudfunc.js';        
+    var lLastFileName;
     
     /* if passed string, or object 
      * putting it to array
@@ -163,22 +161,24 @@ exports.jsScripts=function jsScripts(pJSFiles_a, pCache_b){
         }
     };
     
+    var lName;
     /* moving thru all elements of js files array */
     for(var i=0; pJSFiles_a[i]; i++){
         /* if postProcessing function exist
          * getting file name and passet next
          */
-        var lMoreProcessing_o = pJSFiles_a[i];
-        var lName;
+        var lMoreProcessing_o = pJSFiles_a[i];        
         if(typeof lMoreProcessing_o === 'object'){
             for(lName in lMoreProcessing_o){
             }
         }else lName = pJSFiles_a[i];
         console.log('reading file ' + lName + '...');        
         
-        fs.readFile(lName, fileReaded(pJSFiles_a[i],dataReaded_f));
+        fs.readFile(lName, fileReaded(pJSFiles_a[i], dataReaded_f));
     }
-            
+    /* saving the name of last readed file for hash saving function */
+    lLastFileName = lName;
+    
     return true;
 };
 
@@ -395,7 +395,7 @@ function fileWrited(pFileName){
 }
 
 /*
- * Function reads hach table of files
+ * Function reads hash table of files
  * checks is file changed or not
  * and return result.
  * @pFileName - name of file
