@@ -52,6 +52,22 @@ fs.mkdir(MinFolder,511,makeFolder);
 exports.MinFolder = MinFolder;
 exports.Cache    = {};
 
+
+/* function minificate js,css and html files
+ * @pFiles_a                - array of js, css and html file names or string, if name
+ *                            single, or object if postProcessing neaded
+ *                              {'client.js': function(pFinalCode){} }
+ *                            or convertion images to base64 neaded
+ *                              {'style.css': true}
+ *                            or {'style.css':{minimize: true, func: function(){}}
+ * @pCache_b                - if true files do not writes on disk, just saves
+ *                              in Minify Cache
+ */
+exports.optimize = function(pFiles_a, pCache_b){
+ 
+}
+
+
 /* function which minificate js-files
  * @pJSFiles_a              - varible, wich contain array
  *                            of js file names or string, if name
