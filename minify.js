@@ -64,7 +64,39 @@ exports.Cache    = {};
  *                              in Minify Cache
  */
 exports.optimize = function(pFiles_a, pCache_b){
- 
+    'use strict';
+    
+     /* if passed string, or object 
+     * putting it to array
+     */
+    if (typeof pFiles_a === 'string' ||
+        !pFiles_a[0])
+            pFiles_a=[pJSFiles_a];      
+            
+            
+    var lName;
+        
+    var dataReaded_f=function(pFileName, pData){
+     
+    }
+    /* moving thru all elements of js files array */
+    for(var i=0; pFiles_a[i]; i++){
+        /* if postProcessing function exist
+         * getting file name and passet next
+         */
+        var lPostProcessing_o = pJSFiles_a[i];        
+        if(typeof lPostProcessing_o === 'object'){
+            for(lName in lPostProcessing_o){
+            }
+        }else lName = pFiles_a[i];
+        console.log('reading file ' + lName + '...');        
+        
+        fs.readFile(lName, fileReaded(pFiles_a[i], dataReaded_f));
+    }
+    /* saving the name of last readed file for hash saving function */
+    lLastFileName = lName;
+    
+    return true;
 }
 
 
