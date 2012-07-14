@@ -11,6 +11,7 @@ created.
 
 * 3 functions: jsScripts, cssStyles and html merged to one function optimize.
 
+
 2012.07.11, Version v0.1.1
 
 * In jsScripts, bug with function MoreProcessing_o.Func fixed,
