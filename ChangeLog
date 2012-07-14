@@ -1,4 +1,4 @@
-2012.07.*, Version v0.1.2
+2012.07.14, Version v0.1.2
 
 * In jsScripts, bug with function jsScripts fixed, from now 
 jsScripts taking 2 parameters: file names and neaded_cache bolean.
