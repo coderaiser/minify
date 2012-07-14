@@ -395,9 +395,7 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
         var lFileHash = crypto.createHash('sha1');
         lFileHash.update(pFileData);
         lFileHash = lFileHash.digest('hex');
-        
-        console.log(pFileName + ': ' + lFileHash);
-        
+                
         if(lReadedHash && 
             lReadedHash === lFileHash){
                 /* file did not change */
