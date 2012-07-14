@@ -277,8 +277,7 @@ exports.optimize = function(pFiles_a, pCache_b){
              * in root
              */
         if (!isFileChanged(pFileName, pData, pLastFile_b)) {
-            console.log('file: ' + pFileName + ' do not changed...');
-                return;
+            return;
         }
             minFileName = MinFolder + minFileName;
             
