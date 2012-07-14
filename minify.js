@@ -244,8 +244,8 @@ exports.optimize = function(pFiles_a, pCache_b){
              * and base64images setted up
              * se should convert it
              */
-            if (pLastFile_b && (lCSS_o && lCSS_o.img) ||
-                (lCSS_o === true)){
+            if (pLastFile_b && (lCSS_o && lCSS_o.img ||
+                lCSS_o === true)){
                     base64_images(lAllCSS);
             }
         } else
