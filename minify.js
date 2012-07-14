@@ -195,7 +195,8 @@ exports.optimize = function(pFiles_a, pCache_b){
             
             
     var lName;
-        
+    
+    var lAllCSS;
     var dataReaded_f=function(pFileName, pData){        
         /*
          * if postProcessing function exist
@@ -224,14 +225,33 @@ exports.optimize = function(pFiles_a, pCache_b){
         if(Minify._checkExtension(pFileName,'js')){
             
             final_code=Minify._uglifyJS(pData);        
-            minFileName=pFileName.replace('.js','.min.js');           
+            minFileName=pFileName.replace('.js', '.min.js');           
             
-        } else if (Minify._checkExtension(pFileName,'html')) {
+        } else if (Minify._checkExtension(pFileName, 'html')) {
             
             final_code=Minify.htmlMinify(pData);                
-            minFileName=pFileName.replace('.html','.min.html');
+            minFileName=pFileName.replace('.html', '.min.html');
             
-        }else
+        } else if (Minify._checkExtension(pFileName, 'css')) {
+            
+            final_code=Minify._cleanCSS(pData);
+            lAllCSS+=final_code;        
+            minFileName=pFileName.replace('.css','.min.css');           
+            
+            /* in css could be lCSS_o 
+             * {img: true, moreProcessing: function(){}}
+             */
+            var lCSS_o = lMoreProcessing_f;
+            if (lCSS_o                      && 
+                typeof lCSS_o === 'object'  &&
+                lCSS_o.img){
+                    base64_images(lAllCSS);
+                    lMoreProcessing_f = lCSS_o.moreProcessing;
+            }else if (typeof lCSS_o ==='boolean' &&
+                lCSS_o === true){
+                base64_images(lAllCSS);
+            }   
+        } else
             return;
         
         /* if lMoreProcessing_f seeted up 
@@ -263,7 +283,7 @@ exports.optimize = function(pFiles_a, pCache_b){
             
             fs.writeFile(minFileName, final_code, fileWrited(minFileName));
         }
-    };
+    }
     /* moving thru all elements of js files array */
     for(var i=0; pFiles_a[i]; i++){
         /* if postProcessing function exist
@@ -273,7 +293,7 @@ exports.optimize = function(pFiles_a, pCache_b){
         if(typeof lPostProcessing_o === 'object'){
             for(lName in lPostProcessing_o){
             }
-        }else lName = pFiles_a[i];
+        } else lName = pFiles_a[i];
         console.log('reading file ' + lName + '...');        
                 
         /* if it's last file send true */
@@ -285,7 +305,7 @@ exports.optimize = function(pFiles_a, pCache_b){
     /* saving the name of last readed file for hash saving function */
     
     return true;
-}
+};
 
 /* функция сжимает css-стили 
  * и сохраняет их с именем .min.css
