@@ -196,7 +196,7 @@ exports.optimize = function(pFiles_a, pCache_b){
             
     var lName;
         
- var dataReaded_f=function(pFileName, pData){        
+    var dataReaded_f=function(pFileName, pData){        
         /*
          * if postProcessing function exist
          * getting it from pFileName object
@@ -222,8 +222,15 @@ exports.optimize = function(pFiles_a, pCache_b){
         
         /* if it's js file - getting optimized version */
         if(Minify._checkExtension(pFileName,'js')){
+            
             final_code=Minify._uglifyJS(pData);        
             minFileName=pFileName.replace('.js','.min.js');           
+            
+        } else if (Minify._checkExtension(pFileName,'html')) {
+            
+            final_code=Minify.htmlMinify(pData);                
+            minFileName=pFileName.replace('.html','.min.html');
+            
         }else
             return;
         
@@ -339,40 +346,6 @@ exports.cssStyles=function cssStyles(pCSSFiles_a, pImgConvertToBase64_b){
     return true;
 };
 
-/* функция сжимает html файлы
- * и сохраняет их с именем .min.html
- * @pHTMLFiles_a - массим имен html
- * файлов, или строка если имя одно
- */
-exports.html=function(pHTMLFiles_a){
-    'use strict';
-            
-    /* if html file names is not array
-     * making it array
-     */
-    if (typeof pHTMLFiles_a === 'string' || 
-        !pHTMLFiles_a[0])
-            pHTMLFiles_a=[pHTMLFiles_a];
-    var dataReaded_f=function(pFileName, pData){
-        console.log('file ' + pFileName + ' readed');
-        var final_code=Minify.htmlMinify(pData);
-                
-        var minFileName=pFileName.replace('.html','.min.html');
-                    
-         /* adding Min folder to file path */
-         minFileName = MinFolder + minFileName;
-         /* записываем сжатый html файл*/
-        fs.writeFile(minFileName, final_code, fileWrited(minFileName));
-    };
-        
-     /* moving thru all elements of html files array */
-    for(var i=0;pHTMLFiles_a[i];i++){
-        console.log('reading file ' + pHTMLFiles_a[i]+'...');
-        fs.readFile(pHTMLFiles_a[i],fileReaded(pHTMLFiles_a[i],dataReaded_f));
-    }
-    
-    return true;
-};
 
 /* функция переводит картинки в base64 и записывает в css-файл*/
 function base64_images(pFileContent_s){
