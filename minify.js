@@ -405,8 +405,7 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
         }else{
             Hashes[pFileName] = lFileHash;
             if(pLastFile_b)
-                fs.writeFile('hashes.json', Hash, fileWrited(pLastFile_b));
-            console.log(Hashes);
+                fs.writeFile('hashes.json', Hashes, fileWrited(pLastFile_b));            
             
             return true;
         }        
