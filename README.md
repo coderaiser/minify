@@ -51,9 +51,9 @@ minify.optimize({
 });
 ```
 
-if post image converting needed
+if post image converting needed (works with css only)
 ```js
-minify.optimize([{'client.js':true},
+minify.optimize([{'style.css':true},
     'index.html']);
 ```    
 
