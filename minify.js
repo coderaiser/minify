@@ -377,7 +377,8 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
         if(!Hashes)
             try {
                 /* try to read file with hashes */
-                Hashes = require('hashes.json');            
+                console.log('trying  to read hashes.json');
+                Hashes = require(process.cwd()+'/hashes');            
                 for(var lFileName in Hashes)
                     /* if founded row with file name
                      * saving hash
@@ -387,6 +388,7 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
                         break;
                     }
             }catch(pError) {
+                console.log('hashes.json was not readed. ');
                 Hashes={};
             }
         /* create md5 hash of file data */ 
@@ -401,7 +403,7 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
         }else{
             Hashes[pFileName] = lFileHash;
             if(pLastFile_b)
-                fs.writeFile('hashes.json', JSON.stringify(Hashes), fileWrited(pLastFile_b));            
+                fs.writeFile('./hashes.json', JSON.stringify(Hashes), fileWrited(pLastFile_b));            
             
             return true;
         }        
