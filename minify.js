@@ -197,7 +197,7 @@ exports.optimize = function(pFiles_a, pCache_b){
     var lName;
     
     var lAllCSS;
-    var dataReaded_f=function(pFileName, pData){        
+    var dataReaded_f=function(pFileName, pData, pLastFile_b){        
         /*
          * if postProcessing function exist
          * getting it from pFileName object
@@ -213,7 +213,7 @@ exports.optimize = function(pFiles_a, pCache_b){
         }
         console.log('file ' + pFileName + ' readed');
         
-        if (!isFileChanged(pFileName, pData)) {
+        if (!isFileChanged(pFileName, pData, pLastFile_b)) {
             console.log('file: ' + pFileName + ' do not changed...');
             return;
         }
@@ -307,65 +307,6 @@ exports.optimize = function(pFiles_a, pCache_b){
     return true;
 };
 
-/* функция сжимает css-стили 
- * и сохраняет их с именем .min.css
- * @pCSSFiles_a           - масив имен css файлов или строка,
- *                          если имя одно
- * @pImgConvertToBase64_b - булевый признак,
- *                          который отвечает за то, что быконвертировать
- *                          картинки в base64 и поместить в выходной css файл
- */
-exports.cssStyles=function cssStyles(pCSSFiles_a, pImgConvertToBase64_b){
-                
-    if(typeof pCSSFiles_a === "string")
-        pCSSFiles_a=[pCSSFiles_a];
-    /* Varible contains information
-     * about readed css file
-     */
-    var lCSSFiles_doneCount=0;
-    
-    var lAllStyle='';
-    
-    var dataReaded_f=function(pFileName, pData) {
-        
-        console.log('file ' + pFileName + ' readed');        
-        var final_code=Minify._cleanCSS(pData);
-        
-        lAllStyle+=final_code;
-        
-        var minFileName=pFileName.replace('.css','.min.css');           
-           
-        ++lCSSFiles_doneCount;
-        
-        /* if all files writed we
-         * save all minimized css 
-         * to one file all.min.css
-         */                
-        if(pCSSFiles_a.length === lCSSFiles_doneCount){
-            /* если включена конвертация картинок в base64
-             * вызываем её
-             */
-            if(pImgConvertToBase64_b)
-                base64_images(lAllStyle);
-            else
-                fs.writeFile(MinFolder + 'all.min.css', lAllStyle, fileWrited(MinFolder + 'all.min.css'));
-        }
-         /* в другом случае - записываем сжатый css файл*/
-        else{
-            minFileName = MinFolder + path.basename(minFileName); 
-            fs.writeFile(minFileName, final_code, fileWrited(minFileName));
-        }
-    };
-    
-   /* moving thru all elements of css files array */
-    for(var i=0;pCSSFiles_a[i];i++){
-        console.log('reading file ' + pCSSFiles_a[i]+'...');
-        fs.readFile(pCSSFiles_a[i],fileReaded(pCSSFiles_a[i],dataReaded_f));
-    }
-        
-    return true;
-};
-
 
 /* функция переводит картинки в base64 и записывает в css-файл*/
 function base64_images(pFileContent_s){
@@ -388,9 +329,11 @@ function base64_images(pFileContent_s){
 
 /* Функция создаёт асинхроную версию 
  * для чтения файла
- * @pFileName - имя считываемого файла
+ * @pFileName       - имя считываемого файла
+ * @pProcessFunc    - функция обработки файла
+ * @pLastFile_b     - последний файл?
  */
-function fileReaded(pFileName,pCompressFunc){
+function fileReaded(pFileName,pProcessFunc, pLastFile_b){
     "use strict";
     return function(pError,pData){
         /* функция в которую мы попадаем,
@@ -401,8 +344,8 @@ function fileReaded(pFileName,pCompressFunc){
          * функция запускаем её
          */        
         if(!pError)
-            if (pCompressFunc && typeof pCompressFunc==="function")
-                    pCompressFunc(pFileName,pData.toString());
+            if (pProcessFunc && typeof pProcessFunc==="function")
+                    pProcessFunc(pFileName,pData.toString(), pLastFile_b);
         else console.log(pError);
     };
 }
@@ -427,7 +370,7 @@ function fileWrited(pFileName){
  * @pFileData - data of file
  * result: boolean
  */
-function isFileChanged(pFileName, pFileData){
+function isFileChanged(pFileName, pFileData, pLastFile_b){
         var lReadedHash;
         
         if(!Hashes)
@@ -458,6 +401,8 @@ function isFileChanged(pFileName, pFileData){
                 return false;
         }else{
             Hashes[pFileName] = lFileHash;
+            if(pLastFile_b)
+                fs.writeFile('hashes.json', Hash, fileWrited(pLastFile_b));
             console.log(Hashes);
             
             return true;
