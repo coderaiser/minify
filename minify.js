@@ -378,19 +378,21 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
             try {
                 /* try to read file with hashes */
                 console.log('trying  to read hashes.json');
-                Hashes = require(process.cwd()+'/hashes');            
-                for(var lFileName in Hashes)
-                    /* if founded row with file name
-                     * saving hash
-                     */
-                    if (lFileName === pFileName) {
-                        lReadedHash = Hashes[pFileName];
-                        break;
-                    }
+                Hashes = require(process.cwd()+'/hashes');                            
             }catch(pError) {
                 console.log('hashes.json was not readed. ');
                 Hashes={};
             }
+        
+        for(var lFileName in Hashes)
+            /* if founded row with file name
+             * saving hash
+             */
+            if (lFileName === pFileName) {
+                lReadedHash = Hashes[pFileName];
+                break;
+        }
+        
         /* create md5 hash of file data */ 
         var lFileHash = crypto.createHash('sha1');
         lFileHash.update(pFileData);
