@@ -32,14 +32,6 @@ names or string, if name single.
  - **pCache_b**(optional)           - if true files do not writes on disk,
 just saves in Minify Cache.
 
-**Examples:**
-
-```js
-'client.js', 
-['client.js','cloudfunc.js']
-{'client.js':'function postProcessing(pFinalCode){ return pFinalCode}}
-```
-**postProcessing**  - function, thet will be executed after
 **Examples**:
 
 ```js
