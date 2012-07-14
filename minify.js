@@ -212,12 +212,7 @@ exports.optimize = function(pFiles_a, pCache_b){
             pFileName = lName;
         }
         console.log('file ' + pFileName + ' readed');
-        
-        if (!isFileChanged(pFileName, pData, pLastFile_b)) {
-            console.log('file: ' + pFileName + ' do not changed...');
-            return;
-        }
-        
+                
         var final_code;
         var minFileName;
         
@@ -242,17 +237,25 @@ exports.optimize = function(pFiles_a, pCache_b){
              * {img: true, moreProcessing: function(){}}
              */
             var lCSS_o = lMoreProcessing_f;
-            if (lCSS_o                      && 
-                typeof lCSS_o === 'object'  &&
-                lCSS_o.img){
-                    base64_images(lAllCSS);
+            if (typeof lCSS_o === 'object'){
                     lMoreProcessing_f = lCSS_o.moreProcessing;
-            }else if (typeof lCSS_o ==='boolean' &&
-                lCSS_o === true){
-                base64_images(lAllCSS);
-            }   
+            }                    
+            /* if it's last file
+             * and base64images setted up
+             * se should convert it
+             */
+            if (pLastFile_b && (lCSS_o && lCSS_o.img) ||
+                (lCSS_o === true)){
+                    base64_images(lAllCSS);
+            }
         } else
             return;
+        
+         if (!isFileChanged(pFileName, pData, pLastFile_b)) {
+            console.log('file: ' + pFileName + ' do not changed...');
+            return;
+        }
+        
         
         /* if lMoreProcessing_f seeted up 
          * and function associated with
@@ -283,7 +286,7 @@ exports.optimize = function(pFiles_a, pCache_b){
             
             fs.writeFile(minFileName, final_code, fileWrited(minFileName));
         }
-    }
+    };
     /* moving thru all elements of js files array */
     for(var i=0; pFiles_a[i]; i++){
         /* if postProcessing function exist
