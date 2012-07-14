@@ -301,7 +301,7 @@ exports.optimize = function(pFiles_a, pCache_b){
         fs.readFile(lName,
             fileReaded(pFiles_a[i],
                 dataReaded_f,
-                (i === pFiles_a.length-1)?true:false));
+                (i === pFiles_a.length)?true:false));
     }
     /* saving the name of last readed file for hash saving function */
     
@@ -398,14 +398,15 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
         lFileHash.update(pFileData);
         lFileHash = lFileHash.digest('hex');
                 
+        if(pLastFile_b)
+            fs.writeFile('./hashes.json', JSON.stringify(Hashes), fileWrited(pLastFile_b));            
+        
         if(lReadedHash && 
             lReadedHash === lFileHash){
                 /* file did not change */
                 return false;
         }else{
-            Hashes[pFileName] = lFileHash;
-            if(pLastFile_b)
-                fs.writeFile('./hashes.json', JSON.stringify(Hashes), fileWrited(pLastFile_b));            
+            Hashes[pFileName] = lFileHash;            
             
             return true;
         }        
