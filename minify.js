@@ -2,7 +2,7 @@
  * конвертации картинок в css-стилях 
  * в base64 и помещения их в файл стилей
  */
-
+var Minify = {};
 console.log('minify.js loaded...');
 
 /* функция сжимает js-скрипты 
@@ -52,6 +52,126 @@ fs.mkdir(MinFolder,511,makeFolder);
 exports.MinFolder = MinFolder;
 exports.Cache    = {};
 
+/*********************************/
+/* сжимаем код через uglify-js */
+Minify._uglifyJS= function(pDdata){
+    
+    /* подключаем модуль uglify-js
+     * если его нет - дальнейшая 
+     * работа функции не имеет смысла
+     */
+    var jsp;
+    var pro;
+    try{
+        jsp = require("uglify-js").parser;
+        pro = require("uglify-js").uglify;
+    }catch(error){
+        console.log('can\'n load uglify-js\n'                  +
+            'to use js-minification you need to install uglify-js\n'    +
+                'npm install uglify-js\n'                               +
+                'https://github.com/mishoo/UglifyJS');
+        return false;
+    }
+                
+    var orig_code = pDdata.toString();
+    var ast = jsp.parse(orig_code); // parse code and get the initial AST
+    ast = pro.ast_mangle(ast); // get a new AST with mangled names
+    ast = pro.ast_squeeze(ast); // get an AST with compression optimizations
+    var result_code = pro.gen_code(ast); // compressed code here
+    return result_code;
+};
+
+/* сжимаем код через clean-css */
+Minify._cleanCSS=function(pData){
+    'use strict';
+     /* connecting cleanCSS,
+      * if we can't find it -
+      * return false
+      */
+     var cleanCSS;
+     try{
+        cleanCSS = require('clean-css');
+    }catch(error){
+        console.log('can\'n load clean-css \n'                          +
+            'to use css-minification you need to install clean-css \n'  +
+                'npm install clean-css\n'                               +
+                'https://github.com/GoalSmashers/clean-css');
+        return false;
+    }
+        /* Сохраняем весь стиль в одну переменную*/            
+    return cleanCSS.process(pData);
+};
+
+/* сжимаем код через htmlMinify */
+Minify.htmlMinify=function(pData){        
+    /* Сохраняем весь стиль в одну переменную*/            
+     
+     /* connecting cleanCSS,
+      * if we can't find it -
+      * return false
+      */
+     var htmlMinifier;
+     try{
+        htmlMinifier = require('html-minifier');
+    }catch(error){
+        console.log('can\'n load html-minifier \n'                 +
+            'to use html-minification you need to install html-minifier\n'  +
+                'npm install html-minifier\n'                               +
+                'https://github.com/kangax/html-minifier');
+        return false;
+    }
+    
+    var lOptions={
+        removeComments:                 true,
+        removeCommentsFromCDATA:        true,
+        removeCDATASectionsFromCDATA:   true,
+        collapseWhitespace:             true,
+        collapseBooleanAttributes:      true,
+        removeAttributeQuotes:          true,
+        removeRedundantAttributes:      true,
+        useShortDoctype:                true,
+        removeEmptyAttributes:          true,
+        /* оставляем, поскольку у нас
+         * в элемент fm генерируеться
+         * таблица файлов
+         */
+        removeEmptyElements:            false,
+        removeOptionalTags:             true,
+        removeScriptTypeAttributes:     true,
+        removeStyleLinkTypeAttributes:  true
+    };
+    
+    
+    return htmlMinifier.minify(pData,lOptions);
+};
+/*********************************/
+
+
+/*
+ * Функция ищет в имени файла расширение
+ * и если находит возвращает true
+ * @pName - получает имя файла
+ * @pExt - расширение
+ */
+Minify._checkExtension=function(pName,pExt)
+{
+    /* если длина имени больше
+     * длинны расширения - 
+     * имеет смысл продолжать
+     */
+    if(pName.length>pExt.length){
+        var lLength=pName.length;           /* длина имени*/
+        var lExtNum=pName.lastIndexOf(pExt);/* последнее вхождение расширения*/
+        var lExtSub=lLength-lExtNum;        /* длина расширения*/
+        /* если pExt - расширение pName */
+        if(lExtSub===pExt.length)
+            return true;
+        else
+            return false;
+    }
+    else return false;
+}
+
 
 /* function minificate js,css and html files
  * @pFiles_a                - array of js, css and html file names or string, if name
@@ -71,69 +191,12 @@ exports.optimize = function(pFiles_a, pCache_b){
      */
     if (typeof pFiles_a === 'string' ||
         !pFiles_a[0])
-            pFiles_a=[pJSFiles_a];      
+            pFiles_a=[pFiles_a];      
             
             
     var lName;
         
-    var dataReaded_f=function(pFileName, pData){
-     
-    }
-    /* moving thru all elements of js files array */
-    for(var i=0; pFiles_a[i]; i++){
-        /* if postProcessing function exist
-         * getting file name and passet next
-         */
-        var lPostProcessing_o = pJSFiles_a[i];        
-        if(typeof lPostProcessing_o === 'object'){
-            for(lName in lPostProcessing_o){
-            }
-        }else lName = pFiles_a[i];
-        console.log('reading file ' + lName + '...');        
-        
-        fs.readFile(lName, fileReaded(pFiles_a[i], dataReaded_f));
-    }
-    /* saving the name of last readed file for hash saving function */
-    lLastFileName = lName;
-    
-    return true;
-}
-
-
-/* function which minificate js-files
- * @pJSFiles_a              - varible, wich contain array
- *                            of js file names or string, if name
- *                            single, or object if postProcessing neaded
- *                              { Name:'1.js', Func: function(pFinalCode){} }
- * @pCache_b                - if true files do not writes on disk, just saves
- *                              in Minify Cache
- */
-exports.jsScripts=function jsScripts(pJSFiles_a, pCache_b){
-    'use strict';
-    /* подключаем модуль uglify-js
-     * если его нет - дальнейшая 
-     * работа функции не имеет смысла
-     */
-    try{
-        var jsp = require("uglify-js").parser;
-        var pro = require("uglify-js").uglify;
-    }catch(error){
-        console.log('can\'n load uglify-js\n'                  +
-            'to use js-minification you need to install uglify-js\n'    +
-                'npm install uglify-js\n'                               +
-                'https://github.com/mishoo/UglifyJS');
-        return false;
-    }
-    var lLastFileName;
-    
-    /* if passed string, or object 
-     * putting it to array
-     */
-    if (typeof pJSFiles_a === 'string' ||
-        !pJSFiles_a[0])
-            pJSFiles_a=[pJSFiles_a];                
-    
-    var dataReaded_f=function(pFileName, pData){        
+ var dataReaded_f=function(pFileName, pData){        
         /*
          * if postProcessing function exist
          * getting it from pFileName object
@@ -154,29 +217,15 @@ exports.jsScripts=function jsScripts(pJSFiles_a, pCache_b){
             return;
         }
         
-        /*********************************/
-        /* сжимаем код через uglify-js */
-        var uglify_js=function(pDdata){
-            var orig_code = pDdata.toString();
-            var ast = jsp.parse(orig_code); // parse code and get the initial AST
-            ast = pro.ast_mangle(ast); // get a new AST with mangled names
-            ast = pro.ast_squeeze(ast); // get an AST with compression optimizations
-            var result_code = pro.gen_code(ast); // compressed code here
-            return result_code;
-        };
-        /*********************************/
-        var final_code=uglify_js(pData);
+        var final_code;
+        var minFileName;
         
-        var minFileName=pFileName.replace('.js','.min.js');
-        
-        /* если мы сжимаем client.js -
-         * меняем строку cloudfunc.js на
-         * cloudfunc.min.js и выводим сообщение
-         *
-         * меняем строку keyBinding.js на
-         * keyBinding.min.js
-         * если другой файл - ничего не деалем
-         */             
+        /* if it's js file - getting optimized version */
+        if(Minify._checkExtension(pFileName,'js')){
+            final_code=Minify._uglifyJS(pData);        
+            minFileName=pFileName.replace('.js','.min.js');           
+        }else
+            return;
         
         /* if lMoreProcessing_f seeted up 
          * and function associated with
@@ -208,27 +257,28 @@ exports.jsScripts=function jsScripts(pJSFiles_a, pCache_b){
             fs.writeFile(minFileName, final_code, fileWrited(minFileName));
         }
     };
-    
-    var lName;
     /* moving thru all elements of js files array */
-    for(var i=0; pJSFiles_a[i]; i++){
+    for(var i=0; pFiles_a[i]; i++){
         /* if postProcessing function exist
          * getting file name and passet next
          */
-        var lMoreProcessing_o = pJSFiles_a[i];        
-        if(typeof lMoreProcessing_o === 'object'){
-            for(lName in lMoreProcessing_o){
+        var lPostProcessing_o = pFiles_a[i];        
+        if(typeof lPostProcessing_o === 'object'){
+            for(lName in lPostProcessing_o){
             }
-        }else lName = pJSFiles_a[i];
+        }else lName = pFiles_a[i];
         console.log('reading file ' + lName + '...');        
-        
-        fs.readFile(lName, fileReaded(pJSFiles_a[i], dataReaded_f));
+                
+        /* if it's last file send true */
+        fs.readFile(lName,
+            fileReaded(pFiles_a[i],
+                dataReaded_f,
+                (i===pFiles_a.length)?true:false));
     }
     /* saving the name of last readed file for hash saving function */
-    lLastFileName = lName;
     
     return true;
-};
+}
 
 /* функция сжимает css-стили 
  * и сохраняет их с именем .min.css
@@ -239,23 +289,7 @@ exports.jsScripts=function jsScripts(pJSFiles_a, pCache_b){
  *                          картинки в base64 и поместить в выходной css файл
  */
 exports.cssStyles=function cssStyles(pCSSFiles_a, pImgConvertToBase64_b){
-    'use strict';
-    
-     /* connecting cleanCSS,
-      * if we can't find it -
-      * return false
-      */
-     var cleanCSS;
-     try{
-        cleanCSS = require('clean-css');
-    }catch(error){
-        console.log('can\'n load clean-css \n'                          +
-            'to use css-minification you need to install clean-css \n'  +
-                'npm install clean-css\n'                               +
-                'https://github.com/GoalSmashers/clean-css');
-        return false;
-    }
-            
+                
     if(typeof pCSSFiles_a === "string")
         pCSSFiles_a=[pCSSFiles_a];
     /* Varible contains information
@@ -265,16 +299,10 @@ exports.cssStyles=function cssStyles(pCSSFiles_a, pImgConvertToBase64_b){
     
     var lAllStyle='';
     
-    var dataReaded_f=function(pFileName, pData){
-        console.log('file ' + pFileName + ' readed');                
-        /*********************************/
-        /* сжимаем код через clean-css */
-        var clean_css=function(pData){
-            /* Сохраняем весь стиль в одну переменную*/            
-            return cleanCSS.process(pData);
-        };
-        /*********************************/
-        var final_code=clean_css(pData);
+    var dataReaded_f=function(pFileName, pData) {
+        
+        console.log('file ' + pFileName + ' readed');        
+        var final_code=Minify._cleanCSS(pData);
         
         lAllStyle+=final_code;
         
@@ -318,22 +346,7 @@ exports.cssStyles=function cssStyles(pCSSFiles_a, pImgConvertToBase64_b){
  */
 exports.html=function(pHTMLFiles_a){
     'use strict';
-    
-     /* connecting cleanCSS,
-      * if we can't find it -
-      * return false
-      */
-     var htmlMinifier;
-     try{
-        htmlMinifier = require('html-minifier');
-    }catch(error){
-        console.log('can\'n load html-minifier \n'                 +
-            'to use html-minification you need to install html-minifier\n'  +
-                'npm install html-minifier\n'                               +
-                'https://github.com/kangax/html-minifier');
-        return false;
-    }
-        
+            
     /* if html file names is not array
      * making it array
      */
@@ -341,37 +354,8 @@ exports.html=function(pHTMLFiles_a){
         !pHTMLFiles_a[0])
             pHTMLFiles_a=[pHTMLFiles_a];
     var dataReaded_f=function(pFileName, pData){
-        console.log('file ' + pFileName + ' readed');                
-        /*********************************/
-        /* сжимаем код через clean-css */
-        var html_minify=function(pData){
-            /* Сохраняем весь стиль в одну переменную*/            
-            
-            var lOptions={
-                removeComments:                 true,
-                removeCommentsFromCDATA:        true,
-                removeCDATASectionsFromCDATA:   true,
-                collapseWhitespace:             true,
-                collapseBooleanAttributes:      true,
-                removeAttributeQuotes:          true,
-                removeRedundantAttributes:      true,
-                useShortDoctype:                true,
-                removeEmptyAttributes:          true,
-                /* оставляем, поскольку у нас
-                 * в элемент fm генерируеться
-                 * таблица файлов
-                 */
-                removeEmptyElements:            false,
-                removeOptionalTags:             true,
-                removeScriptTypeAttributes:     true,
-                removeStyleLinkTypeAttributes:  true
-            };
-            
-            
-            return htmlMinifier.minify(pData,lOptions);
-        };
-        /*********************************/
-        var final_code=html_minify(pData);
+        console.log('file ' + pFileName + ' readed');
+        var final_code=Minify.htmlMinify(pData);
                 
         var minFileName=pFileName.replace('.html','.min.html');
                     
