@@ -6,17 +6,22 @@ jsScripts taking 2 parameters: file names and neaded_cache bolean.
 * Fixed bug in jsScripts and html functions in type convertions
 (from string to array).
 
+* Added hashes system, so if file was not changed small version woud not
+created.
+
+* 3 functions: jsScripts, cssStyles and html merged to one function optimize.
+
 2012.07.11, Version v0.1.1
 
-* In jsScripts, bug with function MoreProcessing_o.Func fixed, now changed final_code savings,
-not losing.
+* In jsScripts, bug with function MoreProcessing_o.Func fixed,
+now changed final_code savings, not losing.
 
 * In jsScripts, fixed bug, when only one js-file can be post-processed, from now
 every js-file could be post-processed.
 
 * Added ability to save files in Minify Cache, without writing to disk.
 
-* Changed the more processing agrument, no it passes with a file name and js file name
-writing only once.
+* Changed the more processing agrument, no it passes with a file name and js
+file name writing only once.
 
-* Fixed bug with passing not array argument ot jsScripts function
+* Fixed bug with passing not array argument ot jsScripts function.
