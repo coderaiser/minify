@@ -250,13 +250,7 @@ exports.optimize = function(pFiles_a, pCache_b){
             }
         } else
             return;
-        
-         if (!isFileChanged(pFileName, pData, pLastFile_b)) {
-            console.log('file: ' + pFileName + ' do not changed...');
-            return;
-        }
-        
-        
+                                
         /* if lMoreProcessing_f seeted up 
          * and function associated with
          * current file name exists -
@@ -282,6 +276,10 @@ exports.optimize = function(pFiles_a, pCache_b){
              * if it's possible if not -
              * in root
              */
+        if (!isFileChanged(pFileName, pData, pLastFile_b)) {
+            console.log('file: ' + pFileName + ' do not changed...');
+                return;
+        }
             minFileName = MinFolder + minFileName;
             
             fs.writeFile(minFileName, final_code, fileWrited(minFileName));
