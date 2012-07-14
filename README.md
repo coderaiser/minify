@@ -20,16 +20,17 @@ To use **Minify** functions it sould be connected first. It's doing like always.
 ```js
 minify=require('minify');
 ```
-All of minification functions save files in **./min** directory with extension **.min**
-(*.min.js, *.min.css, *.min.html). If directory could be created **minify.MinFolder**
-would countain stirng 'min/', in any other case - '/'.
+All of minification functions save files in **./min** directory with
+extension **.min** (*.min.js, *.min.css, *.min.html).
+If directory could be created **minify.MinFolder** would countain stirng 'min/',
+in any other case - '/'.
 
-**jsScripts**(*pJSFiles_a*, *pCache_b*) - function which minificate js-files
- - **pJSFiles_a**                   - varible, wich contain array of js file
+**optimize**(*pFiles_a*, *pCache_b*) - function which minificate js, html and
+css-files.
+ - **pFiles_a**                   - varible, wich contain array of file
 names or string, if name single.
- - **pCache_b**(optional)           - if true files do not writes on disk, just saves
-in Minify Cache.
-
+ - **pCache_b**(optional)           - if true files do not writes on disk,
+just saves in Minify Cache.
 
 **Examples:**
 
@@ -42,72 +43,43 @@ in Minify Cache.
 **Examples**:
 
 ```js
-minify.jsScripts('client.js');
+minify.optimization('client.js');
 ```
+
 if a couple files:
 ```js
 minify.jsScripts(['client.js',
-    'keyBinding.js']);
+    'style.css']);
 ```
+
 if post processing needed 
 ```js
 minify.jsScripts({
     'client.js' : function(pFinalCode){}
 });
 ```
+
+if post image converting needed
+```js
+minify.cssStyles([{'client.js':true},
+    'index.html']);
+```    
+
 if no need to write on disk
 ```js
 minify.jsScripts('client.js', {
     'client.js' : function(pFinalCode){}
 },true);
 ```
+
 Then we can work with js data just like this:
 ```js
 console.log(minify.Cache['client.js']);
 ```
-**cssStyles****(***pCSSFiles_a*,*pImgConvertToBase64_b***)** - function
-which minificate css-files.
- - **pJSFiles_a**                   - varible, wich contain array of js file
-names or string, if name single
- - **pImgConvertToBase64_b**(optional)  - boolean varible wich is responsible
-for converting images to base64 and save them in outer css-files.
 
-**Examples**:
-```js
-minify.cssStyles('style.css');
-```    
-if a couple files:
-```js
-minify.cssStyles(['style.css',
-    'reset.css']);
-```
-if post image converting needed
-```js
-minify.cssStyles('client.js', true);
-```    
-**html****(***pHTMLFiles_a***)** - function which minificate html-files.
- - **pJSFiles_a**                   - varible, wich contain array of html-file names or string, if name single
-
-**Examples**:
-```js
-minify.html('index.html');
-```    
-if a couple files:
-```js
-minify.html(['index.html','about.htm']);
-```
 **MinFolder** - varible thet contains folder name, where minimized files stored.
                 (could not be changed for now).
                 
-Easy example of using
----------------
-```js
-var minify=require('minify');
-
-minify.jsScripts('client.js');
-minify.cssStyles('style.css');
-minify.html('index.html');
-```
 Additional modules:
 ---------------
 - [UglifyJS] (https://github.com/mishoo/UglifyJS)
