@@ -303,7 +303,7 @@ exports.optimize = function(pFiles_a, pCache_b){
         fs.readFile(lName,
             fileReaded(pFiles_a[i],
                 dataReaded_f,
-                (i===pFiles_a.length)?true:false));
+                (i === pFiles_a.length-1)?true:false));
     }
     /* saving the name of last readed file for hash saving function */
     
