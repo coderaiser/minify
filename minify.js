@@ -196,7 +196,7 @@ exports.optimize = function(pFiles_a, pCache_b){
             
     var lName;
     
-    var lAllCSS;
+    var lAllCSS = '';
     var dataReaded_f=function(pFileName, pData, pLastFile_b){        
         /*
          * if postProcessing function exist
