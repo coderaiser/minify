@@ -35,31 +35,31 @@ just saves in Minify Cache.
 **Examples**:
 
 ```js
-minify.optimization('client.js');
+minify.optimize('client.js');
 ```
 
 if a couple files:
 ```js
-minify.jsScripts(['client.js',
+minify.optimize(['client.js',
     'style.css']);
 ```
 
 if post processing needed 
 ```js
-minify.jsScripts({
+minify.optimize({
     'client.js' : function(pFinalCode){}
 });
 ```
 
 if post image converting needed
 ```js
-minify.cssStyles([{'client.js':true},
+minify.optimize([{'client.js':true},
     'index.html']);
 ```    
 
 if no need to write on disk
 ```js
-minify.jsScripts('client.js', {
+minify.optimize('client.js', {
     'client.js' : function(pFinalCode){}
 },true);
 ```
