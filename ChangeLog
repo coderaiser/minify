@@ -1,6 +1,7 @@
 2012.07.*, Version v0.1.3
 
-* Because of asynchronous nature of node, there is no 
+* Bug fixed: lastReaded file not always was realy last.
+Because of asynchronous nature of node, there is no 
 sence to pass the lastReadedFile boolean parameter,
 because we can not exactly say when file would be readed.
 
