@@ -198,11 +198,11 @@ exports.optimize = function(pFiles_a, pCache_b){
     
     var lAllCSS = '';
     /* varible contains all readed file names */
-    var lReadedFiles=[];
+    var lReadedFilesCount=0;
     var dataReaded_f=function(pFileName, pData){        
         var lLastFile_b;
         
-        lReadedFiles[lReadedFiles.length] = pFileName;
+        ++lReadedFilesCount;
         /*
          * if postProcessing function exist
          * getting it from pFileName object
@@ -248,7 +248,7 @@ exports.optimize = function(pFiles_a, pCache_b){
             /* if lengthis not equal
              * file not last
              */            
-            if (lReadedFiles.length != pFiles_a.length)
+            if (lReadedFilesCount !== pFiles_a.length)
                 lLastFile_b=false;
             else
                 lLastFile_b=true;
