@@ -197,7 +197,12 @@ exports.optimize = function(pFiles_a, pCache_b){
     var lName;
     
     var lAllCSS = '';
-    var dataReaded_f=function(pFileName, pData, pLastFile_b){        
+    /* varible contains all readed file names */
+    var lReadedFiles=[];
+    var dataReaded_f=function(pFileName, pData){        
+        var lLastFile_b;
+        
+        lReadedFiles[lReadedFiles.length] = pFileName;
         /*
          * if postProcessing function exist
          * getting it from pFileName object
@@ -230,7 +235,7 @@ exports.optimize = function(pFiles_a, pCache_b){
         } else if (Minify._checkExtension(pFileName, 'css')) {
             
             final_code=Minify._cleanCSS(pData);
-            lAllCSS+=final_code;        
+            lAllCSS+=final_code;
             minFileName=pFileName.replace('.css','.min.css');           
             
             /* in css could be lCSS_o 
@@ -240,12 +245,20 @@ exports.optimize = function(pFiles_a, pCache_b){
             if (typeof lCSS_o === 'object'){
                     lMoreProcessing_f = lCSS_o.moreProcessing;
             }                    
+            /* if lengthis not equal
+             * file not last
+             */            
+            if (lReadedFiles.length != pFiles_a.length)
+                lLastFile_b=false;
+            else
+                lLastFile_b=true;
+                
             /* if it's last file
              * and base64images setted up
              * se should convert it
              */
-            if (pLastFile_b && (lCSS_o && lCSS_o.img ||
-                lCSS_o === true)){
+            if (lLastFile_b && (lCSS_o && lCSS_o.img ||
+                lCSS_o === true)){                    
                     base64_images(lAllCSS);
             }
         } else
@@ -276,7 +289,7 @@ exports.optimize = function(pFiles_a, pCache_b){
              * if it's possible if not -
              * in root
              */
-        if (!isFileChanged(pFileName, pData, pLastFile_b)) {
+        if (!isFileChanged(pFileName, pData, lLastFile_b)) {
             return;
         }
             minFileName = MinFolder + minFileName;
@@ -299,8 +312,7 @@ exports.optimize = function(pFiles_a, pCache_b){
         /* if it's last file send true */
         fs.readFile(lName,
             fileReaded(pFiles_a[i],
-                dataReaded_f,
-                (i === pFiles_a.length-1)?true:false));
+                dataReaded_f));
     }
     /* saving the name of last readed file for hash saving function */
     
