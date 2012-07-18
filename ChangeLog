@@ -5,6 +5,9 @@ Because of asynchronous nature of node, there is no
 sence to pass the lastReadedFile boolean parameter,
 because we can not exactly say when file would be readed.
 
+* Fixed bug with no dependencies installed, now code
+doesn't changing, just saves the copy of it in min dir.
+
 
 2012.07.14, Version v0.1.2
 
