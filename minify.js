@@ -70,7 +70,7 @@ Minify._uglifyJS= function(pDdata){
             'to use js-minification you need to install uglify-js\n'    +
                 'npm install uglify-js\n'                               +
                 'https://github.com/mishoo/UglifyJS');
-        return false;
+        return pData;
     }
                 
     var orig_code = pDdata.toString();
@@ -96,7 +96,7 @@ Minify._cleanCSS=function(pData){
             'to use css-minification you need to install clean-css \n'  +
                 'npm install clean-css\n'                               +
                 'https://github.com/GoalSmashers/clean-css');
-        return false;
+        return pData;
     }
         /* Сохраняем весь стиль в одну переменную*/            
     return cleanCSS.process(pData);
@@ -118,7 +118,7 @@ Minify.htmlMinify=function(pData){
             'to use html-minification you need to install html-minifier\n'  +
                 'npm install html-minifier\n'                               +
                 'https://github.com/kangax/html-minifier');
-        return false;
+        return pData;
     }
     
     var lOptions={
@@ -234,9 +234,10 @@ exports.optimize = function(pFiles_a, pCache_b){
             
         } else if (Minify._checkExtension(pFileName, 'css')) {
             
-            final_code=Minify._cleanCSS(pData);
-            lAllCSS+=final_code;
-            minFileName=pFileName.replace('.css','.min.css');           
+            final_code  = Minify._cleanCSS(pData);
+
+            lAllCSS    += final_code;
+            minFileName = pFileName.replace('.css','.min.css');           
             
             /* in css could be lCSS_o 
              * {img: true, moreProcessing: function(){}}
