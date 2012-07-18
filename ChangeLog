@@ -7,7 +7,10 @@ because we can not exactly say when file would be readed.
 
 * Fixed bug with no dependencies installed, now code
 doesn't changing, just saves the copy of it in min dir.
-
+* Fixed bug with no css-b64-images module installed,
+now all.min.css writes all the time, even not minimized
+and whith no converted to base64 images, but still containing
+all css files.
 
 2012.07.14, Version v0.1.2
 
