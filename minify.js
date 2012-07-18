@@ -331,8 +331,9 @@ function base64_images(pFileContent_s){
         console.log('can\'n load clean-css \n'                 +
             'to use images to base64 convertation you need to install css-base64-images \n'  +
                 'npm install -g css-b64-images\n'                               +
-                'https://github.com/Filirom1/css-base64-images');
-        return false;
+                'https://github.com/Filirom1/css-base64-images');        
+        fs.writeFile(MinFolder + 'all.min.css', pFileContent_s, fileWrited(MinFolder + 'all.min.css'));        
+        return pFileContent_s;
     }
     b64img.fromString(pFileContent_s, '.','', function(err, css){
         console.log('images converted to base64 and saved in css file');
