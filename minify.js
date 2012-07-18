@@ -54,7 +54,7 @@ exports.Cache    = {};
 
 /*********************************/
 /* сжимаем код через uglify-js */
-Minify._uglifyJS= function(pDdata){
+Minify._uglifyJS= function(pData){
     
     /* подключаем модуль uglify-js
      * если его нет - дальнейшая 
@@ -73,7 +73,7 @@ Minify._uglifyJS= function(pDdata){
         return pData;
     }
                 
-    var orig_code = pDdata.toString();
+    var orig_code = pData.toString();
     var ast = jsp.parse(orig_code); // parse code and get the initial AST
     ast = pro.ast_mangle(ast); // get a new AST with mangled names
     ast = pro.ast_squeeze(ast); // get an AST with compression optimizations
