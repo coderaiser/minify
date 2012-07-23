@@ -246,7 +246,7 @@ exports.optimize = function(pFiles_a, pCache_b){
             if (typeof lCSS_o === 'object'){
                     lMoreProcessing_f = lCSS_o.moreProcessing;
             }                    
-            /* if lengthis not equal
+            /* if leng this not equal
              * file not last
              */            
             if (lReadedFilesCount === pFiles_a.length)
