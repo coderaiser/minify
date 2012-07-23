@@ -199,15 +199,15 @@ exports.optimize = function(pFiles_a, pCache_b){
     var lAllCSS = '';
     /* varible contains all readed file names */
     var lReadedFilesCount=0;
-    var dataReaded_f=function(pFileName, pData){        
+    var dataReaded_f=function(pFileName, pData){                
+        ++lReadedFilesCount;
         var lLastFile_b;
         /* if leng this not equal
          * file not last
          */            
         if (lReadedFilesCount === pFiles_a.length)
             lLastFile_b = true;
-        
-        ++lReadedFilesCount;
+                
         /*
          * if postProcessing function exist
          * getting it from pFileName object
