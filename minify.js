@@ -66,9 +66,8 @@ Minify._uglifyJS= function(pData){
         jsp = require("uglify-js").parser;
         pro = require("uglify-js").uglify;
     }catch(error){
-        console.log('can\'n load uglify-js\n'                  +
-            'to use js-minification you need to install uglify-js\n'    +
-                'npm install uglify-js\n'                               +
+        console.log('can\'n load uglify-js\n'       +
+                'npm install uglify-js\n'           +
                 'https://github.com/mishoo/UglifyJS');
         return pData;
     }
@@ -92,9 +91,8 @@ Minify._cleanCSS=function(pData){
      try{
         cleanCSS = require('clean-css');
     }catch(error){
-        console.log('can\'n load clean-css \n'                          +
-            'to use css-minification you need to install clean-css \n'  +
-                'npm install clean-css\n'                               +
+        console.log('can\'n load clean-css \n'              +
+                'npm install clean-css\n'                   +
                 'https://github.com/GoalSmashers/clean-css');
         return pData;
     }
@@ -114,9 +112,8 @@ Minify.htmlMinify=function(pData){
      try{
         htmlMinifier = require('html-minifier');
     }catch(error){
-        console.log('can\'n load html-minifier \n'                 +
-            'to use html-minification you need to install html-minifier\n'  +
-                'npm install html-minifier\n'                               +
+        console.log('can\'n load html-minifier \n'      +
+                'npm install html-minifier\n'           +
                 'https://github.com/kangax/html-minifier');
         return pData;
     }
@@ -326,11 +323,14 @@ function base64_images(pFileContent_s){
      try{
         b64img = require('css-b64-images');
     }catch(error){
-        console.log('can\'n load clean-css \n'                 +
-            'to use images to base64 convertation you need to install css-base64-images \n'  +
-                'npm install -g css-b64-images\n'                               +
-                'https://github.com/Filirom1/css-base64-images');        
-        fs.writeFile(MinFolder + 'all.min.css', pFileContent_s, fileWrited(MinFolder + 'all.min.css'));        
+        console.log('can\'n load clean-css \n'    +
+                'npm install -g css-b64-images\n' +
+                'https://github.com/Filirom1/css-base64-images');
+                
+        fs.writeFile(MinFolder + 'all.min.css',
+            pFileContent_s,
+            fileWrited(MinFolder + 'all.min.css'));        
+            
         return pFileContent_s;
     }
     b64img.fromString(pFileContent_s, '.','', function(err, css){
@@ -396,22 +396,22 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
             }
         
         for(var lFileName in Hashes)
-            /* if founded row with file name
-             * saving hash
+            /* if founded row with
+             * file name - save hash
              */
             if (lFileName === pFileName) {
                 lReadedHash = Hashes[pFileName];
                 break;
         }
         
-        /* create md5 hash of file data */ 
+        /* create hash of file data */ 
         var lFileHash = crypto.createHash('sha1');
         lFileHash.update(pFileData);
         lFileHash = lFileHash.digest('hex');
                 
         Hashes[pFileName] = lFileHash;
         
-        if(pLastFile_b)
+        pLastFile_b &&
             fs.writeFile('./hashes.json',
                 JSON.stringify(Hashes),
                 fileWrited('./hashes.json'));
