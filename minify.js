@@ -201,6 +201,11 @@ exports.optimize = function(pFiles_a, pCache_b){
     var lReadedFilesCount=0;
     var dataReaded_f=function(pFileName, pData){        
         var lLastFile_b;
+        /* if leng this not equal
+         * file not last
+         */            
+        if (lReadedFilesCount === pFiles_a.length)
+            lLastFile_b = true;
         
         ++lReadedFilesCount;
         /*
@@ -246,11 +251,6 @@ exports.optimize = function(pFiles_a, pCache_b){
             if (typeof lCSS_o === 'object'){
                     lMoreProcessing_f = lCSS_o.moreProcessing;
             }                    
-            /* if leng this not equal
-             * file not last
-             */            
-            if (lReadedFilesCount === pFiles_a.length)
-                lLastFile_b = true;
                 
             /* if it's last file
              * and base64images setted up
