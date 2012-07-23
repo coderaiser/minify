@@ -409,18 +409,13 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
         lFileHash.update(pFileData);
         lFileHash = lFileHash.digest('hex');
                 
+        Hashes[pFileName] = lFileHash;
+        
         if(pLastFile_b)
             fs.writeFile('./hashes.json',
                 JSON.stringify(Hashes),
                 fileWrited('./hashes.json'));
         
-        if(lReadedHash && 
-            lReadedHash === lFileHash){
-                /* file did not change */
-                return false;
-        }else{
-            Hashes[pFileName] = lFileHash;            
-            
-            return true;
-        }        
+        /* has file changed? */
+        return lReadedHash === lFileHash;            
 }
