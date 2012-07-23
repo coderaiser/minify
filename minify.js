@@ -170,7 +170,7 @@ Minify._checkExtension=function(pName,pExt)
             return false;
     }
     else return false;
-}
+};
 
 
 /* function minificate js,css and html files
@@ -249,10 +249,8 @@ exports.optimize = function(pFiles_a, pCache_b){
             /* if lengthis not equal
              * file not last
              */            
-            if (lReadedFilesCount !== pFiles_a.length)
-                lLastFile_b=false;
-            else
-                lLastFile_b=true;
+            if (lReadedFilesCount === pFiles_a.length)
+                lLastFile_b = true;
                 
             /* if it's last file
              * and base64images setted up
