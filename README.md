@@ -8,6 +8,7 @@ project.
 Install
 ---------------
 You can install minify just like that:
+
     npm i minify
 or
     git clone git://github.com/coderaiser/minify
