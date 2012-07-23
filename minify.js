@@ -391,7 +391,7 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
                 console.log('trying  to read hashes.json');
                 Hashes = require(process.cwd()+'/hashes');                            
             }catch(pError) {
-                console.log('hashes.json was not readed. ');
+                console.log('hashes.json not found... \n');
                 Hashes={};
             }
         
