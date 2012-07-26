@@ -260,10 +260,11 @@ exports.optimize = function(pFiles_a, pCache_b){
              * and base64images setted up
              * se should convert it
              */
-            if (lLastFile_b && (lCSS_o && lCSS_o.img ||
-                lCSS_o === true)){
+        if (lLastFile_b && (lCSS_o && lCSS_o.img ||
+            lCSS_o === true)){
+                if(isFileChanged('all.min.css', lAllCSS))
                     base64_images(lAllCSS);
-            }
+        }
         
         
         /* if lMoreProcessing_f seeted up 
@@ -291,12 +292,10 @@ exports.optimize = function(pFiles_a, pCache_b){
              * if it's possible if not -
              * in root
              */
-        if (!isFileChanged(pFileName, pData, lLastFile_b)) {
-            return;
-        }
-            minFileName = MinFolder + minFileName;
-            
-            fs.writeFile(minFileName, final_code, fileWrited(minFileName));
+            if (isFileChanged(pFileName, pData, lLastFile_b)) {
+                minFileName = MinFolder + minFileName;            
+                fs.writeFile(minFileName, final_code, fileWrited(minFileName));
+            }            
         }
     };
     /* moving thru all elements of js files array */
