@@ -91,8 +91,9 @@ Minify._cleanCSS=function(pData){
      try{
         cleanCSS = require('clean-css');
     }catch(error){
-        console.log('can\'n load clean-css \n'              +
-                'npm install clean-css\n'                   +
+        console.log('can\'n load clean-css \n'                          +
+            'to use css-minification you need to install clean-css \n'  +
+                'npm install clean-css\n'                               +
                 'https://github.com/GoalSmashers/clean-css');
         return pData;
     }
@@ -112,8 +113,9 @@ Minify.htmlMinify=function(pData){
      try{
         htmlMinifier = require('html-minifier');
     }catch(error){
-        console.log('can\'n load html-minifier \n'      +
-                'npm install html-minifier\n'           +
+        console.log('can\'n load html-minifier \n'                 +
+            'to use html-minification you need to install html-minifier\n'  +
+                'npm install html-minifier\n'                               +
                 'https://github.com/kangax/html-minifier');
         return pData;
     }
@@ -194,6 +196,7 @@ exports.optimize = function(pFiles_a, pCache_b){
     var lName;
     
     var lAllCSS = '';
+    var lCSS_o;
     /* varible contains all readed file names */
     var lReadedFilesCount=0;
     var dataReaded_f=function(pFileName, pData){                
@@ -244,22 +247,25 @@ exports.optimize = function(pFiles_a, pCache_b){
             /* in css could be lCSS_o 
              * {img: true, moreProcessing: function(){}}
              */
-            var lCSS_o = lMoreProcessing_f;
-            if (typeof lCSS_o === 'object'){
-                    lMoreProcessing_f = lCSS_o.moreProcessing;
-            }                    
-                
+            if(!lCSS_o){
+                lCSS_o = lMoreProcessing_f;
+                if (typeof lCSS_o === 'object'){
+                        lMoreProcessing_f = lCSS_o.moreProcessing;
+                }
+            }
+        } else
+            return;
+                                
             /* if it's last file
              * and base64images setted up
              * se should convert it
              */
             if (lLastFile_b && (lCSS_o && lCSS_o.img ||
-                lCSS_o === true)){                    
+                lCSS_o === true)){
                     base64_images(lAllCSS);
             }
-        } else
-            return;
-                                
+        
+        
         /* if lMoreProcessing_f seeted up 
          * and function associated with
          * current file name exists -
@@ -417,5 +423,5 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
                 fileWrited('./hashes.json'));
         
         /* has file changed? */
-        return lReadedHash !== lFileHash;            
+        return lReadedHash !== lFileHash;
 }
