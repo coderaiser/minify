@@ -417,5 +417,5 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
                 fileWrited('./hashes.json'));
         
         /* has file changed? */
-        return lReadedHash === lFileHash;            
+        return lReadedHash !== lFileHash;            
 }
