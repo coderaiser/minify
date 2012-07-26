@@ -3,6 +3,9 @@
 * Fixed bug with saving hashes.json, if css file was not last,
 file would not writed.
 
+* Fixed bug with saving all.min.css, if css file was not last,
+all.min.css would not be writed and base64 function would not
+be called.
 
 2012.07.19, Version v0.1.3
 
