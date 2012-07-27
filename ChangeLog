@@ -1,4 +1,4 @@
-2012.07.*, Version v0.1.4
+2012.07.27, Version v0.1.4
 
 * Fixed bug with saving hashes.json, if css file was not last,
 file would not writed.
