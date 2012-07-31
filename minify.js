@@ -179,10 +179,14 @@ Minify._checkExtension=function(pName,pExt)
  *                            or convertion images to base64 neaded
  *                              {'style.css': true}
  *                            or {'style.css':{minimize: true, func: function(){}}
- * @pCache_b                - if true files do not writes on disk, just saves
+ *
+ * @pOptions                - object contain main options
+ *                          if cache true files do not writes on disk, just saves
  *                              in Minify Cache
+ * Example: 
+ * {cache: false, gzip: true, callback: func(){}}
  */
-exports.optimize = function(pFiles_a, pCache_b){
+exports.optimize = function(pFiles_a, pOptions){
     'use strict';
     
      /* if passed string, or object 
@@ -283,7 +287,7 @@ exports.optimize = function(pFiles_a, pCache_b){
          * в кэш если установлен pCache_b
          * или на диск, если не установлен
          */
-        if(pCache_b){
+        if(pOptions && pOptions.cache){
             exports.Cache[minFileName] = final_code;
             console.log('file ' + minFileName + ' saved to cache...');
         }
@@ -295,8 +299,14 @@ exports.optimize = function(pFiles_a, pCache_b){
             if (isFileChanged(pFileName, pData, lLastFile_b)) {
                 minFileName = MinFolder + minFileName;            
                 fs.writeFile(minFileName, final_code, fileWrited(minFileName));
-            }            
+            }
         }
+        /* calling callback function if it exist
+         */
+        if(pOptions && 
+            pOptions.callback &&
+            typeof pOptions.callback === 'function')
+                pOptions.callback();
     };
     /* moving thru all elements of js files array */
     for(var i=0; pFiles_a[i]; i++){
