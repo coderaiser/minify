@@ -29,15 +29,24 @@ in any other case - '/'.
 
 **optimize**(*pFiles_a*, *pCache_b*) - function which minificate js, html and
 css-files.
- - **pFiles_a**                   - varible, wich contain array of file
+ - **pFiles_a**                     - varible, wich contain array of file
 names or string, if name single.
- - **pCache_b**(optional)           - if true files do not writes on disk,
-just saves in Minify Cache.
+ - **pOptions**(optional)           - object contain main options.
+
+```js
+pOptions = {cache: false, callback: func(){}};
+```
+
+if cache true files do not writes on disk, just saves in Minify Cache.
 
 **Examples**:
 
 ```js
 minify.optimize('client.js');
+```
+
+```js
+minify.optimize('client.js', {cache: true, callback: func(){}});
 ```
 
 if a couple files:
