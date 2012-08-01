@@ -1,7 +1,7 @@
 var filename    = './test/test.js';
 
 var fs          = require('fs');
-var minify      = require('minify');
+var minify      = require('../minify');
 
 jsTesting();
 
