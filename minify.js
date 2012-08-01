@@ -288,7 +288,7 @@ exports.optimize = function(pFiles_a, pOptions){
          * или на диск, если не установлен
          */
         if(pOptions && pOptions.cache){
-            exports.Cache[minFileName] = final_code;
+            exports.Cache[minFileName] = final_code;            
             console.log('file ' + minFileName + ' saved to cache...');
         }
         else{
