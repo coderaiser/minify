@@ -1,3 +1,10 @@
+2012.08.06, Version v0.1.5
+
+* Added callback function.
+
+* Added tests of js minification.
+
+
 2012.07.27, Version v0.1.4
 
 * Fixed bug with saving hashes.json, if css file was not last,
