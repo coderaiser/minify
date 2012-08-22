@@ -204,9 +204,10 @@ exports.optimize = function(pFiles_a, pOptions){
     
     var lAllCSS = '';
     var lCSS_o;
+    
     /* varible contains all readed file names */
     var lReadedFilesCount=0;
-    var dataReaded_f=function(pFileName, pData){                
+    var dataReaded_f = function(pFileName, pData){                
         ++lReadedFilesCount;
         var lLastFile_b;
         /* if leng this not equal
@@ -229,6 +230,14 @@ exports.optimize = function(pFiles_a, pOptions){
             pFileName = lName;
         }
         console.log('file ' + pFileName + ' readed');
+        
+        /* is it css?*/
+        var lIsItCSS_b = Minify._checkExtension(pFileName, 'css');
+        
+        /* if it is not css and file has not been changed go out*/
+        if(!lIsItCSS_b && !isFileChanged(pFileName, pData, lLastFile_b))
+            return;
+                
                 
         var final_code;
         var minFileName;
@@ -244,7 +253,7 @@ exports.optimize = function(pFiles_a, pOptions){
             final_code=Minify.htmlMinify(pData);                
             minFileName=pFileName.replace('.html', '.min.html');
             
-        } else if (Minify._checkExtension(pFileName, 'css')) {
+        } else if (lIsItCSS_b) {
             
             final_code  = Minify._cleanCSS(pData);
 
