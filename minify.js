@@ -13,7 +13,10 @@ var fs = require('fs');
 var path=require('path');
 var crypto = require('crypto');
 
+/* object contains hashes of files*/
 var Hashes;
+/* hash of hashes.json*/
+var HashesHash;
 
 var MinFolder='min/';
 /* function clear MinFolder
@@ -190,8 +193,8 @@ exports.optimize = function(pFiles_a, pOptions){
     'use strict';
     
      /* if passed string, or object 
-     * putting it to array
-     */
+      * putting it to array
+      */
     if (typeof pFiles_a === 'string' ||
         !pFiles_a[0])
             pFiles_a=[pFiles_a];      
@@ -296,6 +299,7 @@ exports.optimize = function(pFiles_a, pOptions){
              * if it's possible if not -
              * in root
              */
+            
             if (isFileChanged(pFileName, pData, lLastFile_b)) {
                 minFileName = MinFolder + minFileName;            
                 fs.writeFile(minFileName, final_code, fileWrited(minFileName));
@@ -400,14 +404,21 @@ function fileWrited(pFileName){
 function isFileChanged(pFileName, pFileData, pLastFile_b){
         var lReadedHash;
         
+        /* create hash of file data */ 
+        var lFileHash = crypto.createHash('sha1');
         if(!Hashes)
             try {
                 /* try to read file with hashes */
                 console.log('trying  to read hashes.json');
-                Hashes = require(process.cwd()+'/hashes');                            
+                Hashes = require(process.cwd()+'/hashes');
+                
+                /* getting hash of hash file */
+                lFileHash.update(JSON.stringify(Hashes));
+                HashesHash = lFileHash.digest('hex');
+                
             }catch(pError) {
                 console.log('hashes.json not found... \n');
-                Hashes={};
+                Hashes = {};
             }
         
         for(var lFileName in Hashes)
@@ -419,18 +430,25 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
                 break;
         }
         
-        /* create hash of file data */ 
-        var lFileHash = crypto.createHash('sha1');
+        lFileHash = crypto.createHash('sha1'); 
         lFileHash.update(pFileData);
         lFileHash = lFileHash.digest('hex');
                 
         Hashes[pFileName] = lFileHash;
-        
-        pLastFile_b &&
-            fs.writeFile('./hashes.json',
-                JSON.stringify(Hashes),
-                fileWrited('./hashes.json'));
-        
+                                
+        if(pLastFile_b){
+            
+            lFileHash = crypto.createHash('sha1');
+            lFileHash.update(JSON.stringify(Hashes));
+            lFileHash = lFileHash.digest('hex');
+            
+            /* if hashes file was changes - write it */
+            if(lFileHash !== HashesHash)
+                fs.writeFile('./hashes.json',
+                    JSON.stringify(Hashes),
+                    fileWrited('./hashes.json'));
+            else console.log('no one file has been changed');
+        }
         /* has file changed? */
         return lReadedHash !== lFileHash;
 }

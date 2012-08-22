@@ -1,3 +1,8 @@
+2012.08.*, Version v0.1.6
+
+* From now file hashes.json saving only if it was changed.
+
+
 2012.08.06, Version v0.1.5
 
 * Added callback function.
