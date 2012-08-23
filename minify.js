@@ -13,10 +13,30 @@ var fs = require('fs');
 var path=require('path');
 var crypto = require('crypto');
 
+try{
+    var html = require('lib/html');
+    var js = require('lib/js');
+    var css = require('lib/css');
+    var img = require('lib/img');    
+    
+    Minify._uglifyJS = js._uglifyJS;
+    Minify._cleanCSS = css._cleanCSS;    
+    Minify.htmlMinify = html.htmlMinify;
+/*********************************/
+}
+catch(pError){
+    console.log(pError);    
+    console.log('One of the necessary modules is absent\n'  +
+        're-install the module\n'                           +
+        'npm r minify\n'                                    +
+        'npm i minify');
+}
+
+
 /* object contains hashes of files*/
 var Hashes;
-/* hash of hashes.json*/
-var HashesHash;
+/* boolean hashes.json changed or not */
+var HashesChanged_b;
 
 var MinFolder='min/';
 /* function clear MinFolder
@@ -54,100 +74,6 @@ fs.mkdir(MinFolder,511,makeFolder);
 
 exports.MinFolder = MinFolder;
 exports.Cache    = {};
-
-/*********************************/
-/* сжимаем код через uglify-js */
-Minify._uglifyJS= function(pData){
-    
-    /* подключаем модуль uglify-js
-     * если его нет - дальнейшая 
-     * работа функции не имеет смысла
-     */
-    var jsp;
-    var pro;
-    try{
-        jsp = require("uglify-js").parser;
-        pro = require("uglify-js").uglify;
-    }catch(error){
-        console.log('can\'n load uglify-js\n'       +
-                'npm install uglify-js\n'           +
-                'https://github.com/mishoo/UglifyJS');
-        return pData;
-    }
-                
-    var orig_code = pData.toString();
-    var ast = jsp.parse(orig_code); // parse code and get the initial AST
-    ast = pro.ast_mangle(ast); // get a new AST with mangled names
-    ast = pro.ast_squeeze(ast); // get an AST with compression optimizations
-    var result_code = pro.gen_code(ast); // compressed code here
-    return result_code;
-};
-
-/* сжимаем код через clean-css */
-Minify._cleanCSS=function(pData){
-    'use strict';
-     /* connecting cleanCSS,
-      * if we can't find it -
-      * return false
-      */
-     var cleanCSS;
-     try{
-        cleanCSS = require('clean-css');
-    }catch(error){
-        console.log('can\'n load clean-css \n'                          +
-            'to use css-minification you need to install clean-css \n'  +
-                'npm install clean-css\n'                               +
-                'https://github.com/GoalSmashers/clean-css');
-        return pData;
-    }
-        /* Сохраняем весь стиль в одну переменную*/            
-    return cleanCSS.process(pData);
-};
-
-/* сжимаем код через htmlMinify */
-Minify.htmlMinify=function(pData){        
-    /* Сохраняем весь стиль в одну переменную*/            
-     
-     /* connecting cleanCSS,
-      * if we can't find it -
-      * return false
-      */
-     var htmlMinifier;
-     try{
-        htmlMinifier = require('html-minifier');
-    }catch(error){
-        console.log('can\'n load html-minifier \n'                 +
-            'to use html-minification you need to install html-minifier\n'  +
-                'npm install html-minifier\n'                               +
-                'https://github.com/kangax/html-minifier');
-        return pData;
-    }
-    
-    var lOptions={
-        removeComments:                 true,
-        removeCommentsFromCDATA:        true,
-        removeCDATASectionsFromCDATA:   true,
-        collapseWhitespace:             true,
-        collapseBooleanAttributes:      true,
-        removeAttributeQuotes:          true,
-        removeRedundantAttributes:      true,
-        useShortDoctype:                true,
-        removeEmptyAttributes:          true,
-        /* оставляем, поскольку у нас
-         * в элемент fm генерируеться
-         * таблица файлов
-         */
-        removeEmptyElements:            false,
-        removeOptionalTags:             true,
-        removeScriptTypeAttributes:     true,
-        removeStyleLinkTypeAttributes:  true
-    };
-    
-    
-    return htmlMinifier.minify(pData,lOptions);
-};
-/*********************************/
-
 
 /*
  * Функция ищет в имени файла расширение
@@ -207,7 +133,14 @@ exports.optimize = function(pFiles_a, pOptions){
     
     /* varible contains all readed file names */
     var lReadedFilesCount=0;
-    var dataReaded_f = function(pFileName, pData){                
+    var dataReaded_f = function(pFileName, pData){
+        
+        /* checking for js/html/css */
+        var lIsItCSS_b;
+        var lIsItHTML_b;
+        var lIsItJS_b;
+        
+        
         ++lReadedFilesCount;
         var lLastFile_b;
         /* if leng this not equal
@@ -232,26 +165,31 @@ exports.optimize = function(pFiles_a, pOptions){
         console.log('file ' + pFileName + ' readed');
         
         /* is it css?*/
-        var lIsItCSS_b = Minify._checkExtension(pFileName, 'css');
-        
+        lIsItCSS_b  = Minify._checkExtension(pFileName, 'css') &&
+            Minify._cleanCSS;
+        /* is it html? */
+        if(!lIsItCSS_b)
+            lIsItHTML_b = Minify._checkExtension(pFileName, 'html') &&
+                Minify.htmlMinify;
+        /* is it js? */
+        if(!lIsItHTML_b)
+            lIsItJS_b = Minify._checkExtension(pFileName,'js') &&
+                Minify._uglifyJS;
         /* if it is not css and file has not been changed go out*/
         if(!lIsItCSS_b && !isFileChanged(pFileName, pData, lLastFile_b))
             return;
-                
                 
         var final_code;
         var minFileName;
         
         /* if it's js file - getting optimized version */
-        if(Minify._checkExtension(pFileName,'js')){
+        if(lIsItJS_b){            
+            final_code  = Minify._uglifyJS(pData);        
+            minFileName = pFileName.replace('.js', '.min.js');           
             
-            final_code=Minify._uglifyJS(pData);        
-            minFileName=pFileName.replace('.js', '.min.js');           
-            
-        } else if (Minify._checkExtension(pFileName, 'html')) {
-            
-            final_code=Minify.htmlMinify(pData);                
-            minFileName=pFileName.replace('.html', '.min.html');
+        } else if (lIsItHTML_b) {            
+            final_code  = Minify.htmlMinify(pData);
+            minFileName = pFileName.replace('.html', '.min.html');
             
         } else if (lIsItCSS_b) {
             
@@ -413,18 +351,11 @@ function fileWrited(pFileName){
 function isFileChanged(pFileName, pFileData, pLastFile_b){
         var lReadedHash;
         
-        /* create hash of file data */ 
-        var lFileHash = crypto.createHash('sha1');
         if(!Hashes)
             try {
                 /* try to read file with hashes */
                 console.log('trying  to read hashes.json');
-                Hashes = require(process.cwd()+'/hashes');
-                
-                /* getting hash of hash file */
-                lFileHash.update(JSON.stringify(Hashes));
-                HashesHash = lFileHash.digest('hex');
-                
+                Hashes = require(process.cwd()+'/hashes');                
             }catch(pError) {
                 console.log('hashes.json not found... \n');
                 Hashes = {};
@@ -439,20 +370,20 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
                 break;
         }
         
+        /* create hash of file data */ 
+        var lFileHash = crypto.createHash('sha1');
         lFileHash = crypto.createHash('sha1'); 
         lFileHash.update(pFileData);
         lFileHash = lFileHash.digest('hex');
                 
-        Hashes[pFileName] = lFileHash;
+        if(Hashes[pFileName] !== lFileHash){
+            Hashes[pFileName] = lFileHash;
+            HashesChanged_b = true;
+        }
                                 
-        if(pLastFile_b){
-            
-            lFileHash = crypto.createHash('sha1');
-            lFileHash.update(JSON.stringify(Hashes));
-            lFileHash = lFileHash.digest('hex');
-            
+        if(pLastFile_b){                                    
             /* if hashes file was changes - write it */
-            if(lFileHash !== HashesHash)
+            if(HashesChanged_b)
                 fs.writeFile('./hashes.json',
                     JSON.stringify(Hashes),
                     fileWrited('./hashes.json'));
