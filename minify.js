@@ -70,7 +70,7 @@ var makeFolder = function(pError){
  * of files 511(10)=777(8)
  * rwxrwxrwx
  */
-fs.mkdir(MinFolder,511,makeFolder);
+fs.mkdir(MinFolder, 511, makeFolder);
 
 exports.MinFolder = MinFolder;
 exports.Cache    = {};
@@ -164,93 +164,97 @@ exports.optimize = function(pFiles_a, pOptions){
         }
         console.log('file ' + pFileName + ' readed');
         
-        /* is it css?*/
-        lIsItCSS_b  = Minify._checkExtension(pFileName, 'css') &&
-            Minify._cleanCSS;
-        /* is it html? */
-        if(!lIsItCSS_b)
-            lIsItHTML_b = Minify._checkExtension(pFileName, 'html') &&
-                Minify.htmlMinify;
-        /* is it js? */
-        if(!lIsItHTML_b)
-            lIsItJS_b = Minify._checkExtension(pFileName,'js') &&
-                Minify._uglifyJS;
-        /* if it is not css and file has not been changed go out*/
-        if(!lIsItCSS_b && !isFileChanged(pFileName, pData, lLastFile_b))
-            return;
+        if(isFileChanged(pFileName, pData, lLastFile_b)){
+            
+            /* is it css?*/
+            lIsItCSS_b  = Minify._checkExtension(pFileName, 'css') &&
+                Minify._cleanCSS;
+            /* is it html? */
+            if(!lIsItCSS_b)
+                lIsItHTML_b = Minify._checkExtension(pFileName, 'html') &&
+                    Minify.htmlMinify;
+            /* is it js? */
+            if(!lIsItHTML_b)
+                lIsItJS_b = Minify._checkExtension(pFileName,'js') &&
+                    Minify._uglifyJS;
+                    
+            var final_code;
+            var minFileName;
+            
+            /* if it's js file - getting optimized version */
+            if(lIsItJS_b){            
+                final_code  = Minify._uglifyJS(pData);        
+                minFileName = pFileName.replace('.js', '.min.js');           
                 
-        var final_code;
-        var minFileName;
-        
-        /* if it's js file - getting optimized version */
-        if(lIsItJS_b){            
-            final_code  = Minify._uglifyJS(pData);        
-            minFileName = pFileName.replace('.js', '.min.js');           
+            } else if (lIsItHTML_b) {            
+                final_code  = Minify.htmlMinify(pData);
+                minFileName = pFileName.replace('.html', '.min.html');
+                
+            } else if (lIsItCSS_b) {
+                
+                final_code  = Minify._cleanCSS(pData);
+    
+                lAllCSS    += final_code;
+                minFileName = pFileName.replace('.css','.min.css');           
+                
+                /* in css could be lCSS_o 
+                 * {img: true, moreProcessing: function(){}}
+                 */
+                if(!lCSS_o){
+                    lCSS_o = lMoreProcessing_f;
+                    if (typeof lCSS_o === 'object'){
+                            lMoreProcessing_f = lCSS_o.moreProcessing;
+                    }
+                }
+            } else
+                return;
+    
+                                    
+                /* if it's last file
+                 * and base64images setted up
+                 * se should convert it
+                 */
+            if (lLastFile_b && (lCSS_o && lCSS_o.img ||
+                lCSS_o === true)){
+                    if(isFileChanged('all.min.css', lAllCSS))
+                        base64_images(lAllCSS);
+            }
             
-        } else if (lIsItHTML_b) {            
-            final_code  = Minify.htmlMinify(pData);
-            minFileName = pFileName.replace('.html', '.min.html');
             
-        } else if (lIsItCSS_b) {
-            
-            final_code  = Minify._cleanCSS(pData);
-
-            lAllCSS    += final_code;
-            minFileName = pFileName.replace('.css','.min.css');           
-            
-            /* in css could be lCSS_o 
-             * {img: true, moreProcessing: function(){}}
+            /* if lMoreProcessing_f seeted up 
+             * and function associated with
+             * current file name exists -
+             * run it
              */
-            if(!lCSS_o){
-                lCSS_o = lMoreProcessing_f;
-                if (typeof lCSS_o === 'object'){
-                        lMoreProcessing_f = lCSS_o.moreProcessing;
+            if(lMoreProcessing_f                    &&    
+                typeof lMoreProcessing_f === "function"){
+                    final_code = lMoreProcessing_f(final_code);
+            }                   
+            
+            minFileName = path.basename(minFileName);
+                    
+            /* записываем сжатый js-скрипт
+             * в кэш если установлен pCache_b
+             * или на диск, если не установлен
+             */
+            if(pOptions && pOptions.cache){
+                exports.Cache[minFileName] = final_code;            
+                console.log('file ' + minFileName + ' saved to cache...');
+            }
+            else{
+                /* minimized file will be in min file
+                 * if it's possible if not -
+                 * in root
+                 */
+                
+                if (isFileChanged(pFileName, pData, lLastFile_b)) {
+                    minFileName = MinFolder + minFileName;            
+                    fs.writeFile(minFileName, final_code, fileWrited(minFileName));
                 }
             }
-        } else
-            return;
-                                
-            /* if it's last file
-             * and base64images setted up
-             * se should convert it
-             */
-        if (lLastFile_b && (lCSS_o && lCSS_o.img ||
-            lCSS_o === true)){
-                if(isFileChanged('all.min.css', lAllCSS))
-                    base64_images(lAllCSS);
-        }
-        
-        
-        /* if lMoreProcessing_f seeted up 
-         * and function associated with
-         * current file name exists -
-         * run it
-         */
-        if(lMoreProcessing_f                    &&    
-            typeof lMoreProcessing_f === "function"){
-                final_code = lMoreProcessing_f(final_code);
-        }                   
-        
-        minFileName = path.basename(minFileName);
-                
-        /* записываем сжатый js-скрипт
-         * в кэш если установлен pCache_b
-         * или на диск, если не установлен
-         */
-        if(pOptions && pOptions.cache){
-            exports.Cache[minFileName] = final_code;            
-            console.log('file ' + minFileName + ' saved to cache...');
-        }
-        else{
-            /* minimized file will be in min file
-             * if it's possible if not -
-             * in root
-             */
+          /* if file was not changed */
+        } else{
             
-            if (isFileChanged(pFileName, pData, lLastFile_b)) {
-                minFileName = MinFolder + minFileName;            
-                fs.writeFile(minFileName, final_code, fileWrited(minFileName));
-            }
         }
         /* calling callback function if it exist
          */
