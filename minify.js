@@ -254,7 +254,7 @@ exports.optimize = function(pFiles_a, pOptions){
             }
           /* if file was not changed */
         } else{
-            
+            fs.readFile()
         }
         /* calling callback function if it exist
          */
@@ -263,6 +263,7 @@ exports.optimize = function(pFiles_a, pOptions){
             typeof pOptions.callback === 'function')
                 pOptions.callback();
     };
+    
     /* moving thru all elements of js files array */
     for(var i=0; pFiles_a[i]; i++){
         /* if postProcessing function exist
