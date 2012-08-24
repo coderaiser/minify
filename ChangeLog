@@ -12,6 +12,8 @@ folder is empty files would be minified and writed.
 
 * Added parameters to callback function.
 
+* Added ability auto minificate any neaded file.
+
 
 2012.08.06, Version v0.1.5
 
