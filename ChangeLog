@@ -7,6 +7,9 @@
 * Added function checkextension and ability to read file from
 hdd if it's already minified.
 
+* Fixed bug with hashes.json, from now, if it exist, and min
+folder is empty files would be minified and writed.
+
 
 2012.08.06, Version v0.1.5
 
