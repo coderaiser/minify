@@ -46,7 +46,7 @@ minify.optimize('client.js');
 ```
 
 ```js
-minify.optimize('client.js', {cache: true, callback: func(){}});
+minify.optimize('client.js', {cache: true, callback: func(pMinData){}});
 ```
 
 if a couple files:

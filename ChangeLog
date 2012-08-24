@@ -10,6 +10,8 @@ hdd if it's already minified.
 * Fixed bug with hashes.json, from now, if it exist, and min
 folder is empty files would be minified and writed.
 
+* Added parameters to callback function.
+
 
 2012.08.06, Version v0.1.5
 
