@@ -186,9 +186,9 @@ exports.optimize = function(pFiles_a, pOptions){
         var minFileName = pFileName.replace(lExt, '.min' + lExt);
         minFileName = path.basename(minFileName);
         
-        if(pForce || isFileChanged(pFileName, pData, lLastFile_b)){
-            
-            var final_code;        
+           /* functin minimize files */
+        var lProcessing_f = function(){
+        var final_code;        
             
             /* getting optimized version */
             switch(lExt){
@@ -256,20 +256,28 @@ exports.optimize = function(pFiles_a, pOptions){
                  */                
                 fs.writeFile(minFileName, final_code, fileWrited(minFileName));
             }
+        };
+        
+        if(isFileChanged(pFileName, pData, lLastFile_b)){
+            lProcessing_f();        
           /* if file was not changed */
         } else{
-            fs.readFile(minFileName, function(pError){
-                /* if could not read file call forse
-                 * minification
-                 */
+            fs.readFile(minFileName, function(pError, pFinalCode){
+                /* if could not read file call forse minification */
                 if(pError)
-                    dataReaded_f(pFileName, pData, true);              
+                    lProcessing_f(pFileName, pData, true);
                 
                 /* if need to save in cache - do it */
                 else {
-                    if(pOptions && pOptions.cache){
-                        exports.Cache[minFileName] = final_code;
-                        console.log('file ' + minFileName + ' saved to cache...');
+                    if(pOptions){
+                        if(pOptions.cache){
+                            exports.Cache[minFileName] = pFinalCode;
+                            console.log('file ' + minFileName + ' saved to cache...');
+                        }
+                        
+                        if(pOptions.callback &&
+                            typeof pOptions.callback === 'function')
+                                pOptions.callback();
                     }                    
                 }
             });
@@ -281,6 +289,7 @@ exports.optimize = function(pFiles_a, pOptions){
             typeof pOptions.callback === 'function')
                 pOptions.callback();
     };
+    
     
     /* moving thru all elements of js files array */
     for(var i=0; pFiles_a[i]; i++){
