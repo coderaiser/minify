@@ -258,6 +258,12 @@ exports.optimize = function(pFiles_a, pOptions){
                  */                
                 fs.writeFile(minFileName, final_code, fileWrited(minFileName));
             }
+            
+            /* calling callback function if it exist */
+            if(pOptions && 
+                pOptions.callback &&
+                typeof pOptions.callback === 'function')
+                    pOptions.callback(final_code);
         };
         
         if(isFileChanged(pFileName, pData, lLastFile_b)){
@@ -279,17 +285,11 @@ exports.optimize = function(pFiles_a, pOptions){
                         
                         if(pOptions.callback &&
                             typeof pOptions.callback === 'function')
-                                pOptions.callback();
+                                pOptions.callback(pFinalCode);
                     }                    
                 }
             });
-        }
-        /* calling callback function if it exist
-         */
-        if(pOptions && 
-            pOptions.callback &&
-            typeof pOptions.callback === 'function')
-                pOptions.callback();
+        }        
     };
     
     
