@@ -184,7 +184,9 @@ exports.optimize = function(pFiles_a, pOptions){
         
         var lExt = Minify._getExtension(pFileName);
         var minFileName = pFileName.replace(lExt, '.min' + lExt);
+        
         minFileName = path.basename(minFileName);
+        minFileName = MinFolder + minFileName;
         
            /* functin minimize files */
         var lProcessing_f = function(){
