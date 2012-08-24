@@ -188,12 +188,6 @@ exports.optimize = function(pFiles_a, pOptions){
         minFileName = path.basename(minFileName);
         minFileName = MinFolder + minFileName;
         
-       if(lExt === '.css' && !lCSS_o){      
-            lCSS_o = lMoreProcessing_f;
-            if (typeof lCSS_o === 'object'){
-                    lMoreProcessing_f = lCSS_o.moreProcessing;
-            }
-       }
        /* functin minimize files */
         var lProcessing_f = function(){
         var final_code;        
@@ -210,7 +204,12 @@ exports.optimize = function(pFiles_a, pOptions){
                 
                 case '.css':
                     final_code  = Minify._cleanCSS(pData);        
-                    lAllCSS    += final_code;             
+                    lAllCSS    += final_code;
+                    
+                    lCSS_o = lMoreProcessing_f;
+                    if (typeof lCSS_o === 'object'){
+                        lMoreProcessing_f = lCSS_o.moreProcessing;
+                    }
                     break;
                 
                 default:
@@ -281,17 +280,7 @@ exports.optimize = function(pFiles_a, pOptions){
                         if(pOptions.callback &&
                             typeof pOptions.callback === 'function')
                                 pOptions.callback(pFinalCode);
-                    }
-                    
-                    /* if it's last file
-                     * and base64images setted up
-                     * se should convert it
-                     */
-                    if (lLastFile_b && (lCSS_o && lCSS_o.img ||
-                        lCSS_o === true)){
-                            if(isFileChanged('all.min.css', lAllCSS))
-                                base64_images(lAllCSS);
-                    }
+                    }                    
                 }
             });
         }        
