@@ -217,9 +217,8 @@ exports.optimize = function(pFiles_a, pOptions){
                     break;
                 
                 default:
-                    return console.log('unknow file type ' + lExt +
-                        ', only *.js, *.css, *.html');
-                    break;
+                    return console.log('unknow file type '  +
+                        lExt + ', only *.js, *.css, *.html');
             }
             /* if it's last file
              * and base64images setted up
@@ -254,9 +253,7 @@ exports.optimize = function(pFiles_a, pOptions){
                 /* minimized file will be in min file
                  * if it's possible if not -
                  * in root
-                 */
-                
-                minFileName = MinFolder + minFileName;
+                 */                
                 fs.writeFile(minFileName, final_code, fileWrited(minFileName));
             }
           /* if file was not changed */
