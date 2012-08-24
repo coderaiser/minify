@@ -191,16 +191,16 @@ exports.optimize = function(pFiles_a, pOptions){
             var final_code;        
             
             /* getting optimized version */
-            case(lExt){
-                '.js': 
+            switch(lExt){
+                case '.js': 
                     final_code  = Minify._uglifyJS(pData);
                     break;
                 
-                '.html':
+                case '.html':
                     final_code  = Minify.htmlMinify(pData);
                     break;
                 
-                '.css':
+                case '.css':
                     final_code  = Minify._cleanCSS(pData);
         
                     lAllCSS    += final_code;
