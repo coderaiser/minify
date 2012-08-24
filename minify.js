@@ -158,7 +158,7 @@ exports.optimize = function(pFiles_a, pOptions){
      * @pData           - data of file
      * @pForce          - minify file anyway
      */
-    var dataReaded_f = function(pFileName, pData, pForce){
+    var dataReaded_f = function(pFileName, pData){
         ++lReadedFilesCount;
         var lLastFile_b;
         /* if leng this not equal
@@ -277,6 +277,17 @@ exports.optimize = function(pFiles_a, pOptions){
                 /* if need to save in cache - do it */
                 else {
                     if(pOptions){
+                        
+                        /* if it's last file
+                         * and base64images setted up
+                         * se should convert it
+                         */
+                        if (lLastFile_b && (lCSS_o && lCSS_o.img ||
+                            lCSS_o === true)){
+                                if(isFileChanged('all.min.css', lAllCSS))
+                                    base64_images(lAllCSS);
+                        }
+                        
                         if(pOptions.cache){
                             exports.Cache[minFileName] = pFinalCode;
                             console.log('file ' + minFileName + ' saved to cache...');
@@ -285,7 +296,7 @@ exports.optimize = function(pFiles_a, pOptions){
                         if(pOptions.callback &&
                             typeof pOptions.callback === 'function')
                                 pOptions.callback(pFinalCode);
-                    }                    
+                    }
                 }
             });
         }        
