@@ -209,7 +209,8 @@ exports.optimize = function(pFiles_a, pOptions){
             } else
                 return;
     
-                                    
+                minFileName = path.basename(minFileName);
+                
                 /* if it's last file
                  * and base64images setted up
                  * se should convert it
@@ -231,8 +232,6 @@ exports.optimize = function(pFiles_a, pOptions){
                     final_code = lMoreProcessing_f(final_code);
             }                   
             
-            minFileName = path.basename(minFileName);
-                    
             /* записываем сжатый js-скрипт
              * в кэш если установлен pCache_b
              * или на диск, если не установлен
@@ -247,10 +246,8 @@ exports.optimize = function(pFiles_a, pOptions){
                  * in root
                  */
                 
-                if (isFileChanged(pFileName, pData, lLastFile_b)) {
-                    minFileName = MinFolder + minFileName;            
-                    fs.writeFile(minFileName, final_code, fileWrited(minFileName));
-                }
+                minFileName = MinFolder + minFileName;
+                fs.writeFile(minFileName, final_code, fileWrited(minFileName));
             }
           /* if file was not changed */
         } else{
