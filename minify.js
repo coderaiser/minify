@@ -222,8 +222,7 @@ exports.optimize = function(pFiles_a, pOptions){
              */
             if (lLastFile_b && (lCSS_o && lCSS_o.img ||
                 lCSS_o === true)){
-                    if(isFileChanged('all.min.css', lAllCSS))
-                        base64_images(lAllCSS);
+                    base64_images(lAllCSS);
             }
             
             
