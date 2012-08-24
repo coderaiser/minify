@@ -188,7 +188,13 @@ exports.optimize = function(pFiles_a, pOptions){
         minFileName = path.basename(minFileName);
         minFileName = MinFolder + minFileName;
         
-           /* functin minimize files */
+       if(lExt === '.css' && !lCSS_o){      
+            lCSS_o = lMoreProcessing_f;
+            if (typeof lCSS_o === 'object'){
+                    lMoreProcessing_f = lCSS_o.moreProcessing;
+            }
+       }
+       /* functin minimize files */
         var lProcessing_f = function(){
         var final_code;        
             
@@ -203,19 +209,8 @@ exports.optimize = function(pFiles_a, pOptions){
                     break;
                 
                 case '.css':
-                    final_code  = Minify._cleanCSS(pData);
-        
-                    lAllCSS    += final_code;
-                    
-                    /* in css could be lCSS_o 
-                     * {img: true, moreProcessing: function(){}}
-                     */
-                    if(!lCSS_o){
-                        lCSS_o = lMoreProcessing_f;
-                        if (typeof lCSS_o === 'object'){
-                                lMoreProcessing_f = lCSS_o.moreProcessing;
-                        }
-                    }
+                    final_code  = Minify._cleanCSS(pData);        
+                    lAllCSS    += final_code;             
                     break;
                 
                 default:
