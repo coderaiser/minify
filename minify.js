@@ -191,34 +191,40 @@ exports.optimize = function(pFiles_a, pOptions){
             var final_code;        
             
             /* getting optimized version */
-            if(lExt === 'js'){            
-                final_code  = Minify._uglifyJS(pData);
+            case(lExt){
+                '.js': 
+                    final_code  = Minify._uglifyJS(pData);
+                    break;
                 
-            } else if (lExt === 'html') {
-                final_code  = Minify.htmlMinify(pData);
+                '.html':
+                    final_code  = Minify.htmlMinify(pData);
+                    break;
                 
-            } else if (lExt === 'css') {                
-                final_code  = Minify._cleanCSS(pData);
-    
-                lAllCSS    += final_code;
-                
-                /* in css could be lCSS_o 
-                 * {img: true, moreProcessing: function(){}}
-                 */
-                if(!lCSS_o){
-                    lCSS_o = lMoreProcessing_f;
-                    if (typeof lCSS_o === 'object'){
-                            lMoreProcessing_f = lCSS_o.moreProcessing;
+                '.css':
+                    final_code  = Minify._cleanCSS(pData);
+        
+                    lAllCSS    += final_code;
+                    
+                    /* in css could be lCSS_o 
+                     * {img: true, moreProcessing: function(){}}
+                     */
+                    if(!lCSS_o){
+                        lCSS_o = lMoreProcessing_f;
+                        if (typeof lCSS_o === 'object'){
+                                lMoreProcessing_f = lCSS_o.moreProcessing;
+                        }
                     }
-                }
-            } else
-                return console.log('unknow file type ' + lExt +
-                    ', only *.js, *.css, *.html');
+                    break;
                 
-                /* if it's last file
-                 * and base64images setted up
-                 * se should convert it
-                 */
+                default:
+                    return console.log('unknow file type ' + lExt +
+                        ', only *.js, *.css, *.html');
+                    break;
+            }
+            /* if it's last file
+             * and base64images setted up
+             * se should convert it
+             */
             if (lLastFile_b && (lCSS_o && lCSS_o.img ||
                 lCSS_o === true)){
                     if(isFileChanged('all.min.css', lAllCSS))
