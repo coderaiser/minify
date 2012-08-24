@@ -267,7 +267,7 @@ exports.optimize = function(pFiles_a, pOptions){
             fs.readFile(minFileName, function(pError, pFinalCode){
                 /* if could not read file call forse minification */
                 if(pError)
-                    lProcessing_f(pFileName, pData, true);
+                    lProcessing_f();
                 
                 /* if need to save in cache - do it */
                 else {
