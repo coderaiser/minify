@@ -100,6 +100,25 @@ Minify._checkExtension=function(pName,pExt)
     else return false;
 };
 
+/* function gets file extension
+ * @pFileName
+ * return Ext
+ */
+Minify._getExtension = function(pFileName){
+    /* checking for js/html/css */
+    
+    var lExt;
+    var lCheck_f = Minify._checkExtension;
+    
+    if (lCheck_f(pFileName, 'css'))
+        lExt = '.css';
+    else if(lCheck_f(pFileName, 'html'))
+        lExt = '.html';
+    else if (lCheck_f(pFileName,'js'))
+        lExt = '.js';
+    
+    return lExt;       
+};
 
 /* function minificate js,css and html files
  * @pFiles_a                - array of js, css and html file names or string, if name
@@ -133,14 +152,13 @@ exports.optimize = function(pFiles_a, pOptions){
     
     /* varible contains all readed file names */
     var lReadedFilesCount=0;
-    var dataReaded_f = function(pFileName, pData){
-        
-        /* checking for js/html/css */
-        var lIsItCSS_b;
-        var lIsItHTML_b;
-        var lIsItJS_b;
-        
-        
+    /*
+     * Processing of files
+     * @pFileName       - name of file
+     * @pData           - data of file
+     * @pForce          - minify file anyway
+     */
+    var dataReaded_f = function(pFileName, pData, pForce){
         ++lReadedFilesCount;
         var lLastFile_b;
         /* if leng this not equal
@@ -164,38 +182,25 @@ exports.optimize = function(pFiles_a, pOptions){
         }
         console.log('file ' + pFileName + ' readed');
         
-        if(isFileChanged(pFileName, pData, lLastFile_b)){
+        var lExt = Minify._getExtension(pFileName);
+        var minFileName = pFileName.replace(lExt, '.min' + lExt);
+        minFileName = path.basename(minFileName);
+        
+        if(pForce || isFileChanged(pFileName, pData, lLastFile_b)){
             
-            /* is it css?*/
-            lIsItCSS_b  = Minify._checkExtension(pFileName, 'css') &&
-                Minify._cleanCSS;
-            /* is it html? */
-            if(!lIsItCSS_b)
-                lIsItHTML_b = Minify._checkExtension(pFileName, 'html') &&
-                    Minify.htmlMinify;
-            /* is it js? */
-            if(!lIsItHTML_b)
-                lIsItJS_b = Minify._checkExtension(pFileName,'js') &&
-                    Minify._uglifyJS;
-                    
-            var final_code;
-            var minFileName;
+            var final_code;        
             
-            /* if it's js file - getting optimized version */
-            if(lIsItJS_b){            
-                final_code  = Minify._uglifyJS(pData);        
-                minFileName = pFileName.replace('.js', '.min.js');           
+            /* getting optimized version */
+            if(lExt === 'js'){            
+                final_code  = Minify._uglifyJS(pData);
                 
-            } else if (lIsItHTML_b) {            
+            } else if (lExt === 'html') {
                 final_code  = Minify.htmlMinify(pData);
-                minFileName = pFileName.replace('.html', '.min.html');
                 
-            } else if (lIsItCSS_b) {
-                
+            } else if (lExt === 'css') {                
                 final_code  = Minify._cleanCSS(pData);
     
                 lAllCSS    += final_code;
-                minFileName = pFileName.replace('.css','.min.css');           
                 
                 /* in css could be lCSS_o 
                  * {img: true, moreProcessing: function(){}}
@@ -207,9 +212,8 @@ exports.optimize = function(pFiles_a, pOptions){
                     }
                 }
             } else
-                return;
-    
-                minFileName = path.basename(minFileName);
+                return console.log('unknow file type ' + lExt +
+                    ', only *.js, *.css, *.html');
                 
                 /* if it's last file
                  * and base64images setted up
@@ -237,7 +241,7 @@ exports.optimize = function(pFiles_a, pOptions){
              * или на диск, если не установлен
              */
             if(pOptions && pOptions.cache){
-                exports.Cache[minFileName] = final_code;            
+                exports.Cache[minFileName] = final_code;
                 console.log('file ' + minFileName + ' saved to cache...');
             }
             else{
@@ -251,7 +255,21 @@ exports.optimize = function(pFiles_a, pOptions){
             }
           /* if file was not changed */
         } else{
-            fs.readFile()
+            fs.readFile(minFileName, function(pError){
+                /* if could not read file call forse
+                 * minification
+                 */
+                if(pError)
+                    dataReaded_f(pFileName, pData, true);              
+                
+                /* if need to save in cache - do it */
+                else {
+                    if(pOptions && pOptions.cache){
+                        exports.Cache[minFileName] = final_code;
+                        console.log('file ' + minFileName + ' saved to cache...');
+                    }                    
+                }
+            });
         }
         /* calling callback function if it exist
          */
