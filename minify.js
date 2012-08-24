@@ -251,13 +251,12 @@ exports.optimize = function(pFiles_a, pOptions){
                 exports.Cache[minFileName] = final_code;
                 console.log('file ' + minFileName + ' saved to cache...');
             }
-            else{
-                /* minimized file will be in min file
-                 * if it's possible if not -
-                 * in root
-                 */                
-                fs.writeFile(minFileName, final_code, fileWrited(minFileName));
-            }
+
+            /* minimized file will be in min file
+             * if it's possible if not -
+             * in root
+             */                
+            fs.writeFile(minFileName, final_code, fileWrited(minFileName));
             
             /* calling callback function if it exist */
             if(pOptions && 
