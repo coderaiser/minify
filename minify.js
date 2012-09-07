@@ -276,17 +276,16 @@ exports.optimize = function(pFiles_a, pOptions){
                         
                         if(pOptions.callback &&
                             typeof pOptions.callback === 'function')
-                                pOptions.callback(pFinalCode);
-                        
-                        /* if it's css and last file */
-                        if(lExt === '.css'){
+                                pOptions.callback(pFinalCode);                        
+                    }
+                    else if(lExt === '.css'){
+                            /* if it's css and last file */
                             lAllCSS += pFinalCode;
                             if(lLastFile_b &&
-                                (pOptions.img || pOptions === true)){
+                                (lMoreProcessing_f.img || lMoreProcessing_f === true)){
                                     base64_images(lAllCSS);
                             }
                         }
-                    }                    
                 }
             });
         }        
