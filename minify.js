@@ -17,10 +17,10 @@ try{
     var html = require('./lib/html');
     var js = require('./lib/js');
     var css = require('./lib/css');
-    var img = require('./lib/img');    
+    var img = require('./lib/img');
     
     Minify._uglifyJS = js._uglifyJS;
-    Minify._cleanCSS = css._cleanCSS;    
+    Minify._cleanCSS = css._cleanCSS;
     Minify.htmlMinify = html.htmlMinify;
 /*********************************/
 }
