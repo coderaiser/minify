@@ -4,6 +4,10 @@
 
 * Little bit refactored and optimized.
 
+* Fixed bug with saving optimized css file, wich
+contains all css files with images, if option is
+setted up.
+
 
 2012.08.24, Version v0.1.6
 

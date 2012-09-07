@@ -277,6 +277,15 @@ exports.optimize = function(pFiles_a, pOptions){
                         if(pOptions.callback &&
                             typeof pOptions.callback === 'function')
                                 pOptions.callback(pFinalCode);
+                        
+                        /* if it's css and last file */
+                        if(lExt === '.css'){
+                            lAllCSS += pFinalCode;
+                            if(lLastFile_b &&
+                                (pOptions.img || pOptions === true)){
+                                    base64_images(lAllCSS);
+                            }
+                        }
                     }                    
                 }
             });
