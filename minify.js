@@ -35,8 +35,6 @@ catch(pError){
 
 /* object contains hashes of files*/
 var Hashes;
-/* boolean hashes.json changed or not */
-var HashesChanged_b;
 
 var MinFolder='min/';
 /* function clear MinFolder
@@ -203,7 +201,7 @@ exports.optimize = function(pFiles_a, pOptions){
                     break;
                 
                 case '.css':
-                    final_code  = Minify._cleanCSS(pData);        
+                    final_code  = Minify._cleanCSS(pData);
                     lAllCSS    += final_code;
                     
                     lCSS_o = lMoreProcessing_f;
@@ -377,6 +375,8 @@ function fileWrited(pFileName){
  */
 function isFileChanged(pFileName, pFileData, pLastFile_b){
         var lReadedHash;
+        /* boolean hashes.json changed or not */
+        var lHashesChanged_b = false;
         
         if(!Hashes)
             try {
@@ -403,19 +403,19 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
         lFileHash.update(pFileData);
         lFileHash = lFileHash.digest('hex');
                 
-        if(Hashes[pFileName] !== lFileHash){
+        if(lReadedHash !== lFileHash){
             Hashes[pFileName] = lFileHash;
-            HashesChanged_b = true;
+            lHashesChanged_b = true;
         }
                                 
         if(pLastFile_b){                                    
             /* if hashes file was changes - write it */
-            if(HashesChanged_b)
+            if(lHashesChanged_b)
                 fs.writeFile('./hashes.json',
                     JSON.stringify(Hashes),
                     fileWrited('./hashes.json'));
             else console.log('no one file has been changed');
         }
         /* has file changed? */
-        return lReadedHash !== lFileHash;
+        return lHashesChanged_b;
 }
