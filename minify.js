@@ -9,20 +9,12 @@ console.log('minify.js loaded...');
  * и сохраняет их с именем .min.js
  */
  
-var fs      = require('fs'),
-    path    = require('path');
+var fs                  = require('fs'),
+    path                = require('path');
 
-var isFileChanged = cloudRequire('is-file-changed');
-    
-if(isFileChanged === false){
-    console.log('warning: is-file-changed.js not loaded');
-    isFileChanged = function(){return true;};
-}
-else isFileChanged = isFileChanged.isFileChanged;
-
-var html = cloudRequire('./lib/html');
-var js = cloudRequire('./lib/js');
-var css = cloudRequire('./lib/css');
+var html                = cloudRequire('./lib/html');
+var js                  = cloudRequire('./lib/js');
+var css                 = cloudRequire('./lib/css');
 
 if(!html || !js || !css)    
     return console.log('One of the necessary modules is absent\n'  +
@@ -30,9 +22,9 @@ if(!html || !js || !css)
         'npm r minify\n'                                    +
         'npm i minify');
 else{
-    Minify._uglifyJS = js._uglifyJS;
-    Minify._cleanCSS = css._cleanCSS;
-    Minify.htmlMinify = html.htmlMinify;
+    Minify._uglifyJS    = js._uglifyJS;
+    Minify._cleanCSS    = css._cleanCSS;
+    Minify.htmlMinify   = html.htmlMinify;
 }
 
 var MinFolder='min/';
