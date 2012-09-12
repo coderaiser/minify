@@ -14,7 +14,7 @@ var fs      = require('fs'),
     isFileChanged = null;
 
 try{
-    isFileChanged = require('is-file-changed.js');
+    isFileChanged = require('is-file-changed');
 }
 catch(pError){
     console.log('warning: is-file-changed.js not loaded');
