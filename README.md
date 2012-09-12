@@ -34,10 +34,11 @@ names or string, if name single.
  - **pOptions**(optional)           - object contain main options.
 
 ```js
-pOptions = {cache: false, callback: func(){}};
+pOptions = {cache: false, force: true, callback: func(){}};
 ```
 
-if cache true files do not writes on disk, just saves in Minify Cache.
+if cache true - files do not writes on disk, just saves in Minify Cache.
+If force true - files proceed anyway even if they do not chenged.
 
 **Examples**:
 

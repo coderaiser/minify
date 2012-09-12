@@ -9,15 +9,22 @@ console.log('minify.js loaded...');
  * и сохраняет их с именем .min.js
  */
  
-var fs = require('fs');
-var path=require('path');
-var crypto = require('crypto');
+var fs      = require('fs'),
+    path    = require('path'),
+    isFileChanged = null;
+
+try{
+    isFileChanged = require('is-file-changed.js');
+}
+catch(pError){
+    console.log('warning: is-file-changed.js not loaded');
+    isFileChanged = function(){return true;};
+}
 
 try{
     var html = require('./lib/html');
     var js = require('./lib/js');
     var css = require('./lib/css');
-    var img = require('./lib/img');
     
     Minify._uglifyJS = js._uglifyJS;
     Minify._cleanCSS = css._cleanCSS;
@@ -31,10 +38,6 @@ catch(pError){
         'npm r minify\n'                                    +
         'npm i minify');
 }
-
-
-/* object contains hashes of files*/
-var Hashes;
 
 var MinFolder='min/';
 /* function clear MinFolder
@@ -79,7 +82,7 @@ exports.Cache    = {};
  * @pName - получает имя файла
  * @pExt - расширение
  */
-Minify._checkExtension=function(pName,pExt)
+Minify._checkExtension = function(pName,pExt)
 {
     /* если длина имени больше
      * длинны расширения - 
@@ -256,10 +259,12 @@ exports.optimize = function(pFiles_a, pOptions){
                     pOptions.callback(final_code);
         };
         
-        if(isFileChanged(pFileName, pData, lLastFile_b)){
-            lProcessing_f();        
+        
+        if(pOptions && pOptions.force ||
+            isFileChanged(pFileName, pData, lLastFile_b))
+                lProcessing_f();
           /* if file was not changed */
-        } else{
+        else{
             fs.readFile(minFileName, function(pError, pFinalCode){
                 /* if could not read file call forse minification */
                 if(pError)
@@ -371,59 +376,4 @@ function fileWrited(pFileName){
     return function(error){
         console.log(error?error:('file '+pFileName+' writed...'));
     };
-}
-
-/*
- * Function reads hash table of files
- * checks is file changed or not
- * and return result.
- * @pFileName - name of file
- * @pFileData - data of file
- * result: boolean
- */
-function isFileChanged(pFileName, pFileData, pLastFile_b){
-        var lReadedHash;
-        /* boolean hashes.json changed or not */
-        var lHashesChanged_b = false;
-        
-        if(!Hashes)
-            try {
-                /* try to read file with hashes */
-                console.log('trying  to read hashes.json');
-                Hashes = require(process.cwd()+'/hashes');                
-            }catch(pError) {
-                console.log('hashes.json not found... \n');
-                Hashes = {};
-            }
-        
-        for(var lFileName in Hashes)
-            /* if founded row with
-             * file name - save hash
-             */
-            if (lFileName === pFileName) {
-                lReadedHash = Hashes[pFileName];
-                break;
-        }
-        
-        /* create hash of file data */ 
-        var lFileHash = crypto.createHash('sha1');
-        lFileHash = crypto.createHash('sha1'); 
-        lFileHash.update(pFileData);
-        lFileHash = lFileHash.digest('hex');
-                
-        if(lReadedHash !== lFileHash){
-            Hashes[pFileName] = lFileHash;
-            lHashesChanged_b = true;
-        }
-                                
-        if(pLastFile_b){                                    
-            /* if hashes file was changes - write it */
-            if(lHashesChanged_b)
-                fs.writeFile('./hashes.json',
-                    JSON.stringify(Hashes),
-                    fileWrited('./hashes.json'));
-            else console.log('no one file has been changed');
-        }
-        /* has file changed? */
-        return lHashesChanged_b;
 }
