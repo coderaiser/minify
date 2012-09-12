@@ -10,33 +10,29 @@ console.log('minify.js loaded...');
  */
  
 var fs      = require('fs'),
-    path    = require('path'),
-    isFileChanged = null;
+    path    = require('path');
 
-try{
-    isFileChanged = require('is-file-changed');
-}
-catch(pError){
+var isFileChanged = cloudRequire('is-file-changed');
+    
+if(isFileChanged === false){
     console.log('warning: is-file-changed.js not loaded');
     isFileChanged = function(){return true;};
 }
+else isFileChanged = isFileChanged.isFileChanged;
 
-try{
-    var html = require('./lib/html');
-    var js = require('./lib/js');
-    var css = require('./lib/css');
-    
+var html = cloudRequire('./lib/html');
+var js = cloudRequire('./lib/js');
+var css = cloudRequire('./lib/css');
+
+if(!html || !js || !css)    
+    return console.log('One of the necessary modules is absent\n'  +
+        're-install the modules\n'                           +
+        'npm r minify\n'                                    +
+        'npm i minify');
+else{
     Minify._uglifyJS = js._uglifyJS;
     Minify._cleanCSS = css._cleanCSS;
     Minify.htmlMinify = html.htmlMinify;
-/*********************************/
-}
-catch(pError){
-    console.log(pError);    
-    console.log('One of the necessary modules is absent\n'  +
-        're-install the module\n'                           +
-        'npm r minify\n'                                    +
-        'npm i minify');
 }
 
 var MinFolder='min/';
@@ -137,7 +133,7 @@ Minify._getExtension = function(pFileName){
  */
 exports.optimize = function(pFiles_a, pOptions){
     'use strict';
-    
+     
      /* if passed string, or object 
       * putting it to array
       */
@@ -259,7 +255,6 @@ exports.optimize = function(pFiles_a, pOptions){
                     pOptions.callback(final_code);
         };
         
-        
         if(pOptions && pOptions.force ||
             isFileChanged(pFileName, pData, lLastFile_b))
                 lProcessing_f();
@@ -376,4 +371,14 @@ function fileWrited(pFileName){
     return function(error){
         console.log(error?error:('file '+pFileName+' writed...'));
     };
+}
+
+/* function do safe require of needed module */
+function cloudRequire(pModule){
+  try{
+      return require(pModule);
+  }
+  catch(pError){
+      return false;
+  }
 }
