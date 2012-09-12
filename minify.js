@@ -76,17 +76,22 @@ Minify._checkExtension = function(pName,pExt)
      * длинны расширения - 
      * имеет смысл продолжать
      */
-    if(pName.length>pExt.length){
-        var lLength=pName.length;           /* длина имени*/
-        var lExtNum=pName.lastIndexOf(pExt);/* последнее вхождение расширения*/
-        var lExtSub=lLength-lExtNum;        /* длина расширения*/
-        /* если pExt - расширение pName */
-        if(lExtSub===pExt.length)
-            return true;
-        else
-            return false;
-    }
-    else return false;
+    if (typeof pExt == 'string' &&
+        pName.length > pExt.length) {
+            var lLength = pName.length;             /* длина имени*/
+            var lExtNum = pName.lastIndexOf(pExt);  /* последнее вхождение расширения*/
+            var lExtSub = lLength - lExtNum;        /* длина расширения*/
+            
+            /* если pExt - расширение pName */
+            return lExtSub === pExt.length;
+    
+    }else if(typeof pExt === 'object' &&
+        pExt.length){
+            for(var i=0; i < pName.length; i++)
+                if(this.checkExtension(pName, pExt[i]))
+                    return true;
+    }else
+        return false;
 };
 
 /* function gets file extension
