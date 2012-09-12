@@ -146,13 +146,13 @@ exports.optimize = function(pFiles_a, pOptions){
             pFiles_a=[pFiles_a];      
             
             
-    var lName;
+    var lName   = '';
     
     var lAllCSS = '';
-    var lCSS_o;
+    var lCSS_o  = null;
     
     /* varible contains all readed file names */
-    var lReadedFilesCount=0;
+    var lReadedFilesCount = 0;
     /*
      * Processing of files
      * @pFileName       - name of file
