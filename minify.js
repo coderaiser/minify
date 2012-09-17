@@ -75,7 +75,7 @@ exports.Cache    = {};
  * @pName - получает имя файла
  * @pExt - расширение
  */
-Minify._checkExtension = function(pName,pExt)
+Minify._checkExtension = function(pName, pExt)
 {
     /* если длина имени больше
      * длинны расширения - 
@@ -104,19 +104,10 @@ Minify._checkExtension = function(pName,pExt)
  * return Ext
  */
 Minify._getExtension = function(pFileName){
-    /* checking for js/html/css */
+    /* checking for js/html/css */    
+    var lDot = pFileName.lastIndexOf('.');
     
-    var lExt;
-    var lCheck_f = Minify._checkExtension;
-    
-    if (lCheck_f(pFileName, 'css'))
-        lExt = '.css';
-    else if(lCheck_f(pFileName, 'html'))
-        lExt = '.html';
-    else if (lCheck_f(pFileName,'js'))
-        lExt = '.js';
-    
-    return lExt;       
+    return pFileName.substr(lDot);
 };
 
 /* function minificate js,css and html files
