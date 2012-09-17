@@ -17,8 +17,8 @@ function jsTesting(){
         lData = pData;
         
         minify.optimize(filename,{
-            cache:true,
-            callback:jsCompare
+            cache    : true,
+            callback : jsCompare
         });
         
     }

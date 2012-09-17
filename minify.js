@@ -15,6 +15,7 @@ var fs                  = require('fs'),
 
 /* object contains hashes of files*/
 var Hashes;
+var HashesChanged;
 
 var html                = cloudRequire('./lib/html');
 var js                  = cloudRequire('./lib/js');
@@ -80,7 +81,7 @@ Minify._checkExtension = function(pName,pExt)
      * длинны расширения - 
      * имеет смысл продолжать
      */
-    if (typeof pExt == 'string' &&
+    if (typeof pExt === 'string' &&
         pName.length > pExt.length) {
             var lLength = pName.length;             /* длина имени*/
             var lExtNum = pName.lastIndexOf(pExt);  /* последнее вхождение расширения*/
@@ -388,7 +389,7 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
         var lReadedHash;
         
         /* boolean hashes.json changed or not */
-        var lHashesChanged_b = false;
+        var lThisHashChanged_b = false;
         
         if(!Hashes)
             try {
@@ -417,17 +418,18 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
                 
         if(lReadedHash !== lFileHash){
             Hashes[pFileName] = lFileHash;
-            lHashesChanged_b = true;
+            lThisHashChanged_b = true;
+            HashesChanged = true;
         }
                                 
         if(pLastFile_b){                                    
             /* if hashes file was changes - write it */
-            if(lHashesChanged_b)
+            if(HashesChanged)
                 fs.writeFile('./hashes.json',
                     JSON.stringify(Hashes),
                     fileWrited('./hashes.json'));
             else console.log('no one file has been changed');
         }
         /* has file changed? */
-        return lHashesChanged_b;
+        return lThisHashChanged_b;
 }
