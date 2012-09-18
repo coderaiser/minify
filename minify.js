@@ -23,7 +23,7 @@ var js                  = cloudRequire('./lib/js');
 var css                 = cloudRequire('./lib/css');
 
 if(!html || !js || !css)    
-    return console.log('One of the necessary modules is absent\n'  +
+    console.log('One of the necessary modules is absent\n'  +
         're-install the modules\n'                           +
         'npm r minify\n'                                    +
         'npm i minify');
