@@ -1,3 +1,4 @@
+"use strict";
 /* Модуль сжатия js-скриптов, css-стилей, html-файлов и
  * конвертации картинок в css-стилях 
  * в base64 и помещения их в файл стилей
@@ -69,11 +70,11 @@ fs.mkdir(MinFolder, 511, makeFolder);
 exports.MinFolder = MinFolder;
 exports.Cache    = {};
 
-/*
+/**
  * Функция ищет в имени файла расширение
  * и если находит возвращает true
- * @pName - получает имя файла
- * @pExt - расширение
+ * @param pName - получает имя файла
+ * @param pExt - расширение
  */
 Minify._checkExtension = function(pName, pExt)
 {
