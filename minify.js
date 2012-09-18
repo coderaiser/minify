@@ -100,9 +100,10 @@ Minify._checkExtension = function(pName, pExt)
         return false;
 };
 
-/* function gets file extension
- * @pFileName
- * return Ext
+/**
+ * function gets file extension
+ * @param pFileName
+ * @return Ext
  */
 Minify._getExtension = function(pFileName){
     /* checking for js/html/css */    
@@ -111,15 +112,16 @@ Minify._getExtension = function(pFileName){
     return pFileName.substr(lDot);
 };
 
-/* function minificate js,css and html files
- * @pFiles_a                - array of js, css and html file names or string, if name
+/**
+ * function minificate js,css and html files
+ * @param pFiles_a                - array of js, css and html file names or string, if name
  *                            single, or object if postProcessing neaded
  *                              {'client.js': function(pFinalCode){} }
  *                            or convertion images to base64 neaded
  *                              {'style.css': true}
  *                            or {'style.css':{minimize: true, func: function(){}}
  *
- * @pOptions                - object contain main options
+ * @param pOptions                - object contain main options
  *                          if cache true files do not writes on disk, just saves
  *                              in Minify Cache
  * Example: 
@@ -309,7 +311,10 @@ exports.optimize = function(pFiles_a, pOptions){
 };
 
 
-/* функция переводит картинки в base64 и записывает в css-файл*/
+/** 
+ * Функция переводит картинки в base64 и записывает в css-файл
+ * @param pFileContent_s {String}
+ */
 function base64_images(pFileContent_s){
     'use strict';    
      var b64img;
