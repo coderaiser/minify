@@ -3,6 +3,7 @@
  * конвертации картинок в css-стилях 
  * в base64 и помещения их в файл стилей
  */
+ 
 var Minify = {};
 console.log('minify.js loaded...');
 
