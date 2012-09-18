@@ -73,8 +73,8 @@ exports.Cache    = {};
 /**
  * Функция ищет в имени файла расширение
  * и если находит возвращает true
- * @param pName - получает имя файла
- * @param pExt - расширение
+ * @param pName
+ * @param pExt
  */
 Minify._checkExtension = function(pName, pExt)
 {
