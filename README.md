@@ -20,7 +20,7 @@ API
 
 To use **Minify** functions it sould be connected first. It's doing like always.
 ```js
-minify=require('minify');
+minify = require('minify');
 ```
 All of minification functions save files in **./min** directory with
 extension **.min** (*.min.js, *.min.css, *.min.html).
@@ -34,11 +34,10 @@ names or string, if name single.
  - **pOptions**(optional)           - object contain main options.
 
 ```js
-pOptions = {cache: false, force: true, callback: func(){}};
+pOptions = {cache: false, callback: func(){}};
 ```
 
 if cache true - files do not writes on disk, just saves in Minify Cache.
-If force true - files proceed anyway even if they do not chenged.
 
 **Examples**:
 

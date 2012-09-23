@@ -146,11 +146,10 @@ exports.optimize = function(pFiles_a, pOptions){
     
     /* varible contains all readed file names */
     var lReadedFilesCount = 0;
-    /*
+    /**
      * Processing of files
-     * @pFileName       - name of file
-     * @pData           - data of file
-     * @pForce          - minify file anyway
+     * @param pFileName       - name of file
+     * @param pData           - data of file
      */
     var dataReaded_f = function(pFileName, pData){
         ++lReadedFilesCount;
@@ -252,7 +251,7 @@ exports.optimize = function(pFiles_a, pOptions){
                     pOptions.callback(final_code);
         };
         
-        if(pOptions && pOptions.force ||
+        if(pOptions ||
             isFileChanged(pFileName, pData, lLastFile_b))
                 lProcessing_f();
           /* if file was not changed */
