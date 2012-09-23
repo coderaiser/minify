@@ -183,73 +183,73 @@ exports.optimize = function(pFiles_a, pOptions){
         
        /* functin minimize files */
         var lProcessing_f = function(){
-        var final_code;        
-            
-            /* getting optimized version */
-            switch(lExt){
-                case '.js': 
-                    final_code  = Minify._uglifyJS(pData);
-                    break;
+            var final_code;        
                 
-                case '.html':
-                    final_code  = Minify.htmlMinify(pData);
-                    break;
-                
-                case '.css':
-                    final_code  = Minify._cleanCSS(pData);
-                    lAllCSS    += final_code;
+                /* getting optimized version */
+                switch(lExt){
+                    case '.js': 
+                        final_code  = Minify._uglifyJS(pData);
+                        break;
                     
-                    lCSS_o = lMoreProcessing_f;
-                    if (typeof lCSS_o === 'object'){
-                        lMoreProcessing_f = lCSS_o.moreProcessing;
-                    }
-                    break;
+                    case '.html':
+                        final_code  = Minify.htmlMinify(pData);
+                        break;
+                    
+                    case '.css':
+                        final_code  = Minify._cleanCSS(pData);
+                        lAllCSS    += final_code;
+                        
+                        lCSS_o = lMoreProcessing_f;
+                        if (typeof lCSS_o === 'object'){
+                            lMoreProcessing_f = lCSS_o.moreProcessing;
+                        }
+                        break;
+                    
+                    default:
+                        return console.log('unknow file type '  +
+                            lExt + ', only *.js, *.css, *.html');
+                }
+                /* if it's last file
+                 * and base64images setted up
+                 * se should convert it
+                 */
+                if (lLastFile_b && (lCSS_o && lCSS_o.img ||
+                    lCSS_o === true)){
+                        base64_images(lAllCSS);
+                }
                 
-                default:
-                    return console.log('unknow file type '  +
-                        lExt + ', only *.js, *.css, *.html');
-            }
-            /* if it's last file
-             * and base64images setted up
-             * se should convert it
-             */
-            if (lLastFile_b && (lCSS_o && lCSS_o.img ||
-                lCSS_o === true)){
-                    base64_images(lAllCSS);
-            }
-            
-            
-            /* if lMoreProcessing_f seeted up 
-             * and function associated with
-             * current file name exists -
-             * run it
-             */
-            if(lMoreProcessing_f                    &&    
-                typeof lMoreProcessing_f === "function"){
-                    final_code = lMoreProcessing_f(final_code);
-            }                   
-            
-            /* записываем сжатый js-скрипт
-             * в кэш если установлен pCache_b
-             * или на диск, если не установлен
-             */
-            if(pOptions && pOptions.cache){
-                exports.Cache[minFileName] = final_code;
-                console.log('file ' + minFileName + ' saved to cache...');
-            }
-
-            /* minimized file will be in min file
-             * if it's possible if not -
-             * in root
-             */                
-            fs.writeFile(minFileName, final_code, fileWrited(minFileName));
-            
-            /* calling callback function if it exist */
-            if(pOptions && 
-                pOptions.callback &&
-                typeof pOptions.callback === 'function')
-                    pOptions.callback(final_code);
-        };
+                
+                /* if lMoreProcessing_f seeted up 
+                 * and function associated with
+                 * current file name exists -
+                 * run it
+                 */
+                if(lMoreProcessing_f                    &&    
+                    typeof lMoreProcessing_f === "function"){
+                        final_code = lMoreProcessing_f(final_code);
+                }                   
+                
+                /* записываем сжатый js-скрипт
+                 * в кэш если установлен pCache_b
+                 * или на диск, если не установлен
+                 */
+                if(pOptions && pOptions.cache){
+                    exports.Cache[minFileName] = final_code;
+                    console.log('file ' + minFileName + ' saved to cache...');
+                }
+    
+                /* minimized file will be in min file
+                 * if it's possible if not -
+                 * in root
+                 */                
+                fs.writeFile(minFileName, final_code, fileWrited(minFileName));
+                
+                /* calling callback function if it exist */
+                if(pOptions && 
+                    pOptions.callback &&
+                    typeof pOptions.callback === 'function')
+                        pOptions.callback(final_code);
+            };
         
         if(pOptions ||
             isFileChanged(pFileName, pData, lLastFile_b))
