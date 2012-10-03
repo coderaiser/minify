@@ -139,11 +139,10 @@ exports.optimize = function(pFiles_a, pOptions){
             pFiles_a=[pFiles_a];      
             
             
-    var lName   = '';
-    
-    var lAllCSS = '';
-    var lCSS_o  = null;
-    
+    var lName   = '',    
+        lAllCSS = '',
+        lCSS_o  = null,
+        lMinIMg_b = false;
     /* varible contains all readed file names */
     var lReadedFilesCount = 0;
     /**
@@ -272,17 +271,20 @@ exports.optimize = function(pFiles_a, pOptions){
                         
                         if(pOptions.callback &&
                             typeof pOptions.callback === 'function')
-                                pOptions.callback(pFinalCode);                        
+                                pOptions.callback(pFinalCode);
                     }
                     else if(lExt === '.css'){
                             /* if it's css and last file */
                             lAllCSS += pFinalCode;
-                            if(lLastFile_b &&
-                                (lMoreProcessing_f.img || lMoreProcessing_f === true)){
-                                    base64_images(lAllCSS);
-                            }
+                            
+                            if(lMoreProcessing_f.img ||
+                                lMoreProcessing_f === true)
+                                    lMinIMg_b = true;
                         }
                 }
+                
+                if(lLastFile_b)
+                    base64_images(lAllCSS);
             });
         }        
     };
