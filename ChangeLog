@@ -1,7 +1,9 @@
 2012.10.*, Version v0.1.8
 
-Fixed bug with minimizing images to css file.
+* Fixed bug with minimizing images to css file.
 If css file not the last, minification was not doing.
+
+* Changed versions of needed modules.
 
 
 2012.10.01, Version v0.1.7
