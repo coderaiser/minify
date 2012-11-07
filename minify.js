@@ -225,10 +225,8 @@ exports.optimize = function(pFiles_a, pOptions){
                      * current file name exists -
                      * run it
                      */
-                    if(lMoreProcessing_f                    &&    
-                        typeof lMoreProcessing_f === "function"){
-                            final_code = lMoreProcessing_f(final_code);
-                    }                   
+                    if(Util.isFunction(lMoreProcessing_f) )
+                        final_code = lMoreProcessing_f(final_code);
                     
                     /* записываем сжатый js-скрипт
                      * в кэш если установлен pCache_b
@@ -246,10 +244,8 @@ exports.optimize = function(pFiles_a, pOptions){
                     fs.writeFile(minFileName, final_code, fileWrited(minFileName));
                     
                     /* calling callback function if it exist */
-                    if(pOptions && 
-                        pOptions.callback &&
-                        typeof pOptions.callback === 'function')
-                            pOptions.callback(final_code);
+                    if( pOptions && Util.isFunction(pOptions.callback) )
+                        pOptions.callback(final_code);
                 };
             
             if(pOptions ||
@@ -271,9 +267,8 @@ exports.optimize = function(pFiles_a, pOptions){
                                 console.log('file ' + minFileName + ' saved to cache...');
                             }
                             
-                            if(pOptions.callback &&
-                                typeof pOptions.callback === 'function')
-                                    pOptions.callback(pFinalCode);
+                            if( Util.isFunction(pOptions.callback) )
+                                pOptions.callback(pFinalCode);
                         }
                         else if(lExt === '.css'){
                                 /* if it's css and last file */
@@ -298,10 +293,13 @@ exports.optimize = function(pFiles_a, pOptions){
          * getting file name and passet next
          */
         var lPostProcessing_o = pFiles_a[i];        
-        if(typeof lPostProcessing_o === 'object'){
+        if( Util.isObject(lPostProcessing_o) ){
             for(lName in lPostProcessing_o){
             }
-        } else lName = pFiles_a[i];
+        }
+        else
+            lName = pFiles_a[i];
+        
         console.log('reading file ' + lName + '...');        
                 
         /* if it's last file send true */
@@ -320,8 +318,8 @@ exports.optimize = function(pFiles_a, pOptions){
  * @param pFileContent_s {String}
  */
 function base64_images(pFileContent_s){
-    'use strict';    
      var b64img;
+     
      try{
         b64img = require('css-b64-images');
     }catch(error){
@@ -348,7 +346,6 @@ function base64_images(pFileContent_s){
  * @pLastFile_b     - последний файл?
  */
 function fileReaded(pFileName,pProcessFunc, pLastFile_b){
-    "use strict";
     return function(pError,pData){
         /* функция в которую мы попадаем,
          * если данные считались
@@ -357,10 +354,12 @@ function fileReaded(pFileName,pProcessFunc, pLastFile_b){
          * иначе если переданная функция -
          * функция запускаем её
          */        
-        if(!pError)
-            if (pProcessFunc && typeof pProcessFunc==="function")
-                    pProcessFunc(pFileName,pData.toString(), pLastFile_b);
-        else console.log(pError);
+        if(pError)
+            console.log(pError);
+        
+        else if ( Util.isFunction(pProcessFunc) )
+            pProcessFunc(pFileName, pData.toString(), pLastFile_b);
+                    
     };
 }
 
