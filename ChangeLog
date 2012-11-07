@@ -5,6 +5,8 @@ If css file not the last, minification was not doing.
 
 * Changed versions of needed modules.
 
+* Added module util.js.
+
 
 2012.10.01, Version v0.1.7
 
