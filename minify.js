@@ -390,10 +390,7 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
         if(!Hashes)
             console.log('trying  to read hashes.json');
             
-            Hashes = Util.tryCatch(function(){                
-                return require(DIR + 'hashes');
-            });
-            
+            Hashes = cloudRequire(DIR + 'hashes');            
             if(!Hashes){
                 console.log('hashes.json not found... \n');
                 Hashes = {};
