@@ -15,7 +15,7 @@ var fs                  = require('fs'),
     path                = require('path'),
     crypto              = require('crypto'),
     
-    Util                = cloudRequire('./lib/util'),
+    Util                = require('./lib/util'),
     html                = cloudRequire('./lib/html'),
     js                  = cloudRequire('./lib/js'),
     css                 = cloudRequire('./lib/css'),
@@ -84,12 +84,12 @@ Minify._checkExtension = function(pName, pExt)
      * длинны расширения - 
      * имеет смысл продолжать
      */    
-    var lRet = false;
+    var lRet = true;
     
     if ( Util.isString(pExt) && pName.length > pExt.length ) {
         var lLength = pName.length,             /* длина имени*/
             lExtNum = pName.lastIndexOf(pExt),  /* последнее вхождение расширения*/
-            lExtSub = lLength - lExtNum,        /* длина расширения*/
+            lExtSub = lLength - lExtNum;        /* длина расширения*/
         
         /* если pExt - расширение pName */
         lRet = lExtSub === pExt.length;
@@ -97,7 +97,7 @@ Minify._checkExtension = function(pName, pExt)
     }else if( Util.isObject(pExt) && pExt.length ){
             for(var i=0; i < pName.length; i++)
                 if(this.checkExtension(pName, pExt[i]))
-                    lRet = true;
+                    break;
     }else
         lRet = false;
     
@@ -138,10 +138,10 @@ exports.optimize = function(pFiles_a, pOptions){
       * putting it to array
       */
     if ( Util.isString(pFiles_a) || !pFiles_a[0] )
-        pFiles_a = [pFiles_a];      
+        pFiles_a = [pFiles_a];
             
             
-    var lName   = '',    
+    var lName   = '',
         lAllCSS = '',
         lCSS_o  = null,
         lMinIMg_b = false, 
@@ -150,35 +150,39 @@ exports.optimize = function(pFiles_a, pOptions){
         
         /**
          * Processing of files
-         * @param pFileName       - name of file
-         * @param pData           - data of file
+         * @param pFileData_o {name, data}
          */
-        dataReaded_f = function(pFileName, pData){
+        dataReaded_f = function(pFileData_o){
+            if( !Util.isObject(pFileData_o) )
+                return -1;
+                
+            var lFileName   = pFileData_o.name,
+                lData       = pFileData_o.data,
+                lLastFile_b;
+            
             ++lReadedFilesCount;
-            var lLastFile_b;
-            /* if leng this not equal
-             * file not last
-             */            
+            
+            /* if leng this not equal file not last */
             if (lReadedFilesCount === pFiles_a.length)
                 lLastFile_b = true;
                     
             /*
              * if postProcessing function exist
-             * getting it from pFileName object
+             * getting it from lFileName object
              */
             var lMoreProcessing_f;
-            if( Util.isObject(pFileName) ){
+            if( Util.isObject(lFileName) ){
                 var lName;
-                for(lName in pFileName){
+                for(lName in lFileName){
                     break;
                 }
-                lMoreProcessing_f = pFileName[lName];            
-                pFileName = lName;
+                lMoreProcessing_f = lFileName[lName];            
+                lFileName = lName;
             }
-            console.log('file ' + pFileName + ' readed');
+            console.log('file ' + lFileName + ' readed');
             
-            var lExt = Minify._getExtension(pFileName),
-                minFileName = pFileName.replace(lExt, '.min' + lExt);
+            var lExt = Minify._getExtension(lFileName),
+                minFileName = lFileName.replace(lExt, '.min' + lExt);
             
             minFileName = path.basename(minFileName);
             minFileName = MinFolder + minFileName;
@@ -225,8 +229,9 @@ exports.optimize = function(pFiles_a, pOptions){
                      * current file name exists -
                      * run it
                      */
-                    if(Util.isFunction(lMoreProcessing_f) )
-                        final_code = lMoreProcessing_f(final_code);
+                    var lResult = Util.exec(lMoreProcessing_f, final_code);
+                    if(lResult)
+                        final_code = lResult;
                     
                     /* записываем сжатый js-скрипт
                      * в кэш если установлен pCache_b
@@ -244,14 +249,14 @@ exports.optimize = function(pFiles_a, pOptions){
                     fs.writeFile(minFileName, final_code, fileWrited(minFileName));
                     
                     /* calling callback function if it exist */
-                    if( pOptions && Util.isFunction(pOptions.callback) )
-                        pOptions.callback(final_code);
+                    if(pOptions)
+                        Util.exec(pOptions.callback, final_code);
                 };
             
-            if(pOptions ||
-                isFileChanged(pFileName, pData, lLastFile_b))
-                    lProcessing_f();
-              /* if file was not changed */
+            if(pOptions || isFileChanged(lFileName, lData, lLastFile_b))
+                lProcessing_f();
+          
+          /* if file was not changed */
             else{
                 fs.readFile(minFileName, function(pError, pFinalCode){
                     /* if could not read file call forse minification */
@@ -267,8 +272,7 @@ exports.optimize = function(pFiles_a, pOptions){
                                 console.log('file ' + minFileName + ' saved to cache...');
                             }
                             
-                            if( Util.isFunction(pOptions.callback) )
-                                pOptions.callback(pFinalCode);
+                            Util.Exec(pOptions.callback, pFinalCode);
                         }
                         else if(lExt === '.css'){
                                 /* if it's css and last file */
@@ -303,9 +307,7 @@ exports.optimize = function(pFiles_a, pOptions){
         console.log('reading file ' + lName + '...');        
                 
         /* if it's last file send true */
-        fs.readFile(lName,
-            fileReaded(pFiles_a[i],
-                dataReaded_f));
+        fs.readFile(lName, fileReaded(pFiles_a[i], dataReaded_f));
     }
     /* saving the name of last readed file for hash saving function */
     
@@ -343,23 +345,21 @@ function base64_images(pFileContent_s){
  * для чтения файла
  * @pFileName       - имя считываемого файла
  * @pProcessFunc    - функция обработки файла
- * @pLastFile_b     - последний файл?
  */
-function fileReaded(pFileName,pProcessFunc, pLastFile_b){
-    return function(pError,pData){
+function fileReaded(pFileName, pProcessFunc){
+    return function(pError, pData){
+        pData = pData.toString();
         /* функция в которую мы попадаем,
          * если данные считались
          *
          * если ошибка - показываем её
          * иначе если переданная функция -
          * функция запускаем её
-         */        
+         */
         if(pError)
             console.log(pError);
         
-        else if ( Util.isFunction(pProcessFunc) )
-            pProcessFunc(pFileName, pData.toString(), pLastFile_b);
-                    
+        else Util.exec(pProcessFunc, {name: pFileName, data: pData});
     };
 }
 
@@ -369,34 +369,31 @@ function fileReaded(pFileName,pProcessFunc, pLastFile_b){
  * что файл успешно записан
  */
 function fileWrited(pFileName){
-    "use strict";
     return function(error){
         console.log(error?error:('file '+pFileName+' writed...'));
     };
 }
 
 /* function do safe require of needed module */
-function cloudRequire(pModule){
-  try{
-      return require(pModule);
-  }
-  catch(pError){
-      return false;
-  }
+function cloudRequire(pModule){    
+    return Util.tryCatch(function(){
+        return require(pModule);
+    });    
 }
 
 function isFileChanged(pFileName, pFileData, pLastFile_b){
-        var lReadedHash;
-        
-        /* boolean hashes.json changed or not */
-        var lThisHashChanged_b = false;
+        var lReadedHash,
+            /* boolean hashes.json changed or not */
+            lThisHashChanged_b = false;
         
         if(!Hashes)
-            try {
-                console.log('trying  to read hashes.json');
-                Hashes = require(process.cwd() + '/hashes');
-                
-            }catch(pError) {
+            console.log('trying  to read hashes.json');
+            
+            Hashes = Util.tryCatch(function(){                
+                return require(process.cwd() + '/hashes');
+            });
+            
+            if(!Hashes){
                 console.log('hashes.json not found... \n');
                 Hashes = {};
             }
