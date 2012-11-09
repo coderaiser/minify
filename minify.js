@@ -20,13 +20,15 @@ var fs                  = require('fs'),
     js                  = cloudRequire('./lib/js'),
     css                 = cloudRequire('./lib/css'),
     
+    DIR                 = process.cwd() + '/',
+    
     /* object contains hashes of files*/
     Hashes,
     HashesChanged;
 
 if(!html || !js || !css)    
     console.log('One of the necessary modules is absent\n'  +
-        're-install the modules\n'                           +
+        're-install the modules\n'                          +
         'npm r minify\n'                                    +
         'npm i minify');
 else{
@@ -194,15 +196,15 @@ exports.optimize = function(pFiles_a, pOptions){
                     /* getting optimized version */
                     switch(lExt){
                         case '.js': 
-                            final_code  = Minify._uglifyJS(pData);
+                            final_code  = Minify._uglifyJS(lData);
                             break;
                         
                         case '.html':
-                            final_code  = Minify.htmlMinify(pData);
+                            final_code  = Minify.htmlMinify(lData);
                             break;
                         
                         case '.css':
-                            final_code  = Minify._cleanCSS(pData);
+                            final_code  = Minify._cleanCSS(lData);
                             lAllCSS    += final_code;
                             
                             lCSS_o = lMoreProcessing_f;
@@ -317,28 +319,26 @@ exports.optimize = function(pFiles_a, pOptions){
 
 /** 
  * Функция переводит картинки в base64 и записывает в css-файл
- * @param pFileContent_s {String}
+ * @param pData {String}
  */
-function base64_images(pFileContent_s){
-     var b64img;
-     
-     try{
-        b64img = require('css-b64-images');
-    }catch(error){
+function base64_images(pData){
+    var lPath = MinFolder + 'all.min.css',
+        b64img = cloudRequire('css-b64-images');
+    
+    if(!b64img){
         console.log('can\'n load clean-css \n'    +
                 'npm install -g css-b64-images\n' +
                 'https://github.com/Filirom1/css-base64-images');
-                
-        fs.writeFile(MinFolder + 'all.min.css',
-            pFileContent_s,
-            fileWrited(MinFolder + 'all.min.css'));        
+        
+        fs.writeFile(lPath, pData, fileWrited(lPath));
             
-        return pFileContent_s;
+        return pData;
     }
-    b64img.fromString(pFileContent_s, '.','', function(err, css){
-        console.log('images converted to base64 and saved in css file');
-        fs.writeFile(MinFolder + 'all.min.css', css, fileWrited(MinFolder + 'all.min.css'));
-    });
+    else
+        b64img.fromString(pData, '.', '', function(err, css){
+            console.log('images converted to base64 and saved in css file');
+            fs.writeFile(lPath, css, fileWrited(lPath));
+        });
 }
 
 /* Функция создаёт асинхроную версию 
@@ -359,7 +359,8 @@ function fileReaded(pFileName, pProcessFunc){
         if(pError)
             console.log(pError);
         
-        else Util.exec(pProcessFunc, {name: pFileName, data: pData});
+        else
+            Util.exec(pProcessFunc, {name: pFileName, data: pData});
     };
 }
 
@@ -370,7 +371,7 @@ function fileReaded(pFileName, pProcessFunc){
  */
 function fileWrited(pFileName){
     return function(error){
-        console.log(error?error:('file '+pFileName+' writed...'));
+        console.log(error ? error : ('file ' + pFileName + ' writed...') );
     };
 }
 
@@ -390,7 +391,7 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
             console.log('trying  to read hashes.json');
             
             Hashes = Util.tryCatch(function(){                
-                return require(process.cwd() + '/hashes');
+                return require(DIR + 'hashes');
             });
             
             if(!Hashes){
@@ -409,23 +410,26 @@ function isFileChanged(pFileName, pFileData, pLastFile_b){
         
         /* create hash of file data */ 
         var lFileHash = crypto.createHash('sha1');
+        
         lFileHash = crypto.createHash('sha1'); 
         lFileHash.update(pFileData);
         lFileHash = lFileHash.digest('hex');
                 
         if(lReadedHash !== lFileHash){
-            Hashes[pFileName] = lFileHash;
-            lThisHashChanged_b = true;
-            HashesChanged = true;
+            Hashes[pFileName]   = lFileHash;
+            lThisHashChanged_b  = 
+            HashesChanged       = true;
         }
-                                
-        if(pLastFile_b){                                    
+        
+        if(pLastFile_b){
             /* if hashes file was changes - write it */
             if(HashesChanged)
                 fs.writeFile('./hashes.json',
                     JSON.stringify(Hashes),
                     fileWrited('./hashes.json'));
-            else console.log('no one file has been changed');
+                    
+            else
+                console.log('no one file has been changed');
         }
         /* has file changed? */
         return lThisHashChanged_b;
