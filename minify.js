@@ -44,7 +44,6 @@ var MinFolder='min/';
  * not exist
  */
 var folderExist = function(pError, pStat){
-    "use strict";
     /*file found and it's directory */
     if(!pError && pStat.isDirectory())
         console.log('folder exist: ' + MinFolder);
@@ -57,11 +56,10 @@ var folderExist = function(pError, pStat){
  * moves to folderExist function
  */
 var makeFolder = function(pError){
-    "use strict";
     /*folder created successfully*/
     if(!pError)
         console.log('folder created: min');
-    else fs.stat(MinFolder,folderExist);    
+    else fs.stat(MinFolder,folderExist);
 };
 
 /* Trying to create folder min
@@ -133,9 +131,7 @@ Minify._getExtension = function(pFileName){
  * Example: 
  * {cache: false, gzip: true, callback: func(){}}
  */
-exports.optimize = function(pFiles_a, pOptions){
-    'use strict';
-     
+exports.optimize = function(pFiles_a, pOptions){ 
      /* if passed string, or object 
       * putting it to array
       */
@@ -298,16 +294,15 @@ exports.optimize = function(pFiles_a, pOptions){
         /* if postProcessing function exist
          * getting file name and passet next
          */
-        var lPostProcessing_o = pFiles_a[i];        
-        if( Util.isObject(lPostProcessing_o) ){
-            for(lName in lPostProcessing_o){
-            }
-        }
+        var lPostProcessing_o = pFiles_a[i];
+        if( Util.isObject(lPostProcessing_o) )
+            for(lName in lPostProcessing_o)
+                break;
         else
             lName = pFiles_a[i];
         
-        console.log('reading file ' + lName + '...');        
-                
+        console.log('reading file ' + lName + '...');
+        
         /* if it's last file send true */
         fs.readFile(lName, fileReaded(pFiles_a[i], dataReaded_f));
     }
