@@ -6,7 +6,8 @@
     "use strict";
     
     var DIR         = process.cwd() + '/node_modules/minify/',
-        main        = require(DIR   + 'lib/main'),
+        LIBDIR      = DIR + 'lib/',
+        main        = require(LIBDIR + 'main'),
         
         crypto      = main.crypto,
         fs          = main.fs,
@@ -145,9 +146,9 @@
                 console.log('file ' + lFileName + ' readed');
                 
                 var lExt = Minify._getExtension(lFileName),
-                    minFileName = lFileName.replace(lExt, '.min' + lExt);
+                    minFileName = path.basename(lFileName);
                 
-                minFileName = path.basename(minFileName);
+                minFileName = minFileName.replace(lExt, '.min' + lExt);
                 minFileName = MinFolder + minFileName;
                 
                /* functin minimize files */
@@ -201,7 +202,7 @@
                          * или на диск, если не установлен
                          */
                         if(pOptions && pOptions.cache){
-                            exports.Cache[minFileName] = final_code;
+                            exports.Cache[lFileName] = final_code;
                             console.log('file ' + minFileName + ' saved to cache...');
                         }
             

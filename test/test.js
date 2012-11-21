@@ -1,65 +1,73 @@
-var filename    = './test/test.js';
-
-var fs          = require('fs');
-var minify      = require('../minify');
-
-jsTesting();
-
-function jsTesting(){
-    fs.readFile(filename, fileReaded);
+(function(){
+    "use strict";
     
-    var lData;
+    console.log(process.cwd());
     
-    function fileReaded(pError, pData) {
-        if(pError)
-            return result(false);
-            
-        lData = pData;
+    var DIR         = process.cwd() + '/node_modules/minify/',
+        LIBDIR      = DIR + 'lib/',
+        main        = require(LIBDIR + 'main'),
         
-        minify.optimize(filename,{
-            cache    : true,
-            callback : jsCompare
-        });
+        fs          = main.fs,
+        filename    = DIR + 'test/test.js',
         
-    }
+        minify      = main.require('minify'),
+        uglify      = main.require("uglify-js"),
+        
+        ErrorMsg    =   'can\'n load uglify-js          \n' +
+                        'npm install uglify-js          \n' +
+                        'https://github.com/mishoo/UglifyJS';
     
+    jsTesting();
     
-    function jsCompare(){        
-        fs.rmdir('min', function(){
-            var lUglify = _uglifyJS(lData);
-            var lMinify = minify.Cache['test.min.js'];
+    function jsTesting(){
+        fs.readFile(filename, fileReaded);
+        
+        var lData;
+        
+        function fileReaded(pError, pData) {
+            if(pError)
+                return result(pError);
+                
+            lData = pData;
             
-            return result(lUglify === lMinify);
-        });
+            minify.optimize(filename,{
+                cache    : true,
+                callback : jsCompare
+            });
+            
+        }
+        
+        
+        function jsCompare(){
+            fs.rmdir('min', function(){
+                var lUglify = _uglifyJS(lData),
+                    lMinify = minify.Cache['min/test.min.js'];
+                    
+                console.log(minify);
+               
+               return result(lUglify === lMinify);
+            });
+        }
+        
+        function result(pResult){
+            console.log(pResult);
+        }
     }
     
-    function result(pResult){
-        console.log(pResult);
-    }
-}
-
-function _uglifyJS(pData){
-    
-    /* подключаем модуль uglify-js
-     * если его нет - дальнейшая 
-     * работа функции не имеет смысла
-     */
-    var jsp;
-    var pro;
-    try{
-        jsp = require("uglify-js").parser;
-        pro = require("uglify-js").uglify;
-    }catch(error){
-        console.log('can\'n load uglify-js\n'       +
-                'npm install uglify-js\n'           +
-                'https://github.com/mishoo/UglifyJS');
+    function _uglifyJS(pData){
+        if(uglify){
+            var jsp = uglify.parser,
+                pro = uglify.uglify,
+                /* parse code and get the initial AST */
+                ast = jsp.parse( pData.toString() );
+            
+            ast = pro.ast_mangle(ast);  /* get a new AST with mangled names             */
+            ast = pro.ast_squeeze(ast); /* get an AST with compression optimizations    */
+            pData = pro.gen_code(ast);  /* compressed code here                         */
+        }
+        else
+            console.log(ErrorMsg);
+        
         return pData;
     }
-                
-    var orig_code = pData.toString();
-    var ast = jsp.parse(orig_code); // parse code and get the initial AST
-    ast = pro.ast_mangle(ast); // get a new AST with mangled names
-    ast = pro.ast_squeeze(ast); // get an AST with compression optimizations
-    var result_code = pro.gen_code(ast); // compressed code here
-    return result_code;
-}
+})();

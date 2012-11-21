@@ -7,7 +7,9 @@ If css file not the last, minification was not doing.
 
 * Added module util.js.
 
-* js, css and html modules refactored added module main
+* js, css and html modules refactored added module main.
+
+* Fixed bug with saving to Cache.
 
 
 2012.10.01, Version v0.1.7
