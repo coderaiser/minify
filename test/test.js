@@ -41,11 +41,10 @@
         function jsCompare(){
             fs.rmdir('min', function(){
                 var lUglify = _uglifyJS(lData),
-                    lMinify = minify.Cache['min/test.min.js'];
-                    
-                console.log(minify);
-               
-               return result(lUglify === lMinify);
+                    lMinify = minify.Cache[filename],
+                    lResult = lUglify === lMinify;
+                
+               return result('uglify-js: ' + lResult);
             });
         }
         
