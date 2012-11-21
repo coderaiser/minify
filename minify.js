@@ -8,8 +8,6 @@
     var DIR         = process.cwd() + '/node_modules/minify/',
         main        = require(DIR   + 'lib/main'),
         
-        LIBDIR      = main.LIBDIR,
-        
         crypto      = main.crypto,
         fs          = main.fs,
         path        = main.path,
