@@ -4,10 +4,9 @@
  */
 (function(){
     "use strict";
-    
-    var DIR         = process.cwd() + '/',
-        MinifyDIR   = DIR + 'node_modules/minify/',
-        LIBDIR      = MinifyDIR + 'lib/',
+        
+    var DIR         = __dirname +'/',
+        LIBDIR      = DIR + 'lib/',
         main        = require(LIBDIR + 'main'),
         
         crypto      = main.crypto,
@@ -346,7 +345,7 @@
             if(!Hashes)
                 console.log('trying  to read hashes.json');
                 
-                Hashes = main.require(DIR + 'hashes');
+                Hashes = main.require(cwd + 'hashes');
                 if(!Hashes){
                     console.log('hashes.json not found... \n');
                     Hashes = {};
