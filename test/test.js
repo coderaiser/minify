@@ -5,10 +5,12 @@
         cwd         = process.cwd(),
         baseCwd     = path.basename(cwd);
     
+    console.log(cwd);
     /* if npm test started change dir */
     if(baseCwd === 'minify')
-        process.chdir('../..')
-            
+        process.chdir('../..');
+    
+    console.log(process.cwd() );
     var DIR         = process.cwd() + '/node_modules/minify/',
         LIBDIR      = DIR + 'lib/',
         main        = require(LIBDIR + 'main'),
