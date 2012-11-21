@@ -8,8 +8,8 @@
         fs          = main.fs,
         filename    = DIR + 'test/test.js',
         
-        minify      = main.require('minify'),
-        uglify      = main.require("uglify-js"),
+        minify      = main.rootrequire('minify'),
+        uglify      = main.require('uglify-js'),
         
         ErrorMsg    =   'can\'n load uglify-js          \n' +
                         'npm install uglify-js          \n' +
