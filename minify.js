@@ -37,7 +37,7 @@
         Minify.htmlMinify   = html.htmlMinify;
     }
     
-    var MinFolder='min/';
+    var MinFolder   = DIR + 'min/';
     /* function clear MinFolder
      * if we could not create
      * directory and it is
@@ -310,8 +310,7 @@
      * @pProcessFunc    - функция обработки файла
      */
     function fileReaded(pFileName, pProcessFunc){
-        return function(pError, pData){
-            pData = pData.toString();
+        return function(pError, pData){            
             /* функция в которую мы попадаем,
              * если данные считались
              *
@@ -319,11 +318,16 @@
              * иначе если переданная функция -
              * функция запускаем её
              */
-            if(pError)
-                console.log(pError);
-            
+            if(!pError){
+                pData = pData.toString();
+                
+                Util.exec(pProcessFunc, {
+                    name: pFileName,
+                    data: pData
+                });
+            }
             else
-                Util.exec(pProcessFunc, {name: pFileName, data: pData});
+               console.log(pError);
         };
     }
     
@@ -342,12 +346,15 @@
     function isFileChanged(pFileName, pFileData, pLastFile_b){
             var lReadedHash,
                 /* boolean hashes.json changed or not */
-                lThisHashChanged_b = false;
+                lThisHashChanged_b = false,
+                
+                lHASHES             = DIR       + 'hashes',
+                lHASHES_JSON        = lHASHES   + '.json' ;
             
             if(!Hashes)
                 console.log('trying  to read hashes.json');
                 
-                Hashes = main.require(process.cwd() + '/hashes');
+                Hashes = main.require(lHASHES);
                 if(!Hashes){
                     console.log('hashes.json not found... \n');
                     Hashes = {};
@@ -376,9 +383,9 @@
             if(pLastFile_b){
                 /* if hashes file was changes - write it */
                 if(HashesChanged)
-                    fs.writeFile('./hashes.json',
+                    fs.writeFile(lHASHES_JSON,
                         JSON.stringify(Hashes),
-                        fileWrited('./hashes.json'));
+                        fileWrited(lHASHES_JSON));
                         
                 else
                     console.log('no one file has been changed');

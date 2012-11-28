@@ -11,6 +11,8 @@ If css file not the last, minification was not doing.
 
 * Fixed bug with saving to Cache.
 
+* Fixed bug with hashes.json and min folder, from now
+they stored in minify directory.
 
 2012.10.01, Version v0.1.7
 
