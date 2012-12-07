@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Minify by coderaiser</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Minify</h1>
+        <p class="header">Minifier of js, css, html and img</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/coderaiser/minify/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/coderaiser/minify/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/coderaiser/minify">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/coderaiser">coderaiser</a></p>
+
+
+      </header>
+      <section>
+        <h1>Minify <a href="http://travis-ci.org/coderaiser/minify"><img src="https://secure.travis-ci.org/coderaiser/minify.png?branch=master" alt="Build Status"></a>
+</h1>
+
+<p><strong>Minify</strong> - a minifier of js, css, html and img files,
+used in <a href="http://github.com/coderaiser/cloudcmd" title="Cloud Commander">Cloud Commander</a>
+project.</p>
+
+<h2>Install</h2>
+
+<p>You can install minify just like that:</p>
+
+<pre><code>npm i minify
+</code></pre>
+
+<p>or</p>
+
+<pre><code>git clone git://github.com/coderaiser/minify
+</code></pre>
+
+<h2>API</h2>
+
+<p><strong>Minify</strong> module contains some api for interacting from another js files.</p>
+
+<p>To use <strong>Minify</strong> functions it sould be connected first. It's doing like always.</p>
+
+<div class="highlight"><pre><span class="nx">minify</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'minify'</span><span class="p">);</span>
+</pre></div>
+
+<p>All of minification functions save files in <strong>./min</strong> directory with
+extension <strong>.min</strong> (*.min.js, <em>.min.css, *.min.html).
+If directory could be created **minify.MinFolder</em>* would countain stirng 'min/',
+in any other case - '/'.</p>
+
+<p><strong>optimize</strong>(*pFiles_a*, <em>pCache_b</em>) - function which minificate js, html and
+css-files.</p>
+
+<ul>
+<li>
+<strong>pFiles_a</strong>                     - varible, wich contain array of file
+names or string, if name single.</li>
+<li>
+<strong>pOptions</strong>(optional)           - object contain main options.</li>
+</ul><div class="highlight"><pre><span class="nx">pOptions</span> <span class="o">=</span> <span class="p">{</span><span class="nx">cache</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">callback</span><span class="o">:</span> <span class="nx">func</span><span class="p">(){}};</span>
+</pre></div>
+
+<p>if cache true - files do not writes on disk, just saves in Minify Cache.</p>
+
+<p><strong>Examples</strong>:</p>
+
+<div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">(</span><span class="s1">'client.js'</span><span class="p">);</span>
+</pre></div>
+
+<div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">(</span><span class="s1">'client.js'</span><span class="p">,</span> <span class="p">{</span><span class="nx">cache</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">callback</span><span class="o">:</span> <span class="nx">func</span><span class="p">(</span><span class="nx">pMinData</span><span class="p">){}});</span>
+</pre></div>
+
+<p>if a couple files:</p>
+
+<div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">([</span><span class="s1">'client.js'</span><span class="p">,</span>
+    <span class="s1">'style.css'</span><span class="p">]);</span>
+</pre></div>
+
+<p>if post processing needed </p>
+
+<div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">({</span>
+    <span class="s1">'client.js'</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">pFinalCode</span><span class="p">){}</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>if post image converting needed (works with css only)</p>
+
+<div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">([{</span><span class="s1">'style.css'</span><span class="o">:</span><span class="kc">true</span><span class="p">},</span>
+    <span class="s1">'index.html'</span><span class="p">]);</span>
+</pre></div>
+
+<p>if no need to write on disk</p>
+
+<div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">(</span><span class="s1">'client.js'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">'client.js'</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">pFinalCode</span><span class="p">){}</span>
+<span class="p">},</span><span class="kc">true</span><span class="p">);</span>
+</pre></div>
+
+<p>Then we can work with js data just like this:</p>
+
+<div class="highlight"><pre><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">minify</span><span class="p">.</span><span class="nx">Cache</span><span class="p">[</span><span class="s1">'client.js'</span><span class="p">]);</span>
+</pre></div>
+
+<p><strong>MinFolder</strong> - varible thet contains folder name, where minimized files stored.
+                (could not be changed for now).</p>
+
+<h2>Additional modules:</h2>
+
+<ul>
+<li><a href="https://github.com/mishoo/UglifyJS">UglifyJS</a></li>
+<li><a href="https://github.com/GoalSmashers/clean-css">clean-css</a></li>
+<li><a href="https://github.com/kangax/html-minifier">html-minifier</a></li>
+<li><a href="https://github.com/Filirom1/css-base64-images">css-b64-images</a></li>
+</ul><p>Install addtitional modules:</p>
+
+<pre><code>npm i uglify-js clean-css html-minifier css-b64-images
+</code></pre>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
