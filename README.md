@@ -2,7 +2,7 @@ Minify [![Build Status](https://secure.travis-ci.org/coderaiser/minify.png?branc
 ======
 
 **Minify** - a minifier of js, css, html and img files,
-used in [Cloud Commander](http://github.com/coderaiser/cloudcmd "Cloud Commander")
+used in [Cloud Commander](http://coderaiser.github.com/cloudcmd "Cloud Commander")
 project.
 
 Install
