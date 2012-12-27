@@ -249,8 +249,8 @@
                             if(lExt === '.css'){
                                 /* if it's css and last file */
                                 lAllCSS += pFinalCode;
-                                
-                                if(lMoreProcessing_f.img || lMoreProcessing_f === true)
+                                var lProc = lMoreProcessing_f
+                                if(lProc && lProc.img || lProc === true)
                                     lMinIMg_b = true;
                             }
                         }
