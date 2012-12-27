@@ -246,14 +246,13 @@
                                 
                                 Util.exec(pOptions.callback, pFinalCode);
                             }
-                            else if(lExt === '.css'){
-                                    /* if it's css and last file */
-                                    lAllCSS += pFinalCode;
-                                    
-                                    if(lMoreProcessing_f.img ||
-                                        lMoreProcessing_f === true)
-                                            lMinIMg_b = true;
-                                }
+                            if(lExt === '.css'){
+                                /* if it's css and last file */
+                                lAllCSS += pFinalCode;
+                                
+                                if(lMoreProcessing_f.img || lMoreProcessing_f === true)
+                                    lMinIMg_b = true;
+                            }
                         }
                         
                          if (lLastFile_b){
