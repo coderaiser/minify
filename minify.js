@@ -215,6 +215,7 @@
                     if(pOptions)
                         Util.exec(pOptions.callback, final_code);
                 }
+                };
                 
                 if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
                     lProcessing_f();
@@ -250,7 +251,6 @@
                         }
                     });
             };
-        };
         
         /* moving thru all elements of js files array */
         for(var i=0; pFiles_a[i]; i++){
