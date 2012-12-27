@@ -3,6 +3,9 @@
 * Fixed bug with optimizing images: if in css was not
 result css file do not saves.
 
+* Fixed bug with executing callback.
+
+
 2012.12.12, Version v0.1.8
 
 * Fixed bug with minimizing images to css file.

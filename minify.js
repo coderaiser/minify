@@ -244,7 +244,7 @@
                                     console.log('file ' + minFileName + ' saved to cache...');
                                 }
                                 
-                                Util.Exec(pOptions.callback, pFinalCode);
+                                Util.exec(pOptions.callback, pFinalCode);
                             }
                             else if(lExt === '.css'){
                                     /* if it's css and last file */
