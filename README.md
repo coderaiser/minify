@@ -64,7 +64,7 @@ minify.optimize({
 
 if post image converting needed (works with css only)
 ```js
-minify.optimize([{'style.css':true},
+minify.optimize([{'style.css': {img: true, merge: true} },
     'index.html']);
 ```    
 

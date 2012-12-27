@@ -105,13 +105,12 @@
           */
         if ( Util.isString(pFiles_a) || !pFiles_a[0] )
             pFiles_a = [pFiles_a];
-                
-                
-        var lName   = '',
-            lAllCSS = '',
-            lCSS_o  = null,
-            lMinIMg_b = false, 
-            /* varible contains all readed file names */
+        
+        var lName       = '',
+            lAllCSS     = '',
+            lCSS_o      = null,
+            lMinIMg_b   = false,
+            /* varible contains all readed files count */
             lReadedFilesCount = 0,
             
             /**
@@ -122,16 +121,12 @@
                 if( !Util.isObject(pFileData_o) )
                     return -1;
                     
-                var lFileName   = pFileData_o.name,
-                    lData       = pFileData_o.data,
-                    lLastFile_b;
-                
                 ++lReadedFilesCount;
                 
-                /* if leng this not equal file not last */
-                if (lReadedFilesCount === pFiles_a.length)
-                    lLastFile_b = true;
-                        
+                var lFileName   = pFileData_o.name,
+                    lData       = pFileData_o.data,
+                    lLastFile_b = lReadedFilesCount === pFiles_a.length;
+                
                 /*
                  * if postProcessing function exist
                  * getting it from lFileName object
@@ -155,7 +150,7 @@
                 
                /* functin minimize files */
                 var lProcessing_f = function(){
-                    var final_code;        
+                    var final_code;
                         
                         /* getting optimized version */
                         switch(lExt){
@@ -173,9 +168,8 @@
                                 
                                 lCSS_o = lMoreProcessing_f;
                                 
-                                if ( Util.isObject(lCSS_o) ){
+                                if ( Util.isObject(lCSS_o) )
                                     lMoreProcessing_f = lCSS_o.moreProcessing;
-                                }
                                 break;
                             
                             default:
@@ -184,18 +178,16 @@
                         }
                         /* if it's last file
                          * and base64images setted up
-                         * se should convert it
+                         * we should convert it
                          */
-                        if (lLastFile_b && lAllCSS.length){
-                            if(lCSS_o && lCSS_o.img || lCSS_o === true)
+                        if (lLastFile_b && lCSS_o && lCSS_o.merge){
+                            if(lCSS_o.img)
                                 base64_images(lAllCSS);
                             else{
                                 var lPath = MinFolder + 'all.min.css';
                                 fs.writeFile(lPath, lAllCSS, fileWrited(lPath));
                             }
-                        }
-                        
-                        
+                                                
                         /* if lMoreProcessing_f seeted up 
                          * and function associated with
                          * current file name exists -
@@ -229,7 +221,7 @@
                     lProcessing_f();
               
               /* if file was not changed */
-                else{
+                else
                     fs.readFile(minFileName, function(pError, pFinalCode){
                         /* if could not read file call forse minification */
                         if(pError)
@@ -255,8 +247,8 @@
                             }
                         }
                         
-                         if (lLastFile_b && lAllCSS.length){
-                            if(lCSS_o && lCSS_o.img || lCSS_o === true)
+                         if (lLastFile_b && lCSS_o && lCSS_o.merge){
+                            if(lCSS_o.img)
                                 base64_images(lAllCSS);
                             else{
                                 var lPath = MinFolder + 'all.min.css';
@@ -264,7 +256,6 @@
                             }
                         }
                     });
-                }
             };
         
         
