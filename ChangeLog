@@ -39,6 +39,8 @@ setted up.
 
 * File check moved to module is-file-changed.
 
+* Function doit moved to cloudcmd module.
+
 
 2012.08.24, Version v0.1.6
 

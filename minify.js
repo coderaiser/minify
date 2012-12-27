@@ -109,7 +109,6 @@
         var lName       = '',
             lAllCSS     = '',
             lCSS_o      = null,
-            lMinIMg_b   = false,
             /* varible contains all readed files count */
             lReadedFilesCount = 0,
             
@@ -152,70 +151,70 @@
                 var lProcessing_f = function(){
                     var final_code;
                         
-                        /* getting optimized version */
-                        switch(lExt){
-                            case '.js': 
-                                final_code  = Minify._uglifyJS(lData);
-                                break;
+                    /* getting optimized version */
+                    switch(lExt){
+                        case '.js': 
+                            final_code  = Minify._uglifyJS(lData);
+                            break;
+                        
+                        case '.html':
+                            final_code  = Minify.htmlMinify(lData);
+                            break;
+                        
+                        case '.css':
+                            final_code  = Minify._cleanCSS(lData);
+                            lAllCSS    += final_code;
                             
-                            case '.html':
-                                final_code  = Minify.htmlMinify(lData);
-                                break;
+                            lCSS_o = lMoreProcessing_f;
                             
-                            case '.css':
-                                final_code  = Minify._cleanCSS(lData);
-                                lAllCSS    += final_code;
-                                
-                                lCSS_o = lMoreProcessing_f;
-                                
-                                if ( Util.isObject(lCSS_o) )
-                                    lMoreProcessing_f = lCSS_o.moreProcessing;
-                                break;
-                            
-                            default:
-                                return console.log('unknow file type '  +
-                                    lExt + ', only *.js, *.css, *.html');
+                            if ( Util.isObject(lCSS_o) )
+                                lMoreProcessing_f = lCSS_o.moreProcessing;
+                            break;
+                        
+                        default:
+                            return console.log('unknow file type '  +
+                                lExt + ', only *.js, *.css, *.html');
+                    }
+                    /* if it's last file
+                     * and base64images setted up
+                     * we should convert it
+                     */
+                    if (lLastFile_b && lCSS_o && lCSS_o.merge){
+                        if(lCSS_o.img)
+                            base64_images(lAllCSS);
+                        else{
+                            var lPath = MinFolder + 'all.min.css';
+                            fs.writeFile(lPath, lAllCSS, fileWrited(lPath));
                         }
-                        /* if it's last file
-                         * and base64images setted up
-                         * we should convert it
-                         */
-                        if (lLastFile_b && lCSS_o && lCSS_o.merge){
-                            if(lCSS_o.img)
-                                base64_images(lAllCSS);
-                            else{
-                                var lPath = MinFolder + 'all.min.css';
-                                fs.writeFile(lPath, lAllCSS, fileWrited(lPath));
-                            }
-                                                
-                        /* if lMoreProcessing_f seeted up 
-                         * and function associated with
-                         * current file name exists -
-                         * run it
-                         */
-                        var lResult = Util.exec(lMoreProcessing_f, final_code);
-                        if(lResult)
-                            final_code = lResult;
-                        
-                        /* записываем сжатый js-скрипт
-                         * в кэш если установлен pCache_b
-                         * или на диск, если не установлен
-                         */
-                        if(pOptions && pOptions.cache){
-                            exports.Cache[lFileName] = final_code;
-                            console.log('file ' + minFileName + ' saved to cache...');
-                        }
-                        
-                        /* minimized file will be in min file
-                         * if it's possible if not -
-                         * in root
-                         */                
-                        fs.writeFile(minFileName, final_code, fileWrited(minFileName));
-                        
-                        /* calling callback function if it exist */
-                        if(pOptions)
-                            Util.exec(pOptions.callback, final_code);
-                    };
+                                            
+                    /* if lMoreProcessing_f seeted up 
+                     * and function associated with
+                     * current file name exists -
+                     * run it
+                     */
+                    var lResult = Util.exec(lMoreProcessing_f, final_code);
+                    if(lResult)
+                        final_code = lResult;
+                    
+                    /* записываем сжатый js-скрипт
+                     * в кэш если установлен pCache_b
+                     * или на диск, если не установлен
+                     */
+                    if(pOptions && pOptions.cache){
+                        exports.Cache[lFileName] = final_code;
+                        console.log('file ' + minFileName + ' saved to cache...');
+                    }
+                    
+                    /* minimized file will be in min file
+                     * if it's possible if not -
+                     * in root
+                     */                
+                    fs.writeFile(minFileName, final_code, fileWrited(minFileName));
+                    
+                    /* calling callback function if it exist */
+                    if(pOptions)
+                        Util.exec(pOptions.callback, final_code);
+                }
                 
                 if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
                     lProcessing_f();
@@ -230,7 +229,6 @@
                         /* if need to save in cache - do it */
                         else {
                             if(pOptions){
-                                                                               
                                 if(pOptions.cache){
                                     exports.Cache[minFileName] = pFinalCode;
                                     console.log('file ' + minFileName + ' saved to cache...');
@@ -238,13 +236,8 @@
                                 
                                 Util.exec(pOptions.callback, pFinalCode);
                             }
-                            if(lExt === '.css'){
-                                /* if it's css and last file */
-                                lAllCSS += pFinalCode;
-                                var lProc = lMoreProcessing_f
-                                if(lProc && lProc.img || lProc === true)
-                                    lMinIMg_b = true;
-                            }
+                            if(lExt === '.css')
+                                lAllCSS     += pFinalCode;
                         }
                         
                          if (lLastFile_b && lCSS_o && lCSS_o.merge){
@@ -257,7 +250,7 @@
                         }
                     });
             };
-        
+        };
         
         /* moving thru all elements of js files array */
         for(var i=0; pFiles_a[i]; i++){
@@ -280,7 +273,6 @@
         
         return true;
     };
-    
     
     /** 
      * Функция переводит картинки в base64 и записывает в css-файл
