@@ -186,7 +186,7 @@
                             var lPath = MinFolder + 'all.min.css';
                             fs.writeFile(lPath, lAllCSS, fileWrited(lPath));
                         }
-                                            
+                    }
                     /* if lMoreProcessing_f seeted up 
                      * and function associated with
                      * current file name exists -
@@ -214,7 +214,6 @@
                     /* calling callback function if it exist */
                     if(pOptions)
                         Util.exec(pOptions.callback, final_code);
-                }
                 };
                 
                 if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
