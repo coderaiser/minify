@@ -186,7 +186,7 @@
                          * and base64images setted up
                          * se should convert it
                          */
-                        if (lLastFile_b){
+                        if (lLastFile_b && lAllCSS.length){
                             if(lCSS_o && lCSS_o.img || lCSS_o === true)
                                 base64_images(lAllCSS);
                             else{
@@ -213,7 +213,7 @@
                             exports.Cache[lFileName] = final_code;
                             console.log('file ' + minFileName + ' saved to cache...');
                         }
-            
+                        
                         /* minimized file will be in min file
                          * if it's possible if not -
                          * in root
@@ -255,7 +255,7 @@
                             }
                         }
                         
-                         if (lLastFile_b){
+                         if (lLastFile_b && lAllCSS.length){
                             if(lCSS_o && lCSS_o.img || lCSS_o === true)
                                 base64_images(lAllCSS);
                             else{
