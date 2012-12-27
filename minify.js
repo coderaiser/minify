@@ -186,8 +186,14 @@
                          * and base64images setted up
                          * se should convert it
                          */
-                        if (lLastFile_b && (lCSS_o && lCSS_o.img || lCSS_o === true))
-                            base64_images(lAllCSS);
+                        if (lLastFile_b){
+                            if(lCSS_o && lCSS_o.img || lCSS_o === true)
+                                base64_images(lAllCSS);
+                            else{
+                                var lPath = MinFolder + 'all.min.css';
+                                fs.writeFile(lPath, lAllCSS, fileWrited(lPath));
+                            }
+                        }
                         
                         
                         /* if lMoreProcessing_f seeted up 
@@ -219,7 +225,7 @@
                             Util.exec(pOptions.callback, final_code);
                     };
                 
-                if(pOptions || isFileChanged(lFileName, lData, lLastFile_b))
+                if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
                     lProcessing_f();
               
               /* if file was not changed */
@@ -250,10 +256,16 @@
                                 }
                         }
                         
-                        if(lLastFile_b)
-                            base64_images(lAllCSS);
+                         if (lLastFile_b){
+                            if(lCSS_o && lCSS_o.img || lCSS_o === true)
+                                base64_images(lAllCSS);
+                            else{
+                                var lPath = MinFolder + 'all.min.css';
+                                fs.writeFile(lPath, lAllCSS, fileWrited(lPath));
+                            }
+                        }
                     });
-                }        
+                }
             };
         
         
