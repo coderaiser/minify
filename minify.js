@@ -139,7 +139,7 @@
                     lMoreProcessing_f = lFileName[lName];
                     lFileName = lName;
                 }
-                console.log('file ' + lFileName + ' readed');
+                console.log('minify: file ' + path.basename(lFileName) + ' readed');
                 
                 var lExt = Minify._getExtension(lFileName),
                     minFileName = path.basename(lFileName);
@@ -263,7 +263,7 @@
             else
                 lName = pFiles_a[i];
             
-            console.log('reading file ' + lName + '...');
+            Util.log('minify: reading file ' + path.basename(lName) + '...');
             
             /* if it's last file send true */
             fs.readFile(lName, fileReaded(pFiles_a[i], dataReaded_f));
@@ -320,7 +320,7 @@
                 });
             }
             else
-               console.log(pError);
+               Util.log(pError);
         };
     }
     
@@ -331,59 +331,59 @@
      */
     function fileWrited(pFileName){
         return function(error){
-            console.log(error ? error : ('file ' + pFileName + ' writed...') );
+            Util.log(error ? error : ('minify: file ' + path.basename(pFileName) + ' writed...') );
         };
     }
     
     
     function isFileChanged(pFileName, pFileData, pLastFile_b){
-            var lReadedHash,
-                /* boolean hashes.json changed or not */
-                lThisHashChanged_b = false,
-                
-                lHASHES             = DIR       + 'hashes',
-                lHASHES_JSON        = lHASHES   + '.json' ;
+        var lReadedHash,
+            /* boolean hashes.json changed or not */
+            lThisHashChanged_b = false,
             
-            if(!Hashes)
-                console.log('trying  to read hashes.json');
-                
-                Hashes = main.require(lHASHES);
-                if(!Hashes){
-                    console.log('hashes.json not found... \n');
-                    Hashes = {};
-                }
+            lHASHES             = DIR       + 'hashes',
+            lHASHES_JSON        = lHASHES   + '.json' ;
+        
+        if(!Hashes)
+            console.log('trying  to read hashes.json');
             
-            for(var lFileName in Hashes)
-                /* if founded row with file name - save hash */
-                if (lFileName === pFileName) {
-                    lReadedHash = Hashes[pFileName];
-                    break;
+            Hashes = main.require(lHASHES);
+            if(!Hashes){
+                console.log('hashes.json not found... \n');
+                Hashes = {};
             }
-            
-            /* create hash of file data */ 
-            var lFileHash = crypto.createHash('sha1');
-            
-            lFileHash = crypto.createHash('sha1'); 
-            lFileHash.update(pFileData);
-            lFileHash = lFileHash.digest('hex');
+        
+        for(var lFileName in Hashes)
+            /* if founded row with file name - save hash */
+            if (lFileName === pFileName) {
+                lReadedHash = Hashes[pFileName];
+                break;
+        }
+        
+        /* create hash of file data */ 
+        var lFileHash = crypto.createHash('sha1');
+        
+        lFileHash = crypto.createHash('sha1'); 
+        lFileHash.update(pFileData);
+        lFileHash = lFileHash.digest('hex');
+                
+        if(lReadedHash !== lFileHash){
+            Hashes[pFileName]   = lFileHash;
+            lThisHashChanged_b  = 
+            HashesChanged       = true;
+        }
+        
+        if(pLastFile_b){
+            /* if hashes file was changes - write it */
+            if(HashesChanged)
+                fs.writeFile(lHASHES_JSON,
+                    JSON.stringify(Hashes),
+                    fileWrited(lHASHES_JSON));
                     
-            if(lReadedHash !== lFileHash){
-                Hashes[pFileName]   = lFileHash;
-                lThisHashChanged_b  = 
-                HashesChanged       = true;
-            }
-            
-            if(pLastFile_b){
-                /* if hashes file was changes - write it */
-                if(HashesChanged)
-                    fs.writeFile(lHASHES_JSON,
-                        JSON.stringify(Hashes),
-                        fileWrited(lHASHES_JSON));
-                        
-                else
-                    console.log('no one file has been changed');
-            }
-            /* has file changed? */
-            return lThisHashChanged_b;
+            else
+                Util.log('minify: no one file has been changed');
+        }
+        /* has file changed? */
+        return lThisHashChanged_b;
     }
 })();

@@ -25,6 +25,9 @@ If css file not the last, minification was not doing.
 * Fixed bug with hashes.json and min folder, from now
 they stored in minify directory.
 
+* Changed the way messages printing.
+
+
 2012.10.01, Version v0.1.7
 
 * Changed version of clean-css to 0.6.0.
