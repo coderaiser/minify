@@ -303,7 +303,7 @@
      * @pProcessFunc    - функция обработки файла
      */
     function fileReaded(pFileName, pProcessFunc){
-        return function(pError, pData){            
+        return function(pError, pData){
             /* функция в которую мы попадаем,
              * если данные считались
              *
@@ -330,8 +330,11 @@
      * что файл успешно записан
      */
     function fileWrited(pFileName){
-        return function(error){
-            Util.log(error ? error : ('minify: file ' + path.basename(pFileName) + ' writed...') );
+        return function(pError){
+            if(pError)
+                Util.log(pError);
+            else
+                Util.log('minify: file ' + path.basename(pFileName) + ' writed...');
         };
     }
     
@@ -345,11 +348,11 @@
             lHASHES_JSON        = lHASHES   + '.json' ;
         
         if(!Hashes)
-            console.log('trying  to read hashes.json');
+            Util.log('trying  to read hashes.json');
             
             Hashes = main.require(lHASHES);
             if(!Hashes){
-                console.log('hashes.json not found... \n');
+                Util.log('hashes.json not found... \n');
                 Hashes = {};
             }
         
