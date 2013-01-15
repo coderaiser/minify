@@ -9,6 +9,11 @@ result css file do not saves.
 
 * Added merge flag.
 
+* Changed the way messages printing.
+
+* Updated clean-css to v0.9.1.
+
+
 2012.12.12, Version v0.1.8
 
 * Fixed bug with minimizing images to css file.
@@ -24,10 +29,6 @@ If css file not the last, minification was not doing.
 
 * Fixed bug with hashes.json and min folder, from now
 they stored in minify directory.
-
-* Changed the way messages printing.
-
-* Updated clean-css to v0.9.1.
 
 
 2012.10.01, Version v0.1.7
