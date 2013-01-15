@@ -345,9 +345,7 @@
     
     
     function isFileChanged(pFileName, pFileData, pLastFile_b){
-        var lReadedHash,
-            /* boolean hashes.json changed or not */
-            lThisHashChanged_b = false;
+        var lReadedHash;
         
         if(!Hashes){
             Util.log('trying  to read hashes.json');
@@ -355,37 +353,33 @@
             Hashes = main.require(HASHESNAME);
             if(!Hashes){
                 Util.log('hashes.json not found... \n');
-                Hashes = {};
+                Hashes = [];
             }
         }
-        /*
-        for(var i = 0, n = Hashes.length; i < n; i++){
+        
+        var i, n = Hashes.length;
+        for(i = 0; i < n; i++){
             var lData = Hashes[i];
             
+            /* if founded row with file name - save hash */
             if(lData.name === pFileName){
                 lReadedHash = lData.hash;
                 break;
             }
         }
-        */
-        for(var lFileName in Hashes)
-            /* if founded row with file name - save hash */
-            if (lFileName === pFileName) {
-                lReadedHash = Hashes[pFileName];
-                break;
-        }
-        
+                
         /* create hash of file data */ 
         var lFileHash = crypto.createHash('sha1');
         
-        lFileHash = crypto.createHash('sha1'); 
+        lFileHash = crypto.createHash('sha1');
         lFileHash.update(pFileData);
         lFileHash = lFileHash.digest('hex');
         
-        lThisHashChanged_b  = lReadedHash !== lFileHash;
+        /* boolean hashes.json changed or not */
+        var lThisHashChanged_b  = lReadedHash !== lFileHash;
         
         if(lThisHashChanged_b){
-            Hashes[pFileName]   = lFileHash;
+            Hashes[i]           = {name: pFileName, hash: lFileHash};
             HashesChanged       = true;
         }
         
