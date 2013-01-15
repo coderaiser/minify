@@ -3,10 +3,10 @@
  * в base64 и помещения их в файл стилей
  */
 (function(){
-    "use strict";
+    'use strict';
         
     global.minify   = {};
-
+    
     var DIR         = __dirname +'/',
         LIBDIR      = DIR + 'lib/',
         main        = global.minify.main = require(LIBDIR + 'main'),
@@ -32,8 +32,8 @@
     if(!html || !js || !css)
         console.log('One of the necessary modules is absent\n'  +
             're-install the modules\n'                          +
-            'npm r minify\n'                                    +
-            'npm i minify');
+            'npm r\n'                                           +
+            'npm i');
     else{
         Minify._uglifyJS    = js._uglifyJS;
         Minify._cleanCSS    = css._cleanCSS;
@@ -80,12 +80,10 @@
      * @param pFileName
      * @return Ext
      */
-    Minify._getExtension = function(pFileName){
-        /* checking for js/html/css */
+    function getExtension (pFileName){
         var lDot = pFileName.lastIndexOf('.');
-        
         return pFileName.substr(lDot);
-    };
+    }
     
     /**
      * function minificate js,css and html files
@@ -144,7 +142,7 @@
                 }
                 console.log('minify: file ' + path.basename(lFileName) + ' readed');
                 
-                var lExt = Minify._getExtension(lFileName),
+                var lExt        = getExtension(lFileName),
                     minFileName = path.basename(lFileName);
                 
                 minFileName = minFileName.replace(lExt, '.min' + lExt);
@@ -221,8 +219,8 @@
                 
                 if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
                     lProcessing_f();
-              
-              /* if file was not changed */
+                
+                /* if file was not changed */
                 else
                     fs.readFile(minFileName, function(pError, pFinalCode){
                         /* if could not read file call forse minification */
@@ -239,6 +237,7 @@
                                 
                                 Util.exec(pOptions.callback, pFinalCode);
                             }
+                            
                             if(lExt === '.css')
                                 lAllCSS += pFinalCode;
                         }
@@ -276,7 +275,7 @@
         return true;
     };
     
-    /** 
+    /**
      * Функция переводит картинки в base64 и записывает в css-файл
      * @param pData {String}
      */
