@@ -358,7 +358,16 @@
                 Hashes = {};
             }
         }
-        
+        /*
+        for(var i = 0, n = Hashes.length; i < n; i++){
+            var lData = Hashes[i];
+            
+            if(lData.name === pFileName){
+                lReadedHash = lData.hash;
+                break;
+            }
+        }
+        */
         for(var lFileName in Hashes)
             /* if founded row with file name - save hash */
             if (lFileName === pFileName) {
@@ -372,10 +381,11 @@
         lFileHash = crypto.createHash('sha1'); 
         lFileHash.update(pFileData);
         lFileHash = lFileHash.digest('hex');
-                
-        if(lReadedHash !== lFileHash){
+        
+        lThisHashChanged_b  = lReadedHash !== lFileHash;
+        
+        if(lThisHashChanged_b){
             Hashes[pFileName]   = lFileHash;
-            lThisHashChanged_b  = 
             HashesChanged       = true;
         }
         
