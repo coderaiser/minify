@@ -332,14 +332,14 @@
      * и выводит ошибку или сообщает,
      * что файл успешно записан
      */
-    function writeFile(pFileName, pData){
-        fs.writeFile(pFileName, pData, function(pError){
+    function writeFile(pName, pData){
+        fs.writeFile(pName, pData, function(pError){
             if(pError)
                 Util.log(pError);
-            else
-                Util.log('minify: file '        + 
-                    path.basename(pFileName)    + 
-                    ' writed...');
+            else{
+                pName = path.basename(pName);
+                Util.log('minify: file ' + pName + ' writed...');
+            }
         });
     }
     
