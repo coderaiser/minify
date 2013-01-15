@@ -347,7 +347,7 @@
             /* boolean hashes.json changed or not */
             lThisHashChanged_b = false;
         
-        if(!Hashes)
+        if(!Hashes){
             Util.log('trying  to read hashes.json');
             
             Hashes = main.require(HASHESNAME);
@@ -355,6 +355,7 @@
                 Util.log('hashes.json not found... \n');
                 Hashes = {};
             }
+        }
         
         for(var lFileName in Hashes)
             /* if founded row with file name - save hash */
