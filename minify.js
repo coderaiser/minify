@@ -187,7 +187,7 @@
                             base64_images(lAllCSS);
                         else{
                             var lPath = MinFolder + 'all.min.css';
-                            fs.writeFile(lPath, lAllCSS, fileWrited(lPath));
+                            writeFile(lPath, lAllCSS);
                         }
                     }
                     /* if lMoreProcessing_f seeted up 
@@ -212,7 +212,7 @@
                      * if it's possible if not -
                      * in root
                      */                
-                    fs.writeFile(minFileName, final_code, fileWrited(minFileName));
+                    writeFile(minFileName, final_code);
                     
                     /* calling callback function if it exist */
                     if(pOptions)
@@ -248,7 +248,7 @@
                                 base64_images(lAllCSS);
                             else{
                                 var lPath = MinFolder + 'all.min.css';
-                                fs.writeFile(lPath, lAllCSS, fileWrited(lPath));
+                                writeFile(lPath, lAllCSS);
                             }
                         }
                     });
@@ -289,14 +289,14 @@
                     'npm install -g css-b64-images\n' +
                     'https://github.com/Filirom1/css-base64-images');
             
-            fs.writeFile(lPath, pData, fileWrited(lPath));
+            writeFile(lPath, pData);
                 
             return pData;
         }
         else
             b64img.fromString(pData, '.', '', function(err, css){
                 console.log('images converted to base64 and saved in css file');
-                fs.writeFile(lPath, css, fileWrited(lPath));
+                writeFile(lPath, css);
             });
     }
     
@@ -332,13 +332,13 @@
      * и выводит ошибку или сообщает,
      * что файл успешно записан
      */
-    function fileWrited(pFileName){
-        return function(pError){
+    function writeFile(pFileName, pData){
+        fs.writeFile(pFileName, pData, function(pError){
             if(pError)
                 Util.log(pError);
             else
                 Util.log('minify: file ' + path.basename(pFileName) + ' writed...');
-        };
+        });
     }
     
     
@@ -380,9 +380,7 @@
         if(pLastFile_b){
             /* if hashes file was changes - write it */
             if(HashesChanged)
-                fs.writeFile(HASHES_JSON,
-                    JSON.stringify(Hashes, null, 4),
-                    fileWrited(HASHES_JSON));
+                writeFile(HASHES_JSON, JSON.stringify(Hashes, null, 4));
             else
                 Util.log('minify: no one file has been changed');
         }
