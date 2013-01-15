@@ -281,7 +281,7 @@
      * @param pData {String}
      */
     function base64_images(pData){
-        var lPath = MinFolder + 'all.min.css',
+        var lPath  = MinFolder + 'all.min.css',
             b64img = main.require('css-b64-images');
         
         if(!b64img){
@@ -328,7 +328,7 @@
     }
     
     /*
-     * Функция вызываеться после записи файла
+     * Функция записывает файла
      * и выводит ошибку или сообщает,
      * что файл успешно записан
      */
@@ -337,7 +337,9 @@
             if(pError)
                 Util.log(pError);
             else
-                Util.log('minify: file ' + path.basename(pFileName) + ' writed...');
+                Util.log('minify: file '        + 
+                    path.basename(pFileName)    + 
+                    ' writed...');
         });
     }
     
