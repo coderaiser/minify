@@ -381,7 +381,7 @@
             /* if hashes file was changes - write it */
             if(HashesChanged)
                 fs.writeFile(HASHES_JSON,
-                    JSON.stringify(Hashes),
+                    JSON.stringify(Hashes, null, 4),
                     fileWrited(HASHES_JSON));
             else
                 Util.log('minify: no one file has been changed');
