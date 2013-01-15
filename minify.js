@@ -78,7 +78,7 @@
      * @return Ext
      */
     Minify._getExtension = function(pFileName){
-        /* checking for js/html/css */    
+        /* checking for js/html/css */
         var lDot = pFileName.lastIndexOf('.');
         
         return pFileName.substr(lDot);
@@ -172,7 +172,7 @@
                             break;
                         
                         default:
-                            return console.log('unknow file type '  +
+                            return Util.log('unknow file type '  +
                                 lExt + ', only *.js, *.css, *.html');
                     }
                     /* if it's last file
@@ -237,7 +237,7 @@
                                 Util.exec(pOptions.callback, pFinalCode);
                             }
                             if(lExt === '.css')
-                                lAllCSS     += pFinalCode;
+                                lAllCSS += pFinalCode;
                         }
                         
                          if (lLastFile_b && lCSS_o && lCSS_o.merge){
@@ -379,7 +379,6 @@
                 fs.writeFile(lHASHES_JSON,
                     JSON.stringify(Hashes),
                     fileWrited(lHASHES_JSON));
-                    
             else
                 Util.log('minify: no one file has been changed');
         }
