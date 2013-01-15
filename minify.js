@@ -23,6 +23,9 @@
         Minify      = {},
         
         /* object contains hashes of files*/
+        HASHESNAME  = DIR       + 'hashes',
+        HASHES_JSON = HASHESNAME   + '.json',
+        
         Hashes,
         HashesChanged;
         
@@ -342,15 +345,12 @@
     function isFileChanged(pFileName, pFileData, pLastFile_b){
         var lReadedHash,
             /* boolean hashes.json changed or not */
-            lThisHashChanged_b = false,
-            
-            lHASHES             = DIR       + 'hashes',
-            lHASHES_JSON        = lHASHES   + '.json' ;
+            lThisHashChanged_b = false;
         
         if(!Hashes)
             Util.log('trying  to read hashes.json');
             
-            Hashes = main.require(lHASHES);
+            Hashes = main.require(HASHESNAME);
             if(!Hashes){
                 Util.log('hashes.json not found... \n');
                 Hashes = {};
@@ -379,9 +379,9 @@
         if(pLastFile_b){
             /* if hashes file was changes - write it */
             if(HashesChanged)
-                fs.writeFile(lHASHES_JSON,
+                fs.writeFile(HASHES_JSON,
                     JSON.stringify(Hashes),
-                    fileWrited(lHASHES_JSON));
+                    fileWrited(HASHES_JSON));
             else
                 Util.log('minify: no one file has been changed');
         }
