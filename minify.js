@@ -359,11 +359,9 @@
         }
         
         /* create hash of file data */ 
-        var lFileHash = crypto.createHash('sha1');
-        
-        lFileHash = crypto.createHash('sha1');
-        lFileHash.update(pFileData);
-        lFileHash = lFileHash.digest('hex');
+        var lFileHash   = crypto.createHash('sha1')
+            .update(pFileData)
+            .digest('hex');
         
         /* boolean hashes.json changed or not */
         var lThisHashChanged_b  = lReadedHash !== lFileHash;
