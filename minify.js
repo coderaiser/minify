@@ -30,7 +30,7 @@
         HashesChanged;
         
     if(!html || !js || !css)
-        console.log('One of the necessary modules is absent\n'  +
+        Util.log('One of the necessary modules is absent\n'     +
             're-install the modules\n'                          +
             'npm r\n'                                           +
             'npm i');
@@ -49,7 +49,7 @@
     var folderExist = function(pError, pStat){
         /*file found and it's directory */
         if(!pError && pStat.isDirectory())
-            console.log('folder exist: ' + MinFolder);
+            Util.log('folder exist: ' + MinFolder);
         else MinFolder='/';
     };
     
@@ -61,7 +61,7 @@
     var makeFolder = function(pError){
         /*folder created successfully*/
         if(!pError)
-            console.log('folder created: min');
+            Util.log('folder created: min');
         else fs.stat(MinFolder,folderExist);
     };
     
@@ -140,7 +140,7 @@
                     lMoreProcessing_f = lFileName[lName];
                     lFileName = lName;
                 }
-                console.log('minify: file ' + path.basename(lFileName) + ' readed');
+                Util.log('minify: file ' + path.basename(lFileName) + ' readed');
                 
                 var lExt        = getExtension(lFileName),
                     minFileName = path.basename(lFileName);
@@ -203,7 +203,7 @@
                      */
                     if(pOptions && pOptions.cache){
                         exports.Cache[lFileName] = final_code;
-                        console.log('file ' + minFileName + ' saved to cache...');
+                        Util.log('file ' + minFileName + ' saved to cache...');
                     }
                     
                     /* minimized file will be in min file
@@ -232,7 +232,7 @@
                             if(pOptions){
                                 if(pOptions.cache){
                                     exports.Cache[minFileName] = pFinalCode;
-                                    console.log('file ' + minFileName + ' saved to cache...');
+                                    Util.log('file ' + minFileName + ' saved to cache...');
                                 }
                                 
                                 Util.exec(pOptions.callback, pFinalCode);
@@ -284,8 +284,8 @@
             b64img = main.require('css-b64-images');
         
         if(!b64img){
-            console.log('can\'n load clean-css \n'    +
-                    'npm install -g css-b64-images\n' +
+            Util.log('can\'n load clean-css \n'                 +
+                    'npm install -g css-b64-images\n'           +
                     'https://github.com/Filirom1/css-base64-images');
             
             writeFile(lPath, pData);
@@ -294,7 +294,7 @@
         }
         else
             b64img.fromString(pData, '.', '', function(err, css){
-                console.log('images converted to base64 and saved in css file');
+                Util.log('images converted to base64 and saved in css file');
                 writeFile(lPath, css);
             });
     }
