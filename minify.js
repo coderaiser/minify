@@ -344,9 +344,8 @@
     
     
     function isFileChanged(pFileName, pFileData, pLastFile_b){
-        var lReadedHash;
-        
-        var i, n = Hashes.length;
+        var lReadedHash,
+            i, n = Hashes.length;
         
         for(i = 0; i < n; i++){
             var lData = Hashes[i];
@@ -364,15 +363,13 @@
             .digest('hex');
         
         /* boolean hashes.json changed or not */
-        var lThisHashChanged_b  = lReadedHash !== lFileHash;
-        
-        if(lThisHashChanged_b){
-            Hashes[i]           = {
+        if(lReadedHash !== lFileHash){
+            Hashes[i]       = {
                 name: pFileName,
                 hash: lFileHash
             };
             
-            HashesChanged       = true;
+            HashesChanged   = true;
         }
         
         if(pLastFile_b){
@@ -383,6 +380,6 @@
                 Util.log('minify: no one file has been changed');
         }
         /* has file changed? */
-        return lThisHashChanged_b;
+        return lFileHash;
     }
 })();
