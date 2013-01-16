@@ -26,7 +26,7 @@
         HASHESNAME  = DIR       + 'hashes',
         HASHES_JSON = HASHESNAME   + '.json',
         
-        Hashes,
+        Hashes      = main.require(HASHESNAME) || [],
         HashesChanged;
         
     if(!html || !js || !css)
@@ -346,17 +346,8 @@
     function isFileChanged(pFileName, pFileData, pLastFile_b){
         var lReadedHash;
         
-        if(!Hashes){
-            Util.log('trying  to read hashes.json');
-            
-            Hashes = main.require(HASHESNAME);
-            if(!Hashes){
-                Util.log('hashes.json not found... \n');
-                Hashes = [];
-            }
-        }
-        
         var i, n = Hashes.length;
+        
         for(i = 0; i < n; i++){
             var lData = Hashes[i];
             
@@ -366,7 +357,7 @@
                 break;
             }
         }
-                
+        
         /* create hash of file data */ 
         var lFileHash = crypto.createHash('sha1');
         
@@ -378,7 +369,11 @@
         var lThisHashChanged_b  = lReadedHash !== lFileHash;
         
         if(lThisHashChanged_b){
-            Hashes[i]           = {name: pFileName, hash: lFileHash};
+            Hashes[i]           = {
+                name: pFileName,
+                hash: lFileHash
+            };
+            
             HashesChanged       = true;
         }
         
