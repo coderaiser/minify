@@ -375,7 +375,7 @@
         if(pLastFile_b){
             /* if hashes file was changes - write it */
             if(HashesChanged)
-                writeFile(HASHES_JSON, JSON.stringify(Hashes, null, 4));
+                writeFile(HASHES_JSON, Util.stringifyJSON(Hashes));
             else
                 Util.log('minify: no one file has been changed');
         }
