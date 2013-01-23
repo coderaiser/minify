@@ -34,6 +34,11 @@ If css file not the last, minification was not doing.
 * Fixed bug with hashes.json and min folder, from now
 they stored in minify directory.
 
+* Fixed bug with compression files with same name,
+from min folder would be geted first name.
+From now names in min folder is sha hashes form path
+of file.
+
 
 2012.10.01, Version v0.1.7
 
