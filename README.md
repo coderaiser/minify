@@ -27,17 +27,15 @@ extension **.min** (*.min.js, *.min.css, *.min.html).
 If directory could be created **minify.MinFolder** would countain stirng 'min/',
 in any other case - '/'.
 
-**optimize**(*pFiles_a*, *pCache_b*) - function which minificate js, html and
+**optimize**(*pFiles_a*) - function which minificate js, html and
 css-files.
  - **pFiles_a**                     - varible, wich contain array of file
 names or string, if name single.
  - **pOptions**(optional)           - object contain main options.
 
 ```js
-pOptions = {cache: false, callback: func(){}};
+pOptions = {callback: func(){}};
 ```
-
-if cache true - files do not writes on disk, just saves in Minify Cache.
 
 **Examples**:
 
@@ -46,7 +44,9 @@ minify.optimize('client.js');
 ```
 
 ```js
-minify.optimize('client.js', {cache: true, callback: func(pMinData){}});
+minify.optimize('client.js', {
+    callback: func(pMinData){}
+});
 ```
 
 if a couple files:
@@ -73,11 +73,6 @@ if no need to write on disk
 minify.optimize('client.js', {
     'client.js' : function(pFinalCode){}
 },true);
-```
-
-Then we can work with js data just like this:
-```js
-console.log(minify.Cache['client.js']);
 ```
 
 **MinFolder** - varible thet contains folder name, where minimized files stored.

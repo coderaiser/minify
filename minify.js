@@ -73,7 +73,6 @@
     fs.mkdir(MinFolder, 511, makeFolder);
     
     exports.MinFolder = MinFolder;
-    exports.Cache    = {};
     
     /**
      * function gets file extension
@@ -95,10 +94,9 @@
      *                       or {'style.css':{minimize: true, func: function(){}}
      *
      * @param pOptions  -   object contain main options
-     *                      if cache true files do not writes on disk, just saves
-     *                      in Minify Cache
+     *
      * Example: 
-     * {cache: false, gzip: true, callback: func(){}}
+     * {callback: func(){}}
      */
     exports.optimize = function(pFiles_a, pOptions){ 
          /* if passed string, or object 
@@ -197,19 +195,10 @@
                     if(lResult)
                         final_code = lResult;
                     
-                    /* записываем сжатый js-скрипт
-                     * в кэш если установлен pCache_b
-                     * или на диск, если не установлен
-                     */
-                    if(pOptions && pOptions.cache){
-                        exports.Cache[lFileName] = final_code;
-                        Util.log('file ' + minFileName + ' saved to cache...');
-                    }
-                    
                     /* minimized file will be in min file
                      * if it's possible if not -
                      * in root
-                     */                
+                     */
                     writeFile(minFileName, final_code);
                     
                     /* calling callback function if it exist */
@@ -229,14 +218,8 @@
                         
                         /* if need to save in cache - do it */
                         else {
-                            if(pOptions){
-                                if(pOptions.cache){
-                                    exports.Cache[minFileName] = pFinalCode;
-                                    Util.log('file ' + minFileName + ' saved to cache...');
-                                }
-                                
+                            if(pOptions)
                                 Util.exec(pOptions.callback, pFinalCode);
-                            }
                             
                             if(lExt === '.css')
                                 lAllCSS += pFinalCode;

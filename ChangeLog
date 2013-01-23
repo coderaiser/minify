@@ -13,7 +13,9 @@ result css file do not saves.
 
 * Updated clean-css to v0.9.1.
 
-* Beutified hashes.json format
+* Beutified hashes.json format.
+
+* Removed caching data for improving speed.
 
 
 2012.12.12, Version v0.1.8
