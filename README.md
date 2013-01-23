@@ -34,7 +34,7 @@ names or string, if name single.
  - **pOptions**(optional)           - object contain main options.
 
 ```js
-pOptions = {callback: func(){}};
+pOptions = {callback: func(pData){}};
 ```
 
 **Examples**:

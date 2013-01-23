@@ -96,7 +96,7 @@
      * @param pOptions  -   object contain main options
      *
      * Example: 
-     * {callback: func(){}}
+     * {callback: func(pData){}}
      */
     exports.optimize = function(pFiles_a, pOptions){ 
          /* if passed string, or object 
@@ -141,9 +141,12 @@
                 Util.log('minify: file ' + path.basename(lFileName) + ' readed');
                 
                 var lExt        = getExtension(lFileName),
-                    minFileName = path.basename(lFileName);
+                    //minFileName = path.basename(lFileName);
+                    minFileName = crypto.createHash('sha1')
+                        .update(lFileName)
+                        .digest('hex') + lExt;
                 
-                minFileName = minFileName.replace(lExt, '.min' + lExt);
+                //minFileName = minFileName.replace(lExt, '.min' + lExt);
                 minFileName = MinFolder + minFileName;
                 
                /* functin minimize files */
@@ -228,10 +231,8 @@
                          if (lLastFile_b && lCSS_o && lCSS_o.merge){
                             if(lCSS_o.img)
                                 base64_images(lAllCSS);
-                            else{
-                                var lPath = MinFolder + 'all.min.css';
-                                writeFile(lPath, lAllCSS);
-                            }
+                            else
+                                writeFile(MinFolder + 'all.min.css', lAllCSS);
                         }
                     });
             };
