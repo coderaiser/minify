@@ -144,10 +144,11 @@
                 Util.log('minify: file ' + path.basename(lFileName) + ' readed');
                 
                 var lExt = getExtension(lFileName),
-                    minFileName = getName(lFileName, lExt),
+                    minFileName = getName(lFileName, lExt);
+                console.log(minFileName);
                 
                /* functin minimize files */
-                    lProcessing_f = function(){
+                var lProcessing_f = function(){
                         var final_code;
                             
                         /* getting optimized version */
@@ -267,6 +268,8 @@
             .digest('hex') + lExt;
         
         minFileName = MinFolder + minFileName;
+        
+        return minFileName;
     }
     
     /**
