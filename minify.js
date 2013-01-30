@@ -143,6 +143,7 @@
                 }
                 Util.log('minify: file ' + path.basename(lFileName) + ' readed');
                 
+                console.log(lFileName);
                 var lExt = getExtension(lFileName),
                     minFileName = getName(lFileName, lExt);
                 
@@ -260,6 +261,7 @@
      * @param pName
      */
     function getName(pName, pExt){
+        console.log(pName);
         var lExt        = pExt || getExtension(pName),
         
         minFileName = crypto.createHash('sha1')
