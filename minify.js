@@ -145,7 +145,6 @@
                 
                 var lExt = getExtension(lFileName),
                     minFileName = getName(lFileName, lExt);
-                console.log(minFileName);
                 
                /* functin minimize files */
                 var lProcessing_f = function(){
@@ -207,32 +206,32 @@
                             Util.exec(pOptions.callback, final_code);
                     };
                     
-                    if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
-                        lProcessing_f();
-                    
-                    /* if file was not changed */
-                    else
-                        fs.readFile(minFileName, function(pError, pFinalCode){
-                            /* if could not read file call forse minification */
-                            if(pError)
-                                lProcessing_f();
+                if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
+                    lProcessing_f();
+                
+                /* if file was not changed */
+                else
+                    fs.readFile(minFileName, function(pError, pFinalCode){
+                        /* if could not read file call forse minification */
+                        if(pError)
+                            lProcessing_f();
+                        
+                        else {
+                            if(pOptions)
+                                Util.exec(pOptions.callback, pFinalCode);
                             
-                            else {
-                                if(pOptions)
-                                    Util.exec(pOptions.callback, pFinalCode);
-                                
-                                if(lExt === '.css')
-                                    lAllCSS += pFinalCode;
-                            }
-                            
-                             if (lLastFile_b && lCSS_o && lCSS_o.merge){
-                                if(lCSS_o.img)
-                                    base64_images(lAllCSS);
-                                else
-                                    writeFile(MinFolder + 'all.min.css', lAllCSS);
-                            }
-                        });
-                };
+                            if(lExt === '.css')
+                                lAllCSS += pFinalCode;
+                        }
+                        
+                         if (lLastFile_b && lCSS_o && lCSS_o.merge){
+                            if(lCSS_o.img)
+                                base64_images(lAllCSS);
+                            else
+                                writeFile(MinFolder + 'all.min.css', lAllCSS);
+                        }
+                    });
+            };
         
         /* moving thru all elements of js files array */
         for(var i=0; pFiles_a[i]; i++){
