@@ -145,7 +145,7 @@
                 
                 console.log(lFileName);
                 var lExt = getExtension(lFileName),
-                    minFileName = getName(lFileName, lExt);
+                    lMinFileName = getName(lFileName, lExt);
                 
                /* functin minimize files */
                 var lProcessing_f = function(){
@@ -200,11 +200,11 @@
                          * if it's possible if not -
                          * in root
                          */
-                        writeFile(minFileName, final_code);
+                        writeFile(lMinFileName, final_code);
                         
                         /* calling callback function if it exist */
                         if(pOptions)
-                            Util.exec(pOptions.callback, final_code);
+                            Util.exec(pOptions.callback, {name: lMinFileName, data: final_code});
                     };
                     
                 if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
@@ -212,14 +212,14 @@
                 
                 /* if file was not changed */
                 else
-                    fs.readFile(minFileName, function(pError, pFinalCode){
+                    fs.readFile(lMinFileName, function(pError, pFinalCode){
                         /* if could not read file call forse minification */
                         if(pError)
                             lProcessing_f();
                         
                         else {
                             if(pOptions)
-                                Util.exec(pOptions.callback, pFinalCode);
+                                Util.exec(pOptions.callback, {name: lMinFileName, data: pFinalCode});
                             
                             if(lExt === '.css')
                                 lAllCSS += pFinalCode;
@@ -263,14 +263,13 @@
     function getName(pName, pExt){
         console.log(pName);
         var lExt        = pExt || getExtension(pName),
+            lMinFileName = crypto.createHash('sha1')
+                .update(pName)
+                .digest('hex') + lExt;
         
-        minFileName = crypto.createHash('sha1')
-            .update(pName)
-            .digest('hex') + lExt;
+        lMinFileName = MinFolder + lMinFileName;
         
-        minFileName = MinFolder + minFileName;
-        
-        return minFileName;
+        return lMinFileName;
     }
     
     /**
