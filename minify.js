@@ -204,7 +204,7 @@
                         
                         /* calling callback function if it exist */
                         if(pOptions)
-                            Util.exec(pOptions.callback, {name: lMinFileName, data: final_code});
+                            Util.exec(pOptions.callback, final_code);
                     };
                     
                 if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
@@ -219,7 +219,7 @@
                         
                         else {
                             if(pOptions)
-                                Util.exec(pOptions.callback, {name: lMinFileName, data: pFinalCode});
+                                Util.exec(pOptions.callback, pFinalCode);
                             
                             if(lExt === '.css')
                                 lAllCSS += pFinalCode;
