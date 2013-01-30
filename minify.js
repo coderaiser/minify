@@ -72,8 +72,6 @@
      */
     fs.mkdir(MinFolder, 511, makeFolder);
     
-    exports.MinFolder = MinFolder;
-    
     /**
      * function gets file extension
      * @param pFileName
@@ -98,8 +96,13 @@
      * Example: 
      * {callback: func(pData){}}
      */
-    exports.optimize = function(pFiles_a, pOptions){ 
-         /* if passed string, or object 
+    function optimize(pFiles_a, pOptions){
+        
+        if(pOptions && pOptions.cache)
+            Util.log('minify: warning. cache parameter is deprecated ' + 
+            'and have no sense anymore!');
+        
+         /* if passed string, or object
           * putting it to array
           */
         if ( Util.isString(pFiles_a) || !pFiles_a[0] )
@@ -140,102 +143,95 @@
                 }
                 Util.log('minify: file ' + path.basename(lFileName) + ' readed');
                 
-                var lExt        = getExtension(lFileName),
-                    //minFileName = path.basename(lFileName);
-                    minFileName = crypto.createHash('sha1')
-                        .update(lFileName)
-                        .digest('hex') + lExt;
-                
-                //minFileName = minFileName.replace(lExt, '.min' + lExt);
-                minFileName = MinFolder + minFileName;
+                var lExt = getExtension(lFileName),
+                    minFileName = getName(lFileName, lExt),
                 
                /* functin minimize files */
-                var lProcessing_f = function(){
-                    var final_code;
-                        
-                    /* getting optimized version */
-                    switch(lExt){
-                        case '.js': 
-                            final_code  = Minify._uglifyJS(lData);
-                            break;
-                        
-                        case '.html':
-                            final_code  = Minify.htmlMinify(lData);
-                            break;
-                        
-                        case '.css':
-                            final_code  = Minify._cleanCSS(lData);
-                            lAllCSS    += final_code;
+                    lProcessing_f = function(){
+                        var final_code;
                             
-                            lCSS_o = lMoreProcessing_f;
+                        /* getting optimized version */
+                        switch(lExt){
+                            case '.js': 
+                                final_code  = Minify._uglifyJS(lData);
+                                break;
                             
-                            if ( Util.isObject(lCSS_o) )
-                                lMoreProcessing_f = lCSS_o.moreProcessing;
-                            break;
-                        
-                        default:
-                            return Util.log('unknow file type '  +
-                                lExt + ', only *.js, *.css, *.html');
-                    }
-                    /* if it's last file
-                     * and base64images setted up
-                     * we should convert it
-                     */
-                    if (lLastFile_b && lCSS_o && lCSS_o.merge){
-                        if(lCSS_o.img)
-                            base64_images(lAllCSS);
-                        else{
-                            var lPath = MinFolder + 'all.min.css';
-                            writeFile(lPath, lAllCSS);
+                            case '.html':
+                                final_code  = Minify.htmlMinify(lData);
+                                break;
+                            
+                            case '.css':
+                                final_code  = Minify._cleanCSS(lData);
+                                lAllCSS    += final_code;
+                                
+                                lCSS_o = lMoreProcessing_f;
+                                
+                                if ( Util.isObject(lCSS_o) )
+                                    lMoreProcessing_f = lCSS_o.moreProcessing;
+                                break;
+                            
+                            default:
+                                return Util.log('unknow file type '  +
+                                    lExt + ', only *.js, *.css, *.html');
                         }
-                    }
-                    /* if lMoreProcessing_f seeted up 
-                     * and function associated with
-                     * current file name exists -
-                     * run it
-                     */
-                    var lResult = Util.exec(lMoreProcessing_f, final_code);
-                    if(lResult)
-                        final_code = lResult;
-                    
-                    /* minimized file will be in min file
-                     * if it's possible if not -
-                     * in root
-                     */
-                    writeFile(minFileName, final_code);
-                    
-                    /* calling callback function if it exist */
-                    if(pOptions)
-                        Util.exec(pOptions.callback, final_code);
-                };
-                
-                if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
-                    lProcessing_f();
-                
-                /* if file was not changed */
-                else
-                    fs.readFile(minFileName, function(pError, pFinalCode){
-                        /* if could not read file call forse minification */
-                        if(pError)
-                            lProcessing_f();
-                        
-                        /* if need to save in cache - do it */
-                        else {
-                            if(pOptions)
-                                Util.exec(pOptions.callback, pFinalCode);
-                            
-                            if(lExt === '.css')
-                                lAllCSS += pFinalCode;
-                        }
-                        
-                         if (lLastFile_b && lCSS_o && lCSS_o.merge){
+                        /* if it's last file
+                         * and base64images setted up
+                         * we should convert it
+                         */
+                        if (lLastFile_b && lCSS_o && lCSS_o.merge){
                             if(lCSS_o.img)
                                 base64_images(lAllCSS);
-                            else
-                                writeFile(MinFolder + 'all.min.css', lAllCSS);
+                            else{
+                                var lPath = MinFolder + 'all.min.css';
+                                writeFile(lPath, lAllCSS);
+                            }
                         }
-                    });
-            };
+                        /* if lMoreProcessing_f seeted up 
+                         * and function associated with
+                         * current file name exists -
+                         * run it
+                         */
+                        var lResult = Util.exec(lMoreProcessing_f, final_code);
+                        if(lResult)
+                            final_code = lResult;
+                        
+                        /* minimized file will be in min file
+                         * if it's possible if not -
+                         * in root
+                         */
+                        writeFile(minFileName, final_code);
+                        
+                        /* calling callback function if it exist */
+                        if(pOptions)
+                            Util.exec(pOptions.callback, final_code);
+                    };
+                    
+                    if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
+                        lProcessing_f();
+                    
+                    /* if file was not changed */
+                    else
+                        fs.readFile(minFileName, function(pError, pFinalCode){
+                            /* if could not read file call forse minification */
+                            if(pError)
+                                lProcessing_f();
+                            
+                            else {
+                                if(pOptions)
+                                    Util.exec(pOptions.callback, pFinalCode);
+                                
+                                if(lExt === '.css')
+                                    lAllCSS += pFinalCode;
+                            }
+                            
+                             if (lLastFile_b && lCSS_o && lCSS_o.merge){
+                                if(lCSS_o.img)
+                                    base64_images(lAllCSS);
+                                else
+                                    writeFile(MinFolder + 'all.min.css', lAllCSS);
+                            }
+                        });
+                };
         
         /* moving thru all elements of js files array */
         for(var i=0; pFiles_a[i]; i++){
@@ -257,7 +253,21 @@
         /* saving the name of last readed file for hash saving function */
         
         return true;
-    };
+    }
+    
+    /**
+     * function get name of file in min folder
+     * @param pName
+     */
+    function getName(pName, pExt){
+        var lExt        = pExt || getExtension(pName),
+        
+        minFileName = crypto.createHash('sha1')
+            .update(pName)
+            .digest('hex') + lExt;
+        
+        minFileName = MinFolder + minFileName;
+    }
     
     /**
      * Функция переводит картинки в base64 и записывает в css-файл
@@ -366,4 +376,9 @@
         /* has file changed? */
         return lFileHash;
     }
+        
+    exports.getName     = getName;
+    exports.optimize    = optimize;
+    exports.MinFolder   = MinFolder;
+    
 })();
