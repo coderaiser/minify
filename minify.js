@@ -72,15 +72,6 @@
      */
     fs.mkdir(MinFolder, 511, makeFolder);
     
-    /**
-     * function gets file extension
-     * @param pFileName
-     * @return Ext
-     */
-    function getExtension (pFileName){
-        var lDot = pFileName.lastIndexOf('.');
-        return pFileName.substr(lDot);
-    }
     
     /**
      * function minificate js,css and html files
@@ -144,7 +135,7 @@
                 Util.log('minify: file ' + path.basename(lFileName) + ' readed');
                 
                 console.log(lFileName);
-                var lExt = getExtension(lFileName),
+                var lExt = Util.getExtension(lFileName),
                     lMinFileName = getName(lFileName, lExt);
                 
                /* functin minimize files */
@@ -204,7 +195,10 @@
                         
                         /* calling callback function if it exist */
                         if(pOptions)
-                            Util.exec(pOptions.callback, final_code);
+                            Util.exec(pOptions.callback, {
+                                name: lMinFileName,
+                                data: final_code
+                            });
                     };
                     
                 if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
@@ -219,7 +213,10 @@
                         
                         else {
                             if(pOptions)
-                                Util.exec(pOptions.callback, pFinalCode);
+                                Util.exec(pOptions.callback, {
+                                    name: lMinFileName,
+                                    data: pFinalCode
+                                });
                             
                             if(lExt === '.css')
                                 lAllCSS += pFinalCode;
@@ -261,15 +258,19 @@
      * @param pName
      */
     function getName(pName, pExt){
-        console.log(pName);
-        var lExt        = pExt || getExtension(pName),
-            lMinFileName = crypto.createHash('sha1')
-                .update(pName)
-                .digest('hex') + lExt;
+        var lRet;
         
-        lMinFileName = MinFolder + lMinFileName;
+        if( Util.isString(pName) ){
         
-        return lMinFileName;
+            var lExt        = pExt || Util.getExtension(pName),
+                lMinFileName = crypto.createHash('sha1')
+                    .update(pName)
+                    .digest('hex') + lExt;
+            
+            lRet = MinFolder + lMinFileName;
+        }
+        
+        return lRet;
     }
     
     /**
