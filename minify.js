@@ -41,37 +41,23 @@
     }
     
     var MinFolder   = DIR + 'min/';
-    /* function clear MinFolder
-     * if we could not create
-     * directory and it is
-     * not exist
-     */
-    var folderExist = function(pError, pStat){
-        /*file found and it's directory */
-        if(!pError && pStat.isDirectory())
-            Util.log('folder exist: ' + MinFolder);
-        else MinFolder='/';
-    };
+
+    function makeFolder(pExist){
+        /* Trying to create folder min
+         * where woud be minifyed versions
+         * of files 511(10)=777(8)
+         * rwxrwxrwx
+         */
+        if(!pExist)
+            fs.mkdir(MinFolder, 511, function(pError){
+                if(pError){
+                    Util.log(pError);
+                    MinFolder = '/';
+                }
+            });
+    }
     
-    /*
-     * function says thet folder created
-     * if everything is OK, or
-     * moves to folderExist function
-     */
-    var makeFolder = function(pError){
-        /*folder created successfully*/
-        if(!pError)
-            Util.log('folder created: min');
-        else fs.stat(MinFolder,folderExist);
-    };
-    
-    /* Trying to create folder min
-     * where woud be minifyed versions
-     * of files 511(10)=777(8)
-     * rwxrwxrwx
-     */
-    fs.mkdir(MinFolder, 511, makeFolder);
-    
+    fs.exists(MinFolder, makeFolder);
     
     /**
      * function minificate js,css and html files
@@ -134,7 +120,6 @@
                 }
                 Util.log('minify: file ' + path.basename(lFileName) + ' readed');
                 
-                console.log(lFileName);
                 var lExt = Util.getExtension(lFileName),
                     lMinFileName = getName(lFileName, lExt);
                 
@@ -195,10 +180,12 @@
                         
                         /* calling callback function if it exist */
                         if(pOptions)
-                            Util.exec(pOptions.callback, {
-                                name: lMinFileName,
-                                data: final_code
-                            });
+                            if(pOptions.returnName)
+                                Util.exec(pOptions.callback, {
+                                    name: lMinFileName
+                                });
+                            else
+                                Util.exec(pOptions.callback, final_code);
                     };
                     
                 if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
@@ -213,10 +200,12 @@
                         
                         else {
                             if(pOptions)
-                                Util.exec(pOptions.callback, {
-                                    name: lMinFileName,
-                                    data: pFinalCode
-                                });
+                                if(pOptions.returnName)
+                                    Util.exec(pOptions.callback, {
+                                        name: lMinFileName
+                                    });
+                                else
+                                    Util.exec(pOptions.callback, pFinalCode);
                             
                             if(lExt === '.css')
                                 lAllCSS += pFinalCode;
@@ -292,7 +281,7 @@
         }
         else
             b64img.fromString(pData, '.', '', function(err, css){
-                Util.log('images converted to base64 and saved in css file');
+                Util.log('minify: images converted to base64 and saved in css file');
                 writeFile(lPath, css);
             });
     }

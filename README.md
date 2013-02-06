@@ -68,11 +68,15 @@ minify.optimize([{'style.css': {img: true, merge: true} },
     'index.html']);
 ```    
 
-if no need to write on disk
+if only need the name of minified file (from min directory)
 ```js
 minify.optimize('client.js', {
-    'client.js' : function(pFinalCode){}
-},true);
+    returnName  : true
+    callback    : function(pParams){
+        var lName = pParams && pParams.name;
+        console.log(lName)
+    }
+});
 ```
 
 **MinFolder** - varible thet contains folder name, where minimized files stored.
