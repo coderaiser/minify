@@ -4,7 +4,7 @@
  */
 (function(){
     'use strict';
-        
+    
     global.minify   = {};
     
     var DIR         = __dirname +'/',
