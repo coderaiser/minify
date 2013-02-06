@@ -17,7 +17,6 @@
       console.log('minify <input-file> <output-file>');
       console.log('or for output to screen:');
       console.log('minify <input-file>');
-      return;
     }else if( Argv[2] && !Argv[3])
         minify.optimize(Argv[2], {
             callback: function(pData){
