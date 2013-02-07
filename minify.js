@@ -176,16 +176,17 @@
                          * if it's possible if not -
                          * in root
                          */
-                        writeFile(lMinFileName, final_code);
+                        writeFile(lMinFileName, final_code, function(){
+                            /* calling callback function if it exist */
+                            if(pOptions)
+                                if(pOptions.returnName)
+                                    Util.exec(pOptions.callback, {
+                                        name: lMinFileName
+                                    });
+                                else
+                                    Util.exec(pOptions.callback, final_code);
+                            });
                         
-                        /* calling callback function if it exist */
-                        if(pOptions)
-                            if(pOptions.returnName)
-                                Util.exec(pOptions.callback, {
-                                    name: lMinFileName
-                                });
-                            else
-                                Util.exec(pOptions.callback, final_code);
                     };
                     
                 if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
@@ -318,7 +319,7 @@
      * и выводит ошибку или сообщает,
      * что файл успешно записан
      */
-    function writeFile(pName, pData){
+    function writeFile(pName, pData, pCallBack){
         fs.writeFile(pName, pData, function(pError){
             if(pError)
                 Util.log(pError);
@@ -326,6 +327,8 @@
                 pName = path.basename(pName);
                 Util.log('minify: file ' + pName + ' writed...');
             }
+            
+            Util.exec(pCallBack);
         });
     }
     
