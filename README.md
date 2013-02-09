@@ -14,6 +14,18 @@ or
     
     git clone git://github.com/coderaiser/minify
 
+Command Line
+---------------
+For use in command line just write something like:
+```
+minify <input-file> <output-file>
+```
+or just 
+```
+minify <input-file>>
+```
+to see output in screen.
+
 API
 ---------------
 **Minify** module contains some api for interacting from another js files.
