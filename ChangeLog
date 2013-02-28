@@ -1,4 +1,4 @@
-2013.*.*, Version v0.1.9
+2013.03.01, Version v0.1.9
 
 * Fixed bug with optimizing images: if in css was not
 result css file do not saves.
