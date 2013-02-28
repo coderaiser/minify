@@ -277,13 +277,14 @@
                     'https://github.com/Filirom1/css-base64-images');
             
             writeFile(lPath, pData);
-                
+            
             return pData;
         }
         else
-            b64img.fromString(pData, '.', '', function(err, css){
+            b64img.fromString(pData, '.', '', function(pError, pCSS){
                 Util.log('minify: images converted to base64 and saved in css file');
-                writeFile(lPath, css);
+                Util.log(pError);
+                writeFile(lPath, pCSS);
             });
     }
     
