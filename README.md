@@ -2,7 +2,7 @@ Minify [![Build Status](https://secure.travis-ci.org/coderaiser/minify.png?branc
 ======
 
 **Minify** - a minifier of js, css, html and img files,
-used in [Cloud Commander](http://github.com/coderaiser/cloudcmd "Cloud Commander")
+used in [Cloud Commander](http://coderaiser.github.com/cloudcmd "Cloud Commander")
 project.
 
 Install
@@ -13,6 +13,18 @@ You can install minify just like that:
 or
     
     git clone git://github.com/coderaiser/minify
+
+Command Line
+---------------
+For use in command line just write something like:
+```
+minify <input-file> <output-file>
+```
+or just 
+```
+minify <input-file>>
+```
+to see output in screen.
 
 API
 ---------------
@@ -27,17 +39,15 @@ extension **.min** (*.min.js, *.min.css, *.min.html).
 If directory could be created **minify.MinFolder** would countain stirng 'min/',
 in any other case - '/'.
 
-**optimize**(*pFiles_a*, *pCache_b*) - function which minificate js, html and
+**optimize**(*pFiles_a*) - function which minificate js, html and
 css-files.
  - **pFiles_a**                     - varible, wich contain array of file
 names or string, if name single.
  - **pOptions**(optional)           - object contain main options.
 
 ```js
-pOptions = {cache: false, callback: func(){}};
+pOptions = {callback: func(pFinalCode){}};
 ```
-
-if cache true - files do not writes on disk, just saves in Minify Cache.
 
 **Examples**:
 
@@ -46,7 +56,9 @@ minify.optimize('client.js');
 ```
 
 ```js
-minify.optimize('client.js', {cache: true, callback: func(pMinData){}});
+minify.optimize('client.js', {
+    callback: func(pMinData){}
+});
 ```
 
 if a couple files:
@@ -64,20 +76,19 @@ minify.optimize({
 
 if post image converting needed (works with css only)
 ```js
-minify.optimize([{'style.css':true},
+minify.optimize([{'style.css': {img: true, merge: true} },
     'index.html']);
 ```    
 
-if no need to write on disk
+if only need the name of minified file (from min directory)
 ```js
 minify.optimize('client.js', {
-    'client.js' : function(pFinalCode){}
-},true);
-```
-
-Then we can work with js data just like this:
-```js
-console.log(minify.Cache['client.js']);
+    returnName  : true
+    callback    : function(pParams){
+        var lName = pParams && pParams.name;
+        console.log(lName)
+    }
+});
 ```
 
 **MinFolder** - varible thet contains folder name, where minimized files stored.

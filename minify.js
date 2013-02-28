@@ -3,10 +3,10 @@
  * в base64 и помещения их в файл стилей
  */
 (function(){
-    "use strict";
-        
+    'use strict';
+    
     global.minify   = {};
-
+    
     var DIR         = __dirname +'/',
         LIBDIR      = DIR + 'lib/',
         main        = global.minify.main = require(LIBDIR + 'main'),
@@ -23,14 +23,17 @@
         Minify      = {},
         
         /* object contains hashes of files*/
-        Hashes,
+        HASHESNAME  = DIR       + 'hashes',
+        HASHES_JSON = HASHESNAME   + '.json',
+        
+        Hashes      = main.require(HASHESNAME) || [],
         HashesChanged;
         
     if(!html || !js || !css)
-        console.log('One of the necessary modules is absent\n'  +
+        Util.log('One of the necessary modules is absent\n'     +
             're-install the modules\n'                          +
-            'npm r minify\n'                                    +
-            'npm i minify');
+            'npm r\n'                                           +
+            'npm i');
     else{
         Minify._uglifyJS    = js._uglifyJS;
         Minify._cleanCSS    = css._cleanCSS;
@@ -38,51 +41,23 @@
     }
     
     var MinFolder   = DIR + 'min/';
-    /* function clear MinFolder
-     * if we could not create
-     * directory and it is
-     * not exist
-     */
-    var folderExist = function(pError, pStat){
-        /*file found and it's directory */
-        if(!pError && pStat.isDirectory())
-            console.log('folder exist: ' + MinFolder);
-        else MinFolder='/';
-    };
+
+    function makeFolder(pExist){
+        /* Trying to create folder min
+         * where woud be minifyed versions
+         * of files 511(10)=777(8)
+         * rwxrwxrwx
+         */
+        if(!pExist)
+            fs.mkdir(MinFolder, 511, function(pError){
+                if(pError){
+                    Util.log(pError);
+                    MinFolder = '/';
+                }
+            });
+    }
     
-    /*
-     * function says thet folder created
-     * if everything is OK, or
-     * moves to folderExist function
-     */
-    var makeFolder = function(pError){
-        /*folder created successfully*/
-        if(!pError)
-            console.log('folder created: min');
-        else fs.stat(MinFolder,folderExist);
-    };
-    
-    /* Trying to create folder min
-     * where woud be minifyed versions
-     * of files 511(10)=777(8)
-     * rwxrwxrwx
-     */
-    fs.mkdir(MinFolder, 511, makeFolder);
-    
-    exports.MinFolder = MinFolder;
-    exports.Cache    = {};
-    
-    /**
-     * function gets file extension
-     * @param pFileName
-     * @return Ext
-     */
-    Minify._getExtension = function(pFileName){
-        /* checking for js/html/css */    
-        var lDot = pFileName.lastIndexOf('.');
-        
-        return pFileName.substr(lDot);
-    };
+    fs.exists(MinFolder, makeFolder);
     
     /**
      * function minificate js,css and html files
@@ -94,24 +69,26 @@
      *                       or {'style.css':{minimize: true, func: function(){}}
      *
      * @param pOptions  -   object contain main options
-     *                      if cache true files do not writes on disk, just saves
-     *                      in Minify Cache
+     *
      * Example: 
-     * {cache: false, gzip: true, callback: func(){}}
+     * {callback: func(pData){}}
      */
-    exports.optimize = function(pFiles_a, pOptions){ 
-         /* if passed string, or object 
+    function optimize(pFiles_a, pOptions){
+        
+        if(pOptions && pOptions.cache)
+            Util.log('minify: warning. cache parameter is deprecated ' + 
+            'and have no sense anymore!');
+        
+         /* if passed string, or object
           * putting it to array
           */
         if ( Util.isString(pFiles_a) || !pFiles_a[0] )
             pFiles_a = [pFiles_a];
-                
-                
-        var lName   = '',
-            lAllCSS = '',
-            lCSS_o  = null,
-            lMinIMg_b = false, 
-            /* varible contains all readed file names */
+        
+        var lName       = '',
+            lAllCSS     = '',
+            lCSS_o      = null,
+            /* varible contains all readed files count */
             lReadedFilesCount = 0,
             
             /**
@@ -122,16 +99,12 @@
                 if( !Util.isObject(pFileData_o) )
                     return -1;
                     
-                var lFileName   = pFileData_o.name,
-                    lData       = pFileData_o.data,
-                    lLastFile_b;
-                
                 ++lReadedFilesCount;
                 
-                /* if leng this not equal file not last */
-                if (lReadedFilesCount === pFiles_a.length)
-                    lLastFile_b = true;
-                        
+                var lFileName   = pFileData_o.name,
+                    lData       = pFileData_o.data,
+                    lLastFile_b = lReadedFilesCount === pFiles_a.length;
+                
                 /*
                  * if postProcessing function exist
                  * getting it from lFileName object
@@ -145,18 +118,15 @@
                     lMoreProcessing_f = lFileName[lName];
                     lFileName = lName;
                 }
-                console.log('file ' + lFileName + ' readed');
+                Util.log('minify: file ' + path.basename(lFileName) + ' readed');
                 
-                var lExt = Minify._getExtension(lFileName),
-                    minFileName = path.basename(lFileName);
-                
-                minFileName = minFileName.replace(lExt, '.min' + lExt);
-                minFileName = MinFolder + minFileName;
+                var lExt = Util.getExtension(lFileName),
+                    lMinFileName = getName(lFileName, lExt);
                 
                /* functin minimize files */
                 var lProcessing_f = function(){
-                    var final_code;        
-                        
+                        var final_code;
+                            
                         /* getting optimized version */
                         switch(lExt){
                             case '.js': 
@@ -173,23 +143,26 @@
                                 
                                 lCSS_o = lMoreProcessing_f;
                                 
-                                if ( Util.isObject(lCSS_o) ){
+                                if ( Util.isObject(lCSS_o) )
                                     lMoreProcessing_f = lCSS_o.moreProcessing;
-                                }
                                 break;
                             
                             default:
-                                return console.log('unknow file type '  +
+                                return Util.log('unknow file type '  +
                                     lExt + ', only *.js, *.css, *.html');
                         }
                         /* if it's last file
                          * and base64images setted up
-                         * se should convert it
+                         * we should convert it
                          */
-                        if (lLastFile_b && (lCSS_o && lCSS_o.img || lCSS_o === true))
-                            base64_images(lAllCSS);
-                        
-                        
+                        if (lLastFile_b && lCSS_o && lCSS_o.merge){
+                            if(lCSS_o.img)
+                                base64_images(lAllCSS);
+                            else{
+                                var lPath = MinFolder + 'all.min.css';
+                                writeFile(lPath, lAllCSS);
+                            }
+                        }
                         /* if lMoreProcessing_f seeted up 
                          * and function associated with
                          * current file name exists -
@@ -199,63 +172,54 @@
                         if(lResult)
                             final_code = lResult;
                         
-                        /* записываем сжатый js-скрипт
-                         * в кэш если установлен pCache_b
-                         * или на диск, если не установлен
-                         */
-                        if(pOptions && pOptions.cache){
-                            exports.Cache[lFileName] = final_code;
-                            console.log('file ' + minFileName + ' saved to cache...');
-                        }
-            
                         /* minimized file will be in min file
                          * if it's possible if not -
                          * in root
-                         */                
-                        fs.writeFile(minFileName, final_code, fileWrited(minFileName));
+                         */
+                        writeFile(lMinFileName, final_code, function(){
+                            /* calling callback function if it exist */
+                            if(pOptions)
+                                if(pOptions.returnName)
+                                    Util.exec(pOptions.callback, {
+                                        name: lMinFileName
+                                    });
+                                else
+                                    Util.exec(pOptions.callback, final_code);
+                            });
                         
-                        /* calling callback function if it exist */
-                        if(pOptions)
-                            Util.exec(pOptions.callback, final_code);
                     };
-                
-                if(pOptions || isFileChanged(lFileName, lData, lLastFile_b))
+                    
+                if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
                     lProcessing_f();
-              
-              /* if file was not changed */
-                else{
-                    fs.readFile(minFileName, function(pError, pFinalCode){
+                
+                /* if file was not changed */
+                else
+                    fs.readFile(lMinFileName, function(pError, pFinalCode){
                         /* if could not read file call forse minification */
                         if(pError)
                             lProcessing_f();
                         
-                        /* if need to save in cache - do it */
                         else {
-                            if(pOptions){
-                                                                               
-                                if(pOptions.cache){
-                                    exports.Cache[minFileName] = pFinalCode;
-                                    console.log('file ' + minFileName + ' saved to cache...');
-                                }
-                                
-                                Util.Exec(pOptions.callback, pFinalCode);
-                            }
-                            else if(lExt === '.css'){
-                                    /* if it's css and last file */
-                                    lAllCSS += pFinalCode;
-                                    
-                                    if(lMoreProcessing_f.img ||
-                                        lMoreProcessing_f === true)
-                                            lMinIMg_b = true;
-                                }
+                            if(pOptions)
+                                if(pOptions.returnName)
+                                    Util.exec(pOptions.callback, {
+                                        name: lMinFileName
+                                    });
+                                else
+                                    Util.exec(pOptions.callback, pFinalCode);
+                            
+                            if(lExt === '.css')
+                                lAllCSS += pFinalCode;
                         }
                         
-                        if(lLastFile_b)
-                            base64_images(lAllCSS);
+                         if (lLastFile_b && lCSS_o && lCSS_o.merge){
+                            if(lCSS_o.img)
+                                base64_images(lAllCSS);
+                            else
+                                writeFile(MinFolder + 'all.min.css', lAllCSS);
+                        }
                     });
-                }        
             };
-        
         
         /* moving thru all elements of js files array */
         for(var i=0; pFiles_a[i]; i++){
@@ -269,7 +233,7 @@
             else
                 lName = pFiles_a[i];
             
-            console.log('reading file ' + lName + '...');
+            Util.log('minify: reading file ' + path.basename(lName) + '...');
             
             /* if it's last file send true */
             fs.readFile(lName, fileReaded(pFiles_a[i], dataReaded_f));
@@ -277,30 +241,50 @@
         /* saving the name of last readed file for hash saving function */
         
         return true;
-    };
+    }
     
+    /**
+     * function get name of file in min folder
+     * @param pName
+     */
+    function getName(pName, pExt){
+        var lRet;
+        
+        if( Util.isString(pName) ){
+        
+            var lExt        = pExt || Util.getExtension(pName),
+                lMinFileName = crypto.createHash('sha1')
+                    .update(pName)
+                    .digest('hex') + lExt;
+            
+            lRet = MinFolder + lMinFileName;
+        }
+        
+        return lRet;
+    }
     
-    /** 
+    /**
      * Функция переводит картинки в base64 и записывает в css-файл
      * @param pData {String}
      */
     function base64_images(pData){
-        var lPath = MinFolder + 'all.min.css',
+        var lPath  = MinFolder + 'all.min.css',
             b64img = main.require('css-b64-images');
         
         if(!b64img){
-            console.log('can\'n load clean-css \n'    +
-                    'npm install -g css-b64-images\n' +
+            Util.log('can\'n load clean-css \n'                 +
+                    'npm install -g css-b64-images\n'           +
                     'https://github.com/Filirom1/css-base64-images');
             
-            fs.writeFile(lPath, pData, fileWrited(lPath));
-                
+            writeFile(lPath, pData);
+            
             return pData;
         }
         else
-            b64img.fromString(pData, '.', '', function(err, css){
-                console.log('images converted to base64 and saved in css file');
-                fs.writeFile(lPath, css, fileWrited(lPath));
+            b64img.fromString(pData, '.', '', function(pError, pCSS){
+                Util.log('minify: images converted to base64 and saved in css file');
+                Util.log(pError);
+                writeFile(lPath, pCSS);
             });
     }
     
@@ -310,7 +294,7 @@
      * @pProcessFunc    - функция обработки файла
      */
     function fileReaded(pFileName, pProcessFunc){
-        return function(pError, pData){            
+        return function(pError, pData){
             /* функция в которую мы попадаем,
              * если данные считались
              *
@@ -327,70 +311,71 @@
                 });
             }
             else
-               console.log(pError);
+               Util.log(pError);
         };
     }
     
     /*
-     * Функция вызываеться после записи файла
+     * Функция записывает файла
      * и выводит ошибку или сообщает,
      * что файл успешно записан
      */
-    function fileWrited(pFileName){
-        return function(error){
-            console.log(error ? error : ('file ' + pFileName + ' writed...') );
-        };
+    function writeFile(pName, pData, pCallBack){
+        fs.writeFile(pName, pData, function(pError){
+            if(pError)
+                Util.log(pError);
+            else{
+                pName = path.basename(pName);
+                Util.log('minify: file ' + pName + ' writed...');
+            }
+            
+            Util.exec(pCallBack);
+        });
     }
     
     
     function isFileChanged(pFileName, pFileData, pLastFile_b){
-            var lReadedHash,
-                /* boolean hashes.json changed or not */
-                lThisHashChanged_b = false,
-                
-                lHASHES             = DIR       + 'hashes',
-                lHASHES_JSON        = lHASHES   + '.json' ;
+        var lReadedHash,
+            i, n = Hashes.length;
+        
+        for(i = 0; i < n; i++){
+            var lData = Hashes[i];
             
-            if(!Hashes)
-                console.log('trying  to read hashes.json');
-                
-                Hashes = main.require(lHASHES);
-                if(!Hashes){
-                    console.log('hashes.json not found... \n');
-                    Hashes = {};
-                }
-            
-            for(var lFileName in Hashes)
-                /* if founded row with file name - save hash */
-                if (lFileName === pFileName) {
-                    lReadedHash = Hashes[pFileName];
-                    break;
+            /* if founded row with file name - save hash */
+            if(lData.name === pFileName){
+                lReadedHash = lData.hash;
+                break;
             }
+        }
+        
+        /* create hash of file data */ 
+        var lFileHash   = crypto.createHash('sha1')
+            .update(pFileData)
+            .digest('hex');
+        
+        /* boolean hashes.json changed or not */
+        if(lReadedHash !== lFileHash){
+            Hashes[i]       = {
+                name: pFileName,
+                hash: lFileHash
+            };
             
-            /* create hash of file data */ 
-            var lFileHash = crypto.createHash('sha1');
-            
-            lFileHash = crypto.createHash('sha1'); 
-            lFileHash.update(pFileData);
-            lFileHash = lFileHash.digest('hex');
-                    
-            if(lReadedHash !== lFileHash){
-                Hashes[pFileName]   = lFileHash;
-                lThisHashChanged_b  = 
-                HashesChanged       = true;
-            }
-            
-            if(pLastFile_b){
-                /* if hashes file was changes - write it */
-                if(HashesChanged)
-                    fs.writeFile(lHASHES_JSON,
-                        JSON.stringify(Hashes),
-                        fileWrited(lHASHES_JSON));
-                        
-                else
-                    console.log('no one file has been changed');
-            }
-            /* has file changed? */
-            return lThisHashChanged_b;
+            HashesChanged   = true;
+        }
+        
+        if(pLastFile_b){
+            /* if hashes file was changes - write it */
+            if(HashesChanged)
+                writeFile(HASHES_JSON, Util.stringifyJSON(Hashes));
+            else
+                Util.log('minify: no one file has been changed');
+        }
+        /* has file changed? */
+        return lFileHash;
     }
+        
+    exports.getName     = getName;
+    exports.optimize    = optimize;
+    exports.MinFolder   = MinFolder;
+    
 })();
