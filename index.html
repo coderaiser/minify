@@ -16,7 +16,7 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1 class="header">Minify v0.1.8</h1>
+        <h1 class="header">Minify</h1>
         <p class="header">Minifier of js, css, html and img</p>
 
         <ul>
@@ -34,7 +34,7 @@
 </h1>
 
 <p><strong>Minify</strong> - a minifier of js, css, html and img files,
-used in <a href="http://github.com/coderaiser/cloudcmd" title="Cloud Commander">Cloud Commander</a>
+used in <a href="http://coderaiser.github.com/cloudcmd" title="Cloud Commander">Cloud Commander</a>
 project.</p>
 
 <h2>Install</h2>
@@ -48,6 +48,20 @@ project.</p>
 
 <pre><code>git clone git://github.com/coderaiser/minify
 </code></pre>
+
+<h2>Command Line</h2>
+
+<p>For use in command line just write something like:</p>
+
+<pre><code>minify &lt;input-file&gt; &lt;output-file&gt;
+</code></pre>
+
+<p>or just </p>
+
+<pre><code>minify &lt;input-file&gt;&gt;
+</code></pre>
+
+<p>to see output in screen.</p>
 
 <h2>API</h2>
 
@@ -63,7 +77,7 @@ extension <strong>.min</strong> (*.min.js, <em>.min.css, *.min.html).
 If directory could be created **minify.MinFolder</em>* would countain stirng 'min/',
 in any other case - '/'.</p>
 
-<p><strong>optimize</strong>(*pFiles_a*, <em>pCache_b</em>) - function which minificate js, html and
+<p><strong>optimize</strong>(*pFiles_a*) - function which minificate js, html and
 css-files.</p>
 
 <ul>
@@ -72,17 +86,17 @@ css-files.</p>
 names or string, if name single.</li>
 <li>
 <strong>pOptions</strong>(optional)           - object contain main options.</li>
-</ul><div class="highlight"><pre><span class="nx">pOptions</span> <span class="o">=</span> <span class="p">{</span><span class="nx">cache</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">callback</span><span class="o">:</span> <span class="nx">func</span><span class="p">(){}};</span>
+</ul><div class="highlight"><pre><span class="nx">pOptions</span> <span class="o">=</span> <span class="p">{</span><span class="nx">callback</span><span class="o">:</span> <span class="nx">func</span><span class="p">(</span><span class="nx">pFinalCode</span><span class="p">){}};</span>
 </pre></div>
-
-<p>if cache true - files do not writes on disk, just saves in Minify Cache.</p>
 
 <p><strong>Examples</strong>:</p>
 
 <div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">(</span><span class="s1">'client.js'</span><span class="p">);</span>
 </pre></div>
 
-<div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">(</span><span class="s1">'client.js'</span><span class="p">,</span> <span class="p">{</span><span class="nx">cache</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">callback</span><span class="o">:</span> <span class="nx">func</span><span class="p">(</span><span class="nx">pMinData</span><span class="p">){}});</span>
+<div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">(</span><span class="s1">'client.js'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="nx">callback</span><span class="o">:</span> <span class="nx">func</span><span class="p">(</span><span class="nx">pMinData</span><span class="p">){}</span>
+<span class="p">});</span>
 </pre></div>
 
 <p>if a couple files:</p>
@@ -100,20 +114,19 @@ names or string, if name single.</li>
 
 <p>if post image converting needed (works with css only)</p>
 
-<div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">([{</span><span class="s1">'style.css'</span><span class="o">:</span><span class="kc">true</span><span class="p">},</span>
+<div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">([{</span><span class="s1">'style.css'</span><span class="o">:</span> <span class="p">{</span><span class="nx">img</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">merge</span><span class="o">:</span> <span class="kc">true</span><span class="p">}</span> <span class="p">},</span>
     <span class="s1">'index.html'</span><span class="p">]);</span>
 </pre></div>
 
-<p>if no need to write on disk</p>
+<p>if only need the name of minified file (from min directory)</p>
 
 <div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">(</span><span class="s1">'client.js'</span><span class="p">,</span> <span class="p">{</span>
-    <span class="s1">'client.js'</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">pFinalCode</span><span class="p">){}</span>
-<span class="p">},</span><span class="kc">true</span><span class="p">);</span>
-</pre></div>
-
-<p>Then we can work with js data just like this:</p>
-
-<div class="highlight"><pre><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">minify</span><span class="p">.</span><span class="nx">Cache</span><span class="p">[</span><span class="s1">'client.js'</span><span class="p">]);</span>
+    <span class="nx">returnName</span>  <span class="o">:</span> <span class="kc">true</span>
+    <span class="nx">callback</span>    <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">pParams</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">lName</span> <span class="o">=</span> <span class="nx">pParams</span> <span class="o">&amp;&amp;</span> <span class="nx">pParams</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">lName</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">});</span>
 </pre></div>
 
 <p><strong>MinFolder</strong> - varible thet contains folder name, where minimized files stored.
