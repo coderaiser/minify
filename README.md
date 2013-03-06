@@ -1,6 +1,9 @@
-Minify [![Build Status](https://secure.travis-ci.org/coderaiser/minify.png?branch=master)](http://travis-ci.org/coderaiser/minify)
-======
-
+Minify [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
+===============
+[BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=dev
+[DependencyStatusIMGURL]:   https://gemnasium.com/coderaiser/minify.png
+[BuildStatusURL]:           http://travis-ci.org/coderaiser/minify  "Build Status"
+[DependencyStatusURL]:      https://gemnasium.com/coderaiser/minify "Dependency Status"
 **Minify** - a minifier of js, css, html and img files,
 used in [Cloud Commander](http://coderaiser.github.com/cloudcmd "Cloud Commander")
 project.
