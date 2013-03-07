@@ -19,6 +19,9 @@
     "type": "git",
     "url": "http://github.com/coderaiser/minify.git"
   },
+  "bin": {
+    "minify": "./bin/minify"
+  },
   "scripts": {
     "test": "node test/test.js"
   },
