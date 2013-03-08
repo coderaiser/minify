@@ -107,3 +107,11 @@ Additional modules:
 Install addtitional modules:
 
     npm i uglify-js clean-css html-minifier css-b64-images
+
+Contributing
+---------------
+If you would like to contribute - send pull request to dev branch.
+Getting dev version of **Minify**:
+
+    git clone git://github.com/coderaiser/minify.git
+    git checkout dev
