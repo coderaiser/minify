@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-/* minify binary 
+/* minify binary
  * usage node minify <input-file> <output-file>
  */
 (function(){
