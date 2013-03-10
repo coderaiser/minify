@@ -1,4 +1,4 @@
-Minify [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
+Minify v0.2.0 [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
 ===============
 [BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=dev
 [DependencyStatusIMGURL]:   https://gemnasium.com/coderaiser/minify.png
@@ -107,3 +107,11 @@ Additional modules:
 Install addtitional modules:
 
     npm i uglify-js clean-css html-minifier css-b64-images
+
+Contributing
+---------------
+If you would like to contribute - send pull request to dev branch.
+Getting dev version of **Minify**:
+
+    git clone git://github.com/coderaiser/minify.git
+    git checkout dev

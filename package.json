@@ -10,7 +10,7 @@
     "html",
     "base64"
   ],
-  "version": "0.1.9",
+  "version": "0.2.0",
   "author": {
     "name": "coderaiser",
     "email": "mnemonic.enemy@gmail.com"
@@ -18,6 +18,9 @@
   "repository": {
     "type": "git",
     "url": "http://github.com/coderaiser/minify.git"
+  },  
+  "bin": {
+    "minify": "./bin/minify"
   },
   "scripts": {
     "test": "node test/test.js"
