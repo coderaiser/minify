@@ -1,52 +1,42 @@
 (function(){
-    "use strict";
+    'use strict';
     
     var DIR         = __dirname + '/../',
         LIBDIR      = DIR + 'lib/',
         main        = require(LIBDIR + 'main'),
         
+        util        = main.util,
         fs          = main.fs,
         filename    = DIR + 'test/test.js',
         
         minify      = main.rootrequire('minify'),
         uglify      = main.require('uglify-js'),
         
+        Data,
         ErrorMsg    =   'can\'n load uglify-js          \n' +
                         'npm install uglify-js          \n' +
                         'https://github.com/mishoo/UglifyJS';
     
-    jsTesting();
+    fs.readFile(filename, function(pError, pData) {
+        if(pError)
+            return util.log(pError);
+            
+        Data = pData.toString();
+        
+        minify.optimize(filename,{
+            callback : jsCompare
+        });
+        
+    });
     
-    function jsTesting(){
-        fs.readFile(filename, fileReaded);
-        
-        var lData;
-        
-        function fileReaded(pError, pData) {
-            if(pError)
-                return result(pError);
-                
-            lData = pData;
+    
+    function jsCompare(pData){
+        fs.rmdir('min', function(){
+            var lUglify = _uglifyJS(Data),
+                lResult = lUglify === pData;
             
-            minify.optimize(filename,{
-                callback : jsCompare
-            });
-            
-        }
-        
-        
-        function jsCompare(pData){
-            fs.rmdir('min', function(){
-                var lUglify = _uglifyJS(lData),
-                    lResult = lUglify === pData;
-                
-               return result('uglify-js: ' + lResult);
-            });
-        }
-        
-        function result(pResult){
-            console.log(pResult);
-        }
+           return util.log('uglify-js: ' + lResult);
+        });
     }
     
     function _uglifyJS(pData){
@@ -58,7 +48,7 @@
         }
         else{
             lRet = pData;
-            console.log(ErrorMsg);
+            util.log(ErrorMsg);
         }
         
         return lRet;
