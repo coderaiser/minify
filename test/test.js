@@ -29,7 +29,6 @@
             lData = pData;
             
             minify.optimize(filename,{
-                cache    : true,
                 callback : jsCompare
             });
             
@@ -51,19 +50,17 @@
     }
     
     function _uglifyJS(pData){
-        if(uglify){
-            var jsp = uglify.parser,
-                pro = uglify.uglify,
-                /* parse code and get the initial AST */
-                ast = jsp.parse( pData.toString() );
-            
-            ast = pro.ast_mangle(ast);  /* get a new AST with mangled names             */
-            ast = pro.ast_squeeze(ast); /* get an AST with compression optimizations    */
-            pData = pro.gen_code(ast);  /* compressed code here                         */
-        }
-        else
-            console.log(ErrorMsg);
+        var lRet;
         
-        return pData;
+        if(uglify){
+            var lResult = uglify.minify(pData, {fromString: true});
+            lRet = lResult.code;
+        }
+        else{
+            lRet = pData;
+            console.log(ErrorMsg);
+        }
+        
+        return lRet;
     }
 })();
