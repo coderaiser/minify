@@ -1,7 +1,10 @@
-Minify v0.2.0 [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
+Minify v0.2.0 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
 ===============
+[NPMIMGURL]:                https://badge.fury.io/js/cloudcmd.png
+[BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/cloudcmd.png?branch=dev
 [BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=dev
 [DependencyStatusIMGURL]:   https://gemnasium.com/coderaiser/minify.png
+[NPMURL]:                   http://badge.fury.io/js/cloudcmd
 [BuildStatusURL]:           http://travis-ci.org/coderaiser/minify  "Build Status"
 [DependencyStatusURL]:      https://gemnasium.com/coderaiser/minify "Dependency Status"
 **Minify** - a minifier of js, css, html and img files,
