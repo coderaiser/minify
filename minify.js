@@ -20,8 +20,6 @@
         js          = main.librequire('js'),
         css         = main.librequire('css'),
         
-        Minify      = {},
-        
         /* object contains hashes of files*/
         HASHESNAME  = DIR       + 'hashes',
         HASHES_JSON = HASHESNAME   + '.json',
@@ -30,18 +28,11 @@
         HashesChanged;
         
     if(!html || !js || !css)
-        Util.log('One of the necessary modules is absent\n'     +
-            're-install the modules\n'                          +
-            'npm r\n'                                           +
-            'npm i');
-    else{
-        Minify._uglifyJS    = js._uglifyJS;
-        Minify._cleanCSS    = css._cleanCSS;
-        Minify.htmlMinify   = html.htmlMinify;
-    }
+        Util.log('One of the necessary modules is absent\n' +
+            'install the modules: \n npm i');
     
     var MinFolder   = DIR + 'min/';
-
+    
     function makeFolder(pExist){
         /* Trying to create folder min
          * where woud be minifyed versions
@@ -124,80 +115,77 @@
                     lMinFileName = getName(lFileName, lExt);
                 
                /* functin minimize files */
-                var lProcessing_f = function(){
-                        var final_code;
-                            
-                        /* getting optimized version */
-                        switch(lExt){
-                            case '.js': 
-                                final_code  = Minify._uglifyJS(lData);
-                                break;
-                            
-                            case '.html':
-                                final_code  = Minify.htmlMinify(lData);
-                                break;
-                            
-                            case '.css':
-                                final_code  = Minify._cleanCSS(lData);
-                                lAllCSS    += final_code;
-                                
-                                lCSS_o = lMoreProcessing_f;
-                                
-                                if ( Util.isObject(lCSS_o) )
-                                    lMoreProcessing_f = lCSS_o.moreProcessing;
-                                break;
-                            
-                            default:
-                                return Util.log('unknow file type '  +
-                                    lExt + ', only *.js, *.css, *.html');
-                        }
-                        /* if it's last file
-                         * and base64images setted up
-                         * we should convert it
-                         */
-                        if (lLastFile_b && lCSS_o && lCSS_o.merge){
-                            if(lCSS_o.img)
-                                base64_images(lAllCSS);
-                            else{
-                                var lPath = MinFolder + 'all.min.css';
-                                writeFile(lPath, lAllCSS);
-                            }
-                        }
-                        /* if lMoreProcessing_f seeted up 
-                         * and function associated with
-                         * current file name exists -
-                         * run it
-                         */
-                        var lResult = Util.exec(lMoreProcessing_f, final_code);
-                        if(lResult)
-                            final_code = lResult;
+                var lProcessing_f = function(pData){
+                    switch(lExt){
+                        case '.js': 
+                            pData  = js._uglifyJS(pData);
+                            break;
                         
-                        /* minimized file will be in min file
-                         * if it's possible if not -
-                         * in root
-                         */
-                        writeFile(lMinFileName, final_code, function(){
-                            /* calling callback function if it exist */
-                            if(pOptions)
-                                if(pOptions.returnName)
-                                    Util.exec(pOptions.callback, {
-                                        name: lMinFileName
-                                    });
-                                else
-                                    Util.exec(pOptions.callback, final_code);
-                            });
+                        case '.html':
+                            pData  = html.htmlMinify(pData);
+                            break;
+                        
+                        case '.css':
+                            pData  = css._cleanCSS(pData);
+                            lAllCSS    += pData;
+                            
+                            lCSS_o = lMoreProcessing_f;
+                            
+                            if ( Util.isObject(lCSS_o) )
+                                lMoreProcessing_f = lCSS_o.moreProcessing;
+                            break;
+                        
+                        default:
+                            return Util.log('unknow file type '  +
+                                lExt + ', only *.js, *.css, *.html');
+                    }
+                    /* if it's last file
+                     * and base64images setted up
+                     * we should convert it
+                     */
+                    if (lLastFile_b && lCSS_o && lCSS_o.merge){
+                        if(lCSS_o.img)
+                            base64_images(lAllCSS);
+                        else{
+                            var lPath = MinFolder + 'all.min.css';
+                            writeFile(lPath, lAllCSS);
+                        }
+                    }
+                    /* if lMoreProcessing_f seeted up 
+                     * and function associated with
+                     * current file name exists -
+                     * run it
+                     */
+                    var lResult = Util.exec(lMoreProcessing_f, pData);
+                    if(lResult)
+                        pData = lResult;
+                    
+                    /* minimized file will be in min file
+                     * if it's possible if not -
+                     * in root
+                     */
+                    writeFile(lMinFileName, pData, function(){
+                        /* calling callback function if it exist */
+                        if(pOptions)
+                            if(pOptions.returnName)
+                                Util.exec(pOptions.callback, {
+                                    name: lMinFileName
+                                });
+                            else
+                                Util.exec(pOptions.callback, pData);
+                        });
                         
                     };
                     
                 if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
-                    lProcessing_f();
+                    lProcessing_f(lData);
                 
                 /* if file was not changed */
                 else
                     fs.readFile(lMinFileName, function(pError, pFinalCode){
                         /* if could not read file call forse minification */
                         if(pError)
-                            lProcessing_f();
+                            lProcessing_f(lData);
                         
                         else {
                             if(pOptions)
