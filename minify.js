@@ -5,20 +5,15 @@
 (function(){
     'use strict';
     
-    global.minify   = {};
-    
+   
     var DIR         = __dirname +'/',
         LIBDIR      = DIR + 'lib/',
-        main        = global.minify.main = require(LIBDIR + 'main'),
+        main        = require(LIBDIR + 'main'),
         
         crypto      = main.crypto,
         fs          = main.fs,
         path        = main.path,
         Util        = main.util,
-        
-        html        = main.librequire('html'),
-        js          = main.librequire('js'),
-        css         = main.librequire('css'),
         
         /* object contains hashes of files*/
         HASHESNAME  = DIR       + 'hashes',
@@ -26,10 +21,6 @@
         
         Hashes      = main.require(HASHESNAME) || [],
         HashesChanged;
-        
-    if(!html || !js || !css)
-        Util.log('One of the necessary modules is absent\n' +
-            'install the modules: \n npm i');
     
     var MinFolder   = DIR + 'min/';
     
@@ -116,29 +107,19 @@
                 
                /* functin minimize files */
                 var lProcessing_f = function(pData){
-                    switch(lExt){
-                        case '.js': 
-                            pData  = js._uglifyJS(pData);
-                            break;
+                    pData = main.optimize({
+                        ext : lExt,
+                        data: pData
+                    });
+                    
+                    if(lExt === '.css'){
+                        lAllCSS    += pData;
+                        lCSS_o = lMoreProcessing_f;
                         
-                        case '.html':
-                            pData  = html.htmlMinify(pData);
-                            break;
-                        
-                        case '.css':
-                            pData  = css._cleanCSS(pData);
-                            lAllCSS    += pData;
-                            
-                            lCSS_o = lMoreProcessing_f;
-                            
-                            if ( Util.isObject(lCSS_o) )
-                                lMoreProcessing_f = lCSS_o.moreProcessing;
-                            break;
-                        
-                        default:
-                            return Util.log('unknow file type '  +
-                                lExt + ', only *.js, *.css, *.html');
+                        if ( Util.isObject(lCSS_o) )
+                            lMoreProcessing_f = lCSS_o.moreProcessing;
                     }
+                    
                     /* if it's last file
                      * and base64images setted up
                      * we should convert it
