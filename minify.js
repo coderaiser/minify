@@ -55,11 +55,11 @@
      * Example: 
      * {callback: func(pData){}}
      */
-    function optimize(pFileNames, pOptions){
-        if ( !Util.isArray(pFileNames) )
-            pFileNames = [pFileNames];
-        
-        var lAllCSS     = '',
+    function optimize(pFiles, pOptions){
+        var lFiles = Util.isArray(pFiles) ? pFiles : [pFiles],
+            
+            lName       = '',
+            lAllCSS     = '',
             /* varible contains all readed files count */
             lReadedFilesCount = 0,
             
@@ -72,7 +72,7 @@
                 
                 var lFileName   = pFileData_o.name,
                     lData       = pFileData_o.data,
-                    lIsLastFile = lReadedFilesCount === pFileNames.length;
+                    lIsLastFile = lReadedFilesCount === lFiles.length;
                 
                 /*
                  * if postProcessing function exist
@@ -80,18 +80,32 @@
                  */
                 var lOptimizeParams;
                 if( Util.isObject(lFileName) ){
-                    for(var lName in lFileName){
+                    var lName;
+                    for(lName in lFileName){
                         break;
                     }
+                    
                     lOptimizeParams = lFileName[lName];
-                    lFileName = lName;
+                    lFileName       = lName;
                 }
                 Util.log('minify: file ' + path.basename(lFileName) + ' readed');
                 
                 var lExt            = Util.getExtension(lFileName),
                     lMinFileName    = getName(lFileName, lExt);
                 
-                var lProcessing_f   = function(pData){
+               
+                var lWritedCallBack =  function(pData){
+                    if(pOptions){
+                        if(pOptions.returnName)
+                             Util.exec(pOptions.callback, {
+                                 name: lMinFileName
+                             });
+                         else
+                            Util.exec(pOptions.callback, pData);
+                    }
+                };
+               
+                var lProcessing_f = function(pData){
                     pData = main.optimize({
                         ext : lExt,
                         data: pData
@@ -103,23 +117,9 @@
                     if (lIsLastFile)
                         saveAllCSS(lOptimizeParams, lAllCSS);
                     
-                    var lWritedCallBack =  function(pParams){
-                        var lRet    = Util.checkObj(pParams, 'data'),
-                            p       = pParams;
+                    writeFile(lMinFileName, pData, Util.retExec(lWritedCallBack, pData) );
                         
-                        if(lRet && pOptions){
-                            if(pOptions.returnName)
-                                Util.exec(pOptions.callback, {
-                                    name: lMinFileName
-                                });
-                            else
-                                Util.exec(pOptions.callback, p.data);
-                        }
-                    };
-                    
-                    writeFile(lMinFileName, pData, Util.call(lWritedCallBack, {
-                        data : pData
-                    }) );
+                };
                     
                 if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lIsLastFile))
                     lProcessing_f(lData);
@@ -132,36 +132,34 @@
                             lProcessing_f(lData);
                         
                         else {
-                            writeFile(lMinFileName, pData, Util.call(lWritedCallBack, {
-                                data : pFinalCode
-                            }) );
+                           writeFile(lMinFileName, pFinalCode, Util.retExec(lWritedCallBack, pFinalCode) );
                             
                             if(lExt === '.css')
                                 lAllCSS += pFinalCode;
                         }
                         
-                         if ( lIsLastFile )
-                            saveAllCSS( lOptimizeParams, lAllCSS );
+                         if(lIsLastFile)
+                            saveAllCSS(lOptimizeParams, lAllCSS);
                     });
             };
-            
-        };
         
-        for(var i=0; pFileNames[i]; i++){
+        /* moving thru all elements of js files array */
+        for(var i=0; lFiles[i]; i++){
             /* if postProcessing function exist
              * getting file name and passet next
              */
-            var lPostProcessing_o = pFileNames[i], lName;
+            var lPostProcessing_o = lFiles[i];
             if( Util.isObject(lPostProcessing_o) )
                 for(lName in lPostProcessing_o)
                     break;
             else
-                lName = pFileNames[i];
+                lName = lFiles[i];
             
             Util.log('minify: reading file ' + path.basename(lName) + '...');
             
-            fs.readFile(lName, Util.call(fileReaded, {
-                name    : pFileNames[i],
+            /* if it's last file send true */
+             fs.readFile(lName, Util.call(fileReaded, {
+                name    : lFiles[i],
                 callback: dataReaded_f
             }));
         }
@@ -211,7 +209,7 @@
             });
     }
     
-    /** Функция создаёт асинхроную версию 
+    /* Функция создаёт асинхроную версию 
      * для чтения файла
      * @pFileName       - имя считываемого файла
      * @pProcessFunc    - функция обработки файла
@@ -234,7 +232,7 @@
         }
     }
     
-    /**
+    /*
      * Функция записывает файла
      * и выводит ошибку или сообщает,
      * что файл успешно записан
@@ -253,16 +251,15 @@
     }
     
     function saveAllCSS(pParams, pData){
-        if(pParams && pParams.merge){
-            if(pParams.img)
-                base64_images(pData);
-            else{
-                var lPath = MinFolder + 'all.min.css';
-                writeFile(lPath, pData);
-            }
+       if(pParams && pParams.merge){
+           if(pParams.img)
+               base64_images(pData);
+           else{
+               var lPath = MinFolder + 'all.min.css';
+               writeFile(lPath, pData);
+           }
         }
     }
-    
     
     function isFileChanged(pFileName, pFileData, pLastFile_b){
         var lReadedHash,
