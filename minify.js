@@ -55,21 +55,11 @@
      * Example: 
      * {callback: func(pData){}}
      */
-    function optimize(pFiles_a, pOptions){
+    function optimize(pFileNames, pOptions){
+        if ( !Util.isArray(pFileNames) )
+            pFileNames = [pFileNames];
         
-        if(pOptions && pOptions.cache)
-            Util.log('minify: warning. cache parameter is deprecated ' + 
-            'and have no sense anymore!');
-        
-         /* if passed string, or object
-          * putting it to array
-          */
-        if ( Util.isString(pFiles_a) || !pFiles_a[0] )
-            pFiles_a = [pFiles_a];
-        
-        var lName       = '',
-            lAllCSS     = '',
-            lCSS_o      = null,
+        var lAllCSS     = '',
             /* varible contains all readed files count */
             lReadedFilesCount = 0,
             
@@ -78,87 +68,60 @@
              * @param pFileData_o {name, data}
              */
             dataReaded_f = function(pFileData_o){
-                if( !Util.isObject(pFileData_o) )
-                    return -1;
-                    
                 ++lReadedFilesCount;
                 
                 var lFileName   = pFileData_o.name,
                     lData       = pFileData_o.data,
-                    lLastFile_b = lReadedFilesCount === pFiles_a.length;
+                    lIsLastFile = lReadedFilesCount === pFileNames.length;
                 
                 /*
                  * if postProcessing function exist
                  * getting it from lFileName object
                  */
-                var lMoreProcessing_f;
+                var lOptimizeParams;
                 if( Util.isObject(lFileName) ){
-                    var lName;
-                    for(lName in lFileName){
+                    for(var lName in lFileName){
                         break;
                     }
-                    lMoreProcessing_f = lFileName[lName];
+                    lOptimizeParams = lFileName[lName];
                     lFileName = lName;
                 }
                 Util.log('minify: file ' + path.basename(lFileName) + ' readed');
                 
-                var lExt = Util.getExtension(lFileName),
-                    lMinFileName = getName(lFileName, lExt);
+                var lExt            = Util.getExtension(lFileName),
+                    lMinFileName    = getName(lFileName, lExt);
                 
-               /* functin minimize files */
-                var lProcessing_f = function(pData){
+                var lProcessing_f   = function(pData){
                     pData = main.optimize({
                         ext : lExt,
                         data: pData
                     });
                     
-                    if(lExt === '.css'){
+                    if(lExt === '.css')
                         lAllCSS    += pData;
-                        lCSS_o = lMoreProcessing_f;
+                    
+                    if (lIsLastFile)
+                        saveAllCSS(lOptimizeParams, lAllCSS);
+                    
+                    var lWritedCallBack =  function(pParams){
+                        var lRet    = Util.checkObj(pParams, 'data'),
+                            p       = pParams;
                         
-                        if ( Util.isObject(lCSS_o) )
-                            lMoreProcessing_f = lCSS_o.moreProcessing;
-                    }
-                    
-                    /* if it's last file
-                     * and base64images setted up
-                     * we should convert it
-                     */
-                    if (lLastFile_b && lCSS_o && lCSS_o.merge){
-                        if(lCSS_o.img)
-                            base64_images(lAllCSS);
-                        else{
-                            var lPath = MinFolder + 'all.min.css';
-                            writeFile(lPath, lAllCSS);
-                        }
-                    }
-                    /* if lMoreProcessing_f seeted up 
-                     * and function associated with
-                     * current file name exists -
-                     * run it
-                     */
-                    var lResult = Util.exec(lMoreProcessing_f, pData);
-                    if(lResult)
-                        pData = lResult;
-                    
-                    /* minimized file will be in min file
-                     * if it's possible if not -
-                     * in root
-                     */
-                    writeFile(lMinFileName, pData, function(){
-                        /* calling callback function if it exist */
-                        if(pOptions)
+                        if(lRet && pOptions){
                             if(pOptions.returnName)
                                 Util.exec(pOptions.callback, {
                                     name: lMinFileName
                                 });
                             else
-                                Util.exec(pOptions.callback, pData);
-                        });
-                        
+                                Util.exec(pOptions.callback, p.data);
+                        }
                     };
                     
-                if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lLastFile_b))
+                    writeFile(lMinFileName, pData, Util.call(lWritedCallBack, {
+                        data : pData
+                    }) );
+                    
+                if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lIsLastFile))
                     lProcessing_f(lData);
                 
                 /* if file was not changed */
@@ -169,47 +132,39 @@
                             lProcessing_f(lData);
                         
                         else {
-                            if(pOptions)
-                                if(pOptions.returnName)
-                                    Util.exec(pOptions.callback, {
-                                        name: lMinFileName
-                                    });
-                                else
-                                    Util.exec(pOptions.callback, pFinalCode);
+                            writeFile(lMinFileName, pData, Util.call(lWritedCallBack, {
+                                data : pFinalCode
+                            }) );
                             
                             if(lExt === '.css')
                                 lAllCSS += pFinalCode;
                         }
                         
-                         if (lLastFile_b && lCSS_o && lCSS_o.merge){
-                            if(lCSS_o.img)
-                                base64_images(lAllCSS);
-                            else
-                                writeFile(MinFolder + 'all.min.css', lAllCSS);
-                        }
+                         if ( lIsLastFile )
+                            saveAllCSS( lOptimizeParams, lAllCSS );
                     });
             };
+            
+        };
         
-        /* moving thru all elements of js files array */
-        for(var i=0; pFiles_a[i]; i++){
+        for(var i=0; pFileNames[i]; i++){
             /* if postProcessing function exist
              * getting file name and passet next
              */
-            var lPostProcessing_o = pFiles_a[i];
+            var lPostProcessing_o = pFileNames[i], lName;
             if( Util.isObject(lPostProcessing_o) )
                 for(lName in lPostProcessing_o)
                     break;
             else
-                lName = pFiles_a[i];
+                lName = pFileNames[i];
             
             Util.log('minify: reading file ' + path.basename(lName) + '...');
             
-            /* if it's last file send true */
-            fs.readFile(lName, fileReaded(pFiles_a[i], dataReaded_f));
+            fs.readFile(lName, Util.call(fileReaded, {
+                name    : pFileNames[i],
+                callback: dataReaded_f
+            }));
         }
-        /* saving the name of last readed file for hash saving function */
-        
-        return true;
     }
     
     /**
@@ -256,34 +211,30 @@
             });
     }
     
-    /* Функция создаёт асинхроную версию 
+    /** Функция создаёт асинхроную версию 
      * для чтения файла
      * @pFileName       - имя считываемого файла
      * @pProcessFunc    - функция обработки файла
      */
-    function fileReaded(pFileName, pProcessFunc){
-        return function(pError, pData){
-            /* функция в которую мы попадаем,
-             * если данные считались
-             *
-             * если ошибка - показываем её
-             * иначе если переданная функция -
-             * функция запускаем её
-             */
-            if(!pError){
-                pData = pData.toString();
-                
-                Util.exec(pProcessFunc, {
-                    name: pFileName,
-                    data: pData
-                });
-            }
-            else
-               Util.log(pError);
-        };
+    function fileReaded(pParams){
+        var lRet =  Util.checkObj(pParams, ['error', 'data']) &&
+                    Util.checkObjTrue(pParams.params, ['name', 'callback']);
+        
+        if(lRet){
+            var p = pParams,
+                d = p.params;
+            
+            Util.log(p.error);
+            p.data = p.data.toString();
+            
+            Util.exec(d.callback, {
+                name: d.name,
+                data: p.data
+            });
+        }
     }
     
-    /*
+    /**
      * Функция записывает файла
      * и выводит ошибку или сообщает,
      * что файл успешно записан
@@ -299,6 +250,17 @@
             
             Util.exec(pCallBack);
         });
+    }
+    
+    function saveAllCSS(pParams, pData){
+        if(pParams && pParams.merge){
+            if(pParams.img)
+                base64_images(pData);
+            else{
+                var lPath = MinFolder + 'all.min.css';
+                writeFile(lPath, pData);
+            }
+        }
     }
     
     
