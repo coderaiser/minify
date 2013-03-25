@@ -154,9 +154,9 @@
             };
         
         /* moving thru all elements of js files array */
-        for(var i=0; lFiles[i]; i++){
+        for(var i = 0; lFiles[i]; i++){
             /* if postProcessing function exist
-             * getting file name and passet next
+             * getting file name and pass next
              */
             var lPostProcessing_o = lFiles[i];
             if( Util.isObject(lPostProcessing_o) )
