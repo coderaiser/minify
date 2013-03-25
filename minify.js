@@ -9,6 +9,7 @@
     var DIR         = __dirname +'/',
         LIBDIR      = DIR + 'lib/',
         main        = require(LIBDIR + 'main'),
+        img         = main.require(LIBDIR + 'img'),
         
         crypto      = main.crypto,
         fs          = main.fs,
@@ -16,8 +17,8 @@
         Util        = main.util,
         
         /* object contains hashes of files*/
-        HASHESNAME  = DIR       + 'hashes',
-        HASHES_JSON = HASHESNAME   + '.json',
+        HASHESNAME  = DIR           + 'hashes',
+        HASHES_JSON = HASHESNAME    + '.json',
         
         Hashes      = main.require(HASHESNAME) || [],
         HashesChanged;
@@ -111,14 +112,23 @@
                         data: pData
                     });
                     
-                    if(lExt === '.css')
-                        lAllCSS    += pData;
-                    
-                    if (lIsLastFile)
-                        saveAllCSS(lOptimizeParams, lAllCSS);
-                    
-                    writeFile(lMinFileName, pData, Util.retExec(lWritedCallBack, pData) );
+                    Util.ifExec(lExt !== '.css', function(pOptData){
+                        var lRet = Util.isString(pOptData);
+                        if(lRet)
+                            pData = pOptData;
                         
+                        if (lIsLastFile)
+                            saveAllCSS(lOptimizeParams, lAllCSS);
+                        
+                        writeFile(lMinFileName, pData, lWritedCallBack);
+                    },function(pCallBack){
+                        lAllCSS    += pData;
+                        
+                        img.optimize(pData, function(){
+                            Util.exec(pCallBack, pData);
+                        });
+                            
+                    });
                 };
                     
                 if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lIsLastFile))
@@ -132,7 +142,7 @@
                             lProcessing_f(lData);
                         
                         else {
-                           writeFile(lMinFileName, pFinalCode, Util.retExec(lWritedCallBack, pFinalCode) );
+                           writeFile(lMinFileName, pFinalCode, lWritedCallBack);
                             
                             if(lExt === '.css')
                                 lAllCSS += pFinalCode;
@@ -185,30 +195,6 @@
         return lRet;
     }
     
-    /**
-     * Функция переводит картинки в base64 и записывает в css-файл
-     * @param pData {String}
-     */
-    function base64_images(pData){
-        var lPath  = MinFolder + 'all.min.css',
-            b64img = main.require('css-b64-images');
-        
-        if(!b64img){
-            Util.log('can\'n load clean-css \n'                 +
-                    'npm install -g css-b64-images\n'           +
-                    'https://github.com/Filirom1/css-base64-images');
-            
-            writeFile(lPath, pData);
-            
-            return pData;
-        }
-        else
-            b64img.fromString(pData, '.', '', function(pError, pCSS){
-                Util.log('minify: images converted to base64 and saved in css file');
-                writeFile(lPath, pCSS);
-            });
-    }
-    
     /* Функция создаёт асинхроную версию 
      * для чтения файла
      * @pFileName       - имя считываемого файла
@@ -246,18 +232,14 @@
                 Util.log('minify: file ' + pName + ' writed...');
             }
             
-            Util.exec(pCallBack);
+            Util.exec(pCallBack, pData);
         });
     }
     
     function saveAllCSS(pParams, pData){
        if(pParams && pParams.merge){
-           if(pParams.img)
-               base64_images(pData);
-           else{
-               var lPath = MinFolder + 'all.min.css';
-               writeFile(lPath, pData);
-           }
+           var lPath = MinFolder + 'all.min.css';
+           writeFile(lPath, pData);
         }
     }
     
