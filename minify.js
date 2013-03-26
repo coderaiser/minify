@@ -16,14 +16,8 @@
         path        = main.path,
         Util        = main.util,
         
-        /* object contains hashes of files*/
-        HASHESNAME  = DIR           + 'hashes',
-        HASHES_JSON = HASHESNAME    + '.json',
-        
-        Hashes      = main.require(HASHESNAME) || [],
-        HashesChanged;
     
-    var MinFolder   = DIR + 'min/';
+        MinFolder   = DIR + 'min/';
     
     function makeFolder(pExist){
         /* Trying to create folder min
@@ -86,71 +80,44 @@
                     lOptimizeParams = lFileName[lName];
                     lFileName       = lName;
                 }
-                Util.log('minify: file ' + path.basename(lFileName) + ' readed');
-                
-                var lExt            = Util.getExtension(lFileName),
-                    lMinFileName    = getName(lFileName, lExt);
-                
-               
-                var lWritedCallBack =  function(pData){
-                    if(pOptions){
-                        if(pOptions.returnName)
-                             Util.exec(pOptions.callback, {
-                                 name: lMinFileName
-                             });
-                         else
-                            Util.exec(pOptions.callback, pData);
-                    }
-                };
-               
-                var lProcessing_f = function(pData){
-                    pData = main.optimize({
-                        ext : lExt,
-                        data: pData
-                    });
-                    
-                    Util.ifExec(lExt !== '.css', function(pOptData){
-                        var lRet = Util.isString(pOptData);
-                        if(lRet){
-                            pData    = pOptData;
-                            lAllCSS += pOptData;
-                        }
-                        
-                        ++lReadedFilesCount;
-                        
-                        if ( isLastFile() ){
-                            saveAllCSS(lOptimizeParams, lAllCSS);
-                        }
-                        
-                        writeFile(lMinFileName, pData, lWritedCallBack);
-                    },function(pCallBack){
-                        img.optimize(lFileName, pData, pCallBack);
-                    });
-                };
-                    
-                if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, isLastFile() ))
-                    lProcessing_f(lData);
-                
-                /* if file was not changed */
-                else
-                    fs.readFile(lMinFileName, function(pError, pFinalCode){
-                        /* if could not read file call forse minification */
-                        if(pError)
-                            lProcessing_f(lData);
-                        
-                        else {
-                            ++lReadedFilesCount;
-                            
-                            writeFile(lMinFileName, pFinalCode, lWritedCallBack);
-                            
-                            if(lExt === '.css')
-                                lAllCSS += pFinalCode;
-                        }
-                        
-                         if( isLastFile() )
-                            saveAllCSS(lOptimizeParams, lAllCSS);
-                    });
-            };
+            
+        Util.log('minify: file ' + path.basename(lFileName) + ' readed');
+            
+        var lExt            = Util.getExtension(lFileName),
+            lMinFileName    = getName(lFileName, lExt);
+            
+        lData = main.optimize({
+            ext : lExt,
+            data: lData
+        });
+            
+        Util.ifExec(lExt !== '.css', function(pOptData){
+            var lRet = Util.isString(pOptData);
+            if(lRet){
+                lData    = pOptData;
+                lAllCSS += pOptData;
+            }
+            
+            ++lReadedFilesCount;
+            
+            if ( isLastFile() ){
+                saveAllCSS(lOptimizeParams, lAllCSS);
+            }
+            
+            writeFile(lMinFileName, lData, function(pData){
+                if(pOptions){
+                    if(pOptions.returnName)
+                         Util.exec(pOptions.callback, {
+                             name: lMinFileName
+                         });
+                     else
+                        Util.exec(pOptions.callback, pData);
+                }
+                });
+            },function(pCallBack){
+                img.optimize(lFileName, lData, pCallBack);
+        });
+    };
         
         /* moving thru all elements of js files array */
         for(var i = 0; lFiles[i]; i++){
@@ -240,46 +207,6 @@
            var lPath = MinFolder + 'all.min.css';
            writeFile(lPath, pData);
         }
-    }
-    
-    function isFileChanged(pFileName, pFileData, pLastFile_b){
-        var lReadedHash,
-            i, n = Hashes.length;
-        
-        for(i = 0; i < n; i++){
-            var lData = Hashes[i];
-            
-            /* if founded row with file name - save hash */
-            if(lData.name === pFileName){
-                lReadedHash = lData.hash;
-                break;
-            }
-        }
-        
-        /* create hash of file data */ 
-        var lFileHash   = crypto.createHash('sha1')
-            .update(pFileData)
-            .digest('hex');
-        
-        /* boolean hashes.json changed or not */
-        if(lReadedHash !== lFileHash){
-            Hashes[i]       = {
-                name: pFileName,
-                hash: lFileHash
-            };
-            
-            HashesChanged   = true;
-        }
-        
-        if(pLastFile_b){
-            /* if hashes file was changes - write it */
-            if(HashesChanged)
-                writeFile(HASHES_JSON, Util.stringifyJSON(Hashes));
-            else
-                Util.log('minify: no one file has been changed');
-        }
-        /* has file changed? */
-        return lFileHash;
     }
         
     exports.getName     = getName;
