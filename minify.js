@@ -124,10 +124,7 @@
                         
                         writeFile(lMinFileName, pData, lWritedCallBack);
                     },function(pCallBack){
-                        img.optimize(lFileName, pData, function(){
-                            Util.exec(pCallBack, pData);
-                        });
-                            
+                        img.optimize(lFileName, pData, pCallBack);
                     });
                 };
                     
