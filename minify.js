@@ -69,17 +69,14 @@
              * @param pFileData_o {name, data}
              */
             dataReaded_f = function(pFileData_o){
-                ++lReadedFilesCount;
+                function isLastFile(){
+                    return lReadedFilesCount === lFiles.length;
+                }
                 
                 var lFileName   = pFileData_o.name,
                     lData       = pFileData_o.data,
-                    lIsLastFile = lReadedFilesCount === lFiles.length;
+                    lOptimizeParams;
                 
-                /*
-                 * if postProcessing function exist
-                 * getting it from lFileName object
-                 */
-                var lOptimizeParams;
                 if( Util.isObject(lFileName) ){
                     var lName;
                     for(lName in lFileName){
@@ -114,24 +111,27 @@
                     
                     Util.ifExec(lExt !== '.css', function(pOptData){
                         var lRet = Util.isString(pOptData);
-                        if(lRet)
-                            pData = pOptData;
+                        if(lRet){
+                            pData    = pOptData;
+                            lAllCSS += pOptData;
+                        }
                         
-                        if (lIsLastFile)
+                        ++lReadedFilesCount;
+                        
+                        if ( isLastFile() ){
                             saveAllCSS(lOptimizeParams, lAllCSS);
+                        }
                         
                         writeFile(lMinFileName, pData, lWritedCallBack);
                     },function(pCallBack){
-                        lAllCSS    += pData;
-                        
-                        img.optimize(pData, function(){
+                        img.optimize(lFileName, pData, function(){
                             Util.exec(pCallBack, pData);
                         });
                             
                     });
                 };
                     
-                if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, lIsLastFile))
+                if((pOptions && pOptions.force) || isFileChanged(lFileName, lData, isLastFile() ))
                     lProcessing_f(lData);
                 
                 /* if file was not changed */
@@ -142,13 +142,15 @@
                             lProcessing_f(lData);
                         
                         else {
-                           writeFile(lMinFileName, pFinalCode, lWritedCallBack);
+                            ++lReadedFilesCount;
+                            
+                            writeFile(lMinFileName, pFinalCode, lWritedCallBack);
                             
                             if(lExt === '.css')
                                 lAllCSS += pFinalCode;
                         }
                         
-                         if(lIsLastFile)
+                         if( isLastFile() )
                             saveAllCSS(lOptimizeParams, lAllCSS);
                     });
             };
