@@ -30,7 +30,7 @@
     "uglify-js": "2.2.5",
     "clean-css": "0.10.2",
     "html-minifier": "0.4.5",
-    "css-b64-images": "0.2.2"
+    "css-b64-images": "0.2.3"
   },
   "main": "./minify",
   "engines": {
