@@ -28,8 +28,8 @@
   "preferGlobal": false,
   "dependencies": {
     "uglify-js": "2.2.5",
-    "clean-css": "0.10.2",
-    "html-minifier": "0.4.5",
+    "clean-css": "1.0.0",
+    "html-minifier": "0.5.0",
     "css-b64-images": "0.2.3"
   },
   "main": "./minify",
