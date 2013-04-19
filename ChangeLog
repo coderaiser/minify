@@ -1,4 +1,28 @@
-2013.03.22, Version v0.2.0
+2013.03.22, v0.2.0
+
+* Updated clean-css to v0.10.1.
+
+* Updated uglify-js to 2.2.5.
+
+* Updated clean-css to v0.10.2.
+
+* Removed hashes control.
+
+* Added ability to optimize images in any css.
+
+* Updated css-b64-images to v0.2.3.
+
+* Updated clean-css to v1.0.0.
+
+* Updated html-minifier to v0.5.0.
+
+* Updated clean-css to v1.0.1.
+
+* Fixed bug with generating html
+when html-minifier do not installed.
+
+
+2013.03.01, v0.1.9
 
 * Fixed bug with optimizing images: if in css was not
 result css file do not saves.
@@ -26,29 +50,8 @@ minified file.
 
 * Updated clean-css to v0.10.0.
 
-* Updated clean-css to v0.10.1.
 
-* Updated uglify-js to 2.2.5.
-
-* Updated clean-css to v0.10.2.
-
-* Removed hashes control.
-
-* Added ability to optimize images in any css.
-
-* Updated css-b64-images to v0.2.3.
-
-* Updated clean-css to v1.0.0.
-
-* Updated html-minifier to v0.5.0.
-
-* Updated clean-css to v1.0.1.
-
-* Fixed bug with generating html
-when html-minifier do not installed.
-
-
-2012.12.12, Version v0.1.8
+2012.12.12, v0.1.8
 
 * Fixed bug with minimizing images to css file.
 If css file not the last, minification was not doing.
@@ -70,7 +73,7 @@ From now names in min folder is sha hashes form path
 of file.
 
 
-2012.10.01, Version v0.1.7
+2012.10.01, v0.1.7
 
 * Changed version of clean-css to 0.6.0.
 
@@ -87,7 +90,7 @@ setted up.
 * Function doit moved to cloudcmd module.
 
 
-2012.08.24, Version v0.1.6
+2012.08.24, v0.1.6
 
 * From now file hashes.json saving only if it was changed.
 
@@ -104,14 +107,14 @@ folder is empty files would be minified and writed.
 * Added ability auto minificate any neaded file.
 
 
-2012.08.06, Version v0.1.5
+2012.08.06, v0.1.5
 
 * Added callback function.
 
 * Added tests of js minification.
 
 
-2012.07.27, Version v0.1.4
+2012.07.27, v0.1.4
 
 * Fixed bug with saving hashes.json, if css file was not last,
 file would not writed.
@@ -123,7 +126,7 @@ be called.
 * Fixed bug: all.min.css writed every time.
 
 
-2012.07.19, Version v0.1.3
+2012.07.19, v0.1.3
 
 * Bug fixed: lastReaded file not always was realy last.
 Because of asynchronous nature of node, there is no 
@@ -139,7 +142,7 @@ and whith no converted to base64 images, but still containing
 all css files.
 
 
-2012.07.14, Version v0.1.2
+2012.07.14, v0.1.2
 
 * In jsScripts, bug with function jsScripts fixed, from now 
 jsScripts taking 2 parameters: file names and neaded_cache bolean.
@@ -153,7 +156,7 @@ created.
 * 3 functions: jsScripts, cssStyles and html merged to one function optimize.
 
 
-2012.07.11, Version v0.1.1
+2012.07.11, v0.1.1
 
 * In jsScripts, bug with function MoreProcessing_o.Func fixed,
 now changed final_code savings, not losing.
