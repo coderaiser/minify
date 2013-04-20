@@ -10,7 +10,7 @@ Minify v0.2.0 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][Dependen
 [NPMURL]:                   //npmjs.org/package/minify
 [BuildStatusURL]:           //travis-ci.org/coderaiser/minify  "Build Status"
 [DependencyStatusURL]:      //gemnasium.com/coderaiser/minify "Dependency Status"
-[FlattrURL]:                https://flattr.com/submit/auto?user_id=coderaiser&url=github.com/coderaiser/cloudcmd&title=cloudcmd&language=&tags=github&category=software
+[FlattrURL]:                https://flattr.com/submit/auto?user_id=coderaiser&url=github.com/coderaiser/minify&title=minify&language=&tags=github&category=software
 
 **Minify** - a minifier of js, css, html and img files,
 used in [Cloud Commander](http://coderaiser.github.com/cloudcmd "Cloud Commander")
