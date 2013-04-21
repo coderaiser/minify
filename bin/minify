@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-/* minify binary 
- * usage node minify <input-file> <output-file>
+/* minify binary
+ * usage: node minify <input-file> <output-file>
  */
 (function(){
     'use strict';

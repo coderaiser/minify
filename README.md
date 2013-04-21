@@ -1,5 +1,15 @@
-Minify [![Build Status](https://secure.travis-ci.org/coderaiser/minify.png?branch=master)](http://travis-ci.org/coderaiser/minify)
-======
+Minify v0.2.0 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
+===============
+[![Flattr][FlattrIMGURL]][FlattrURL]
+
+[NPMIMGURL]:                https://badge.fury.io/js/cloudcmd.png
+[BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=master
+[DependencyStatusIMGURL]:   https://gemnasium.com/coderaiser/minify.png
+[FlattrIMGURL]:             http://api.flattr.com/button/flattr-badge-large.png
+[NPMURL]:                   //npmjs.org/package/minify
+[BuildStatusURL]:           //travis-ci.org/coderaiser/minify  "Build Status"
+[DependencyStatusURL]:      //gemnasium.com/coderaiser/minify "Dependency Status"
+[FlattrURL]:                https://flattr.com/submit/auto?user_id=coderaiser&url=github.com/coderaiser/minify&title=minify&language=&tags=github&category=software
 
 **Minify** - a minifier of js, css, html and img files,
 used in [Cloud Commander](http://coderaiser.github.com/cloudcmd "Cloud Commander")
@@ -44,10 +54,6 @@ css-files.
  - **pFiles_a**                     - varible, wich contain array of file
 names or string, if name single.
  - **pOptions**(optional)           - object contain main options.
-
-```js
-pOptions = {callback: func(pFinalCode){}};
-```
 
 **Examples**:
 
@@ -104,3 +110,25 @@ Additional modules:
 Install addtitional modules:
 
     npm i uglify-js clean-css html-minifier css-b64-images
+
+Contributing
+---------------
+If you would like to contribute - send pull request to dev branch.
+Getting dev version of **Minify**:
+
+    git clone git://github.com/coderaiser/minify.git
+    git checkout dev
+
+Version history
+---------------
+- *2012.04.22*, **[v0.2.0](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.0.zip)**
+- *2012.03.01*, **[v0.1.9](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.9.zip)**
+- *2012.12.12*, **[v0.1.8](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.8.zip)**
+- *2012.10.01*, **[v0.1.7](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.7.zip)**
+- *2012.08.24*, **[v0.1.6](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.6.zip)**
+- *2012.08.06*, **[v0.1.5](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.5.zip)**
+- *2012.07.27*, **[v0.1.4](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.4.zip)**
+- *2012.07.19*, **[v0.1.3](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.3.zip)**
+- *2012.07.14*, **[v0.1.2](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.2.zip)**
+- *2012.07.11*, **[v0.1.1](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.1.zip)**
+- *2012.00.00*, **[v0.1.0](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.0.zip)**
