@@ -3,8 +3,7 @@ Minify v0.2.0 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][Dependen
 [![Flattr][FlattrIMGURL]][FlattrURL]
 
 [NPMIMGURL]:                https://badge.fury.io/js/cloudcmd.png
-[BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/cloudcmd.png?branch=dev
-[BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=dev
+[BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=master
 [DependencyStatusIMGURL]:   https://gemnasium.com/coderaiser/minify.png
 [FlattrIMGURL]:             http://api.flattr.com/button/flattr-badge-large.png
 [NPMURL]:                   //npmjs.org/package/minify
