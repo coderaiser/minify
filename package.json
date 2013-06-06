@@ -28,7 +28,7 @@
   "preferGlobal": false,
   "dependencies": {
     "uglify-js": "2.3.5",
-    "clean-css": "1.0.3",
+    "clean-css": "1.0.7",
     "html-minifier": "0.5.2",
     "css-b64-images": "0.2.3"
   },
