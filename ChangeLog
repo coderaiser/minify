@@ -20,6 +20,8 @@
 
 * fix(minify) pData.toString -> pData && pData.toString
 
+* chore(clean-css) v1.0.10 -> v1.0.11
+
 
 2013.04.22, v0.2.0
 
