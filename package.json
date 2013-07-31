@@ -1,40 +1,39 @@
 {
-  "name": "minify",
-  "description": "Minifier of js, css, html and img",
-  "keywords": [
-    "minify",
-    "minimize",
-    "js",
-    "css",
-    "img",
-    "html",
-    "base64"
-  ],
-  "version": "0.2.0",
-  "author": {
-    "name": "coderaiser",
-    "email": "mnemonic.enemy@gmail.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/coderaiser/minify.git"
-  },  
-  "bin": {
-    "minify": "./bin/minify"
-  },
-  "scripts": {
-    "test": "node test/test.js"
-  },
-  "preferGlobal": false,
-  "dependencies": {
-    "uglify-js": "2.3.6",
-    "clean-css": "1.0.11",
-    "html-minifier": "0.5.2",
-    "css-b64-images": "0.2.3"
-  },
-  "main": "./minify",
-  "engines": {
-    "node": ">= 0.4.0"
-  }
+    "name": "minify",
+    "description": "Minifier of js, css, html and img",
+    "keywords": [
+        "minify",
+        "minimize",
+        "js",
+        "css",
+        "img",
+        "html",
+        "base64"
+    ],
+    "version": "0.2.0",
+    "author": {
+        "name": "coderaiser",
+        "email": "mnemonic.enemy@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/coderaiser/minify.git"
+    },
+    "bin": {
+        "minify": "./bin/minify"
+    },
+    "scripts": {
+        "test": "node test/test.js"
+    },
+    "preferGlobal": false,
+    "dependencies": {
+        "uglify-js": "2.3.6",
+        "clean-css": "1.0.12",
+        "html-minifier": "0.5.2",
+        "css-b64-images": "0.2.3"
+    },
+    "main": "./minify",
+    "engines": {
+        "node": ">= 0.4.0"
+    }
 }
-
