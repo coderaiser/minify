@@ -10,24 +10,32 @@
         main        = require('../lib/main'),
         fs          = main.fs,
         Util        = main.util,
-        Argv        = process.argv;
+        
+        lPack       = main.mainpackage,
+        lVersion    = lPack.version,
+        
+        Argv        = process.argv,
+        lIn         = Argv[2],
+        lOut        = Argv[3];
     
-    if ( !Argv[2] ) {
-      console.log('usage:');
-      console.log('minify <input-file> <output-file>');
-      console.log('or for output to screen:');
-      console.log('minify <input-file>');
-    }else if( Argv[2] && !Argv[3])
+    if ( !lIn || Util.strCmp(lIn, ['-h', '--help'])) {
+      console.log('usage:\n'                            +
+                  'minify <input-file> <output-file>\n' +
+                  'or for output to screen:\n'          +
+                  'minify <input-file>\n');
+    } else if ( Util.strCmp(lIn, ['-v', '--version']) ) {
+        console.log('v' + lVersion);
+    } else if( lIn && !lOut)
         minify.optimize(Argv[2], {
             callback: function(pData){
                 Util.log(pData);
             }
         });
-    else if( Argv[3] ) {
-         minify.optimize(Argv[2], {
+    else if( lOut ) {
+         minify.optimize(lIn, {
             callback: function(pData){
-                fs.writeFile(Argv[3], pData, function(pError){
-                    Util.log(pError || 'minify: ' + 'file ' + Argv[3] +' writed');
+                fs.writeFile(lOut, pData, function(pError){
+                    Util.log(pError || 'minify: ' + 'file ' + lOut +' writed');
                 });
             }
         });
