@@ -81,43 +81,43 @@
                     lFileName       = lName;
                 }
             
-        Util.log('minify: file ' + path.basename(lFileName) + ' readed');
-            
-        var lExt            = Util.getExtension(lFileName),
-            lMinFileName    = getName(lFileName, lExt);
-            
-        lData = main.optimize({
-            ext : lExt,
-            data: lData
-        });
-            
-        Util.ifExec(lExt !== '.css', function(pOptData){
-            var lRet = Util.isString(pOptData);
-            if(lRet){
-                lData    = pOptData;
-                lAllCSS += pOptData;
-            }
-            
-            ++lReadedFilesCount;
-            
-            if ( isLastFile() ){
-                saveAllCSS(lOptimizeParams, lAllCSS);
-            }
-            
-            writeFile(lMinFileName, lData, function(pData){
-                if(pOptions){
-                    if(pOptions.returnName)
-                         Util.exec(pOptions.callback, {
-                             name: lMinFileName
-                         });
-                     else
-                        Util.exec(pOptions.callback, pData);
+            Util.log('minify: file ' + path.basename(lFileName) + ' readed');
+                
+            var lExt            = Util.getExtension(lFileName),
+                lMinFileName    = getName(lFileName, lExt);
+                
+            lData = main.optimize({
+                ext : lExt,
+                data: lData
+            });
+                
+            Util.ifExec(lExt !== '.css', function(pOptData){
+                var lRet = Util.isString(pOptData);
+                if(lRet){
+                    lData    = pOptData;
+                    lAllCSS += pOptData;
                 }
-                });
-            },function(pCallBack){
-                img.optimize(lFileName, lData, pCallBack);
-        });
-    };
+                
+                ++lReadedFilesCount;
+                
+                if ( isLastFile() ){
+                    saveAllCSS(lOptimizeParams, lAllCSS);
+                }
+                
+                writeFile(lMinFileName, lData, function(pData){
+                    if(pOptions){
+                        if(pOptions.returnName)
+                             Util.exec(pOptions.callback, {
+                                 name: lMinFileName
+                             });
+                         else
+                            Util.exec(pOptions.callback, pData);
+                    }
+                    });
+                },function(pCallBack){
+                    img.optimize(lFileName, lData, pCallBack);
+            });
+        };
         
         /* moving thru all elements of js files array */
         for(var i = 0; lFiles[i]; i++){
@@ -167,19 +167,20 @@
      * @pProcessFunc    - функция обработки файла
      */
     function fileReaded(pParams){
-        var lRet =  Util.checkObj(pParams, ['error', 'data']) &&
+        var p, d, lData,
+            lRet =  Util.checkObj(pParams, ['error', 'data']) &&
                     Util.checkObjTrue(pParams.params, ['name', 'callback']);
         
         if(lRet){
-            var p = pParams,
-                d = p.params;
+            p = pParams,
+            d = p.params;
             
             Util.log(p.error);
-            p.data = p.data.toString();
+            lData = p.data && p.data.toString();
             
             Util.exec(d.callback, {
                 name: d.name,
-                data: p.data
+                data: lData
             });
         }
     }

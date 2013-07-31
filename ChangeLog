@@ -1,3 +1,32 @@
+2013.08.01, v0.2.1
+
+* Updated clean-css to v1.0.2.
+
+* Updated uglify-js to v2.3.0.
+
+* Updated uglify-js to v2.3.2.
+
+* Updated html-minifier to v0.5.2 and uglify-js to v2.3.4.
+
+* Updated clean-css to v1.0.3 and uglify to v2.3.5.
+
+* Updated clean-css to v1.0.7.
+
+* Updated uglify to v2.3.6.
+
+* doc(contribute) add commit message conventions
+
+* chore(clean-css) v1.0.7 -> v1.0.10
+
+* fix(minify) pData.toString -> pData && pData.toString
+
+* chore(clean-css) v1.0.10 -> v1.0.11
+
+* feature(bin) add -h -v
+
+* chore(clean-css) v1.0.11 -> v1.0.12
+
+
 2013.04.22, v0.2.0
 
 * Updated clean-css to v0.10.1.
