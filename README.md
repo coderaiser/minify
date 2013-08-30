@@ -6,10 +6,12 @@ Minify v0.2.1 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][Dependen
 [BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=master
 [DependencyStatusIMGURL]:   https://gemnasium.com/coderaiser/minify.png
 [FlattrIMGURL]:             http://api.flattr.com/button/flattr-badge-large.png
+[NPM_INFO_IMG]:             https://nodei.co/npm/minify.png?downloads=true&&stars
 [NPMURL]:                   //npmjs.org/package/minify
 [BuildStatusURL]:           //travis-ci.org/coderaiser/minify  "Build Status"
 [DependencyStatusURL]:      //gemnasium.com/coderaiser/minify "Dependency Status"
 [FlattrURL]:                https://flattr.com/submit/auto?user_id=coderaiser&url=github.com/coderaiser/minify&title=minify&language=&tags=github&category=software
+[NPM_INFO_URL]:             https://npmjs.org/package/minify "npm"
 
 **Minify** - a minifier of js, css, html and img files,
 used in [Cloud Commander](http://coderaiser.github.io/cloudcmd "Cloud Commander")
@@ -17,6 +19,8 @@ project.
 
 Install
 ---------------
+[![NPM_INFO][NPM_INFO_IMG]][NPM_INFO_URL]
+
 You can install minify just like that:
 
     npm i minify
