@@ -3,7 +3,7 @@
 update:
 - (package) clean-css: 1.0.12 -> 1.1.2
 
-2013.08.01, v0.2.1
+2013.07.01, v0.2.1
 
 * Updated clean-css to v1.0.2.
 
