@@ -1,22 +1,25 @@
-Minify v0.2.1 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
+Minify v0.2.2 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
 ===============
-[![Flattr][FlattrIMGURL]][FlattrURL]
-
-[NPMIMGURL]:                https://badge.fury.io/js/cloudcmd.png
+[NPMIMGURL]:                https://badge.fury.io/js/minify.png
 [BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=master
 [DependencyStatusIMGURL]:   https://gemnasium.com/coderaiser/minify.png
 [FlattrIMGURL]:             http://api.flattr.com/button/flattr-badge-large.png
+[NPM_INFO_IMG]:             https://nodei.co/npm/minify.png?downloads=true&&stars
 [NPMURL]:                   //npmjs.org/package/minify
 [BuildStatusURL]:           //travis-ci.org/coderaiser/minify  "Build Status"
 [DependencyStatusURL]:      //gemnasium.com/coderaiser/minify "Dependency Status"
 [FlattrURL]:                https://flattr.com/submit/auto?user_id=coderaiser&url=github.com/coderaiser/minify&title=minify&language=&tags=github&category=software
 
 **Minify** - a minifier of js, css, html and img files,
-used in [Cloud Commander](http://coderaiser.github.com/cloudcmd "Cloud Commander")
+used in [Cloud Commander](http://cloudcmd.io "Cloud Commander")
 project.
+
+[![Flattr][FlattrIMGURL]][FlattrURL]
 
 Install
 ---------------
+[![NPM_INFO][NPM_INFO_IMG]][NPMURL]
+
 You can install minify just like that:
 
     npm i minify
@@ -121,7 +124,8 @@ Getting dev version of **Minify**:
 
 Version history
 ---------------
-- *2013.07.01*, **[v0.2.1](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.1.zip)**
+- *2013.10.01*, **[v0.2.2](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.2.zip)**
+- *2013.08.01*, **[v0.2.1](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.1.zip)**
 - *2013.04.22*, **[v0.2.0](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.0.zip)**
 - *2013.03.01*, **[v0.1.9](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.9.zip)**
 - *2012.12.12*, **[v0.1.8](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.8.zip)**
