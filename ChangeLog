@@ -5,7 +5,7 @@ update:
 - uglify: v2.3.6 -> v2.4.0
 - html-minifier: v0.5.2 -> v0.5.4
 
-2013.07.01, v0.2.1
+2013.08.01, v0.2.1
 
 * Updated clean-css to v1.0.2.
 
