@@ -1,7 +1,9 @@
 2013.10.01, v0.2.2
 
 update:
-- (package) clean-css: 1.0.12 -> 1.1.2
+- clean-css: v1.0.10 -> v1.1.2
+- uglify: v2.3.6 -> v2.4.0
+- html-minifier: v0.5.2 -> v0.5.4
 
 2013.07.01, v0.2.1
 
