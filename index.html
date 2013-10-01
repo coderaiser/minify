@@ -29,17 +29,19 @@
       </header>
       <section>
         <h1>
-<a name="minify-v021---" class="anchor" href="#minify-v021---"><span class="octicon octicon-link"></span></a>Minify v0.2.1 <a href="//npmjs.org/package/minify"><img src="https://badge.fury.io/js/cloudcmd.png" alt="NPM version"></a> <a href="//gemnasium.com/coderaiser/minify" title="Dependency Status"><img src="https://gemnasium.com/coderaiser/minify.png" alt="Dependency Status"></a> <a href="//travis-ci.org/coderaiser/minify" title="Build Status"><img src="https://secure.travis-ci.org/coderaiser/minify.png?branch=master" alt="Build Status"></a>
+<a name="minify-v022---" class="anchor" href="#minify-v022---"><span class="octicon octicon-link"></span></a>Minify v0.2.2 <a href="//npmjs.org/package/minify"><img src="https://badge.fury.io/js/minify.png" alt="NPM version"></a> <a href="//gemnasium.com/coderaiser/minify" title="Dependency Status"><img src="https://gemnasium.com/coderaiser/minify.png" alt="Dependency Status"></a> <a href="//travis-ci.org/coderaiser/minify" title="Build Status"><img src="https://secure.travis-ci.org/coderaiser/minify.png?branch=master" alt="Build Status"></a>
 </h1>
+
+<p><strong>Minify</strong> - a minifier of js, css, html and img files,
+used in <a href="http://cloudcmd.io" title="Cloud Commander">Cloud Commander</a>
+project.</p>
 
 <p><a href="https://flattr.com/submit/auto?user_id=coderaiser&amp;url=github.com/coderaiser/minify&amp;title=minify&amp;language=&amp;tags=github&amp;category=software"><img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr"></a></p>
 
-<p><strong>Minify</strong> - a minifier of js, css, html and img files,
-used in <a href="http://coderaiser.github.com/cloudcmd" title="Cloud Commander">Cloud Commander</a>
-project.</p>
-
 <h2>
 <a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h2>
+
+<p><a href="//npmjs.org/package/minify"><img src="https://nodei.co/npm/minify.png?downloads=true&amp;&amp;stars" alt="NPM_INFO"></a></p>
 
 <p>You can install minify just like that:</p>
 
@@ -73,7 +75,7 @@ project.</p>
 
 <p>To use <strong>Minify</strong> functions it sould be connected first. It's doing like always.</p>
 
-<div class="highlight"><pre><span class="nx">minify</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'minify'</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="nx">minify</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'minify'</span><span class="p">);</span>
 </pre></div>
 
 <p>All of minification functions save files in <strong>./min</strong> directory with
@@ -92,36 +94,36 @@ names or string, if name single.</li>
 <strong>pOptions</strong>(optional)           - object contain main options.</li>
 </ul><p><strong>Examples</strong>:</p>
 
-<div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">(</span><span class="s1">'client.js'</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">(</span><span class="s1">'client.js'</span><span class="p">);</span>
 </pre></div>
 
-<div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">(</span><span class="s1">'client.js'</span><span class="p">,</span> <span class="p">{</span>
+<div class="highlight highlight-js"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">(</span><span class="s1">'client.js'</span><span class="p">,</span> <span class="p">{</span>
     <span class="nx">callback</span><span class="o">:</span> <span class="nx">func</span><span class="p">(</span><span class="nx">pMinData</span><span class="p">){}</span>
 <span class="p">});</span>
 </pre></div>
 
 <p>if a couple files:</p>
 
-<div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">([</span><span class="s1">'client.js'</span><span class="p">,</span>
+<div class="highlight highlight-js"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">([</span><span class="s1">'client.js'</span><span class="p">,</span>
     <span class="s1">'style.css'</span><span class="p">]);</span>
 </pre></div>
 
 <p>if post processing needed </p>
 
-<div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">({</span>
+<div class="highlight highlight-js"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">({</span>
     <span class="s1">'client.js'</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">pFinalCode</span><span class="p">){}</span>
 <span class="p">});</span>
 </pre></div>
 
 <p>if post image converting needed (works with css only)</p>
 
-<div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">([{</span><span class="s1">'style.css'</span><span class="o">:</span> <span class="p">{</span><span class="nx">img</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">merge</span><span class="o">:</span> <span class="kc">true</span><span class="p">}</span> <span class="p">},</span>
+<div class="highlight highlight-js"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">([{</span><span class="s1">'style.css'</span><span class="o">:</span> <span class="p">{</span><span class="nx">img</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">merge</span><span class="o">:</span> <span class="kc">true</span><span class="p">}</span> <span class="p">},</span>
     <span class="s1">'index.html'</span><span class="p">]);</span>
 </pre></div>
 
 <p>if only need the name of minified file (from min directory)</p>
 
-<div class="highlight"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">(</span><span class="s1">'client.js'</span><span class="p">,</span> <span class="p">{</span>
+<div class="highlight highlight-js"><pre><span class="nx">minify</span><span class="p">.</span><span class="nx">optimize</span><span class="p">(</span><span class="s1">'client.js'</span><span class="p">,</span> <span class="p">{</span>
     <span class="nx">returnName</span>  <span class="o">:</span> <span class="kc">true</span>
     <span class="nx">callback</span>    <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">pParams</span><span class="p">){</span>
         <span class="kd">var</span> <span class="nx">lName</span> <span class="o">=</span> <span class="nx">pParams</span> <span class="o">&amp;&amp;</span> <span class="nx">pParams</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
@@ -161,7 +163,10 @@ git checkout dev
 
 <ul>
 <li>
-<em>2013.07.01</em>, <strong><a href="//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.1.zip">v0.2.1</a></strong>
+<em>2013.10.01</em>, <strong><a href="//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.2.zip">v0.2.2</a></strong>
+</li>
+<li>
+<em>2013.08.01</em>, <strong><a href="//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.1.zip">v0.2.1</a></strong>
 </li>
 <li>
 <em>2013.04.22</em>, <strong><a href="//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.0.zip">v0.2.0</a></strong>
