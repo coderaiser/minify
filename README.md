@@ -14,7 +14,7 @@ Minify v0.2.1 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][Dependen
 [NPM_INFO_URL]:             https://npmjs.org/package/minify "npm"
 
 **Minify** - a minifier of js, css, html and img files,
-used in [Cloud Commander](http://coderaiser.github.io/cloudcmd "Cloud Commander")
+used in [Cloud Commander](http://cloudcmd.io "Cloud Commander")
 project.
 
 Install
