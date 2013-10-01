@@ -11,7 +11,6 @@ Minify v0.2.2 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][Dependen
 [BuildStatusURL]:           //travis-ci.org/coderaiser/minify  "Build Status"
 [DependencyStatusURL]:      //gemnasium.com/coderaiser/minify "Dependency Status"
 [FlattrURL]:                https://flattr.com/submit/auto?user_id=coderaiser&url=github.com/coderaiser/minify&title=minify&language=&tags=github&category=software
-[NPM_INFO_URL]:             https://npmjs.org/package/minify "npm"
 
 **Minify** - a minifier of js, css, html and img files,
 used in [Cloud Commander](http://cloudcmd.io "Cloud Commander")
@@ -19,7 +18,7 @@ project.
 
 Install
 ---------------
-[![NPM_INFO][NPM_INFO_IMG]][NPM_INFO_URL]
+[![NPM_INFO][NPM_INFO_IMG]][NPMURL]
 
 You can install minify just like that:
 
