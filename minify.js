@@ -81,7 +81,7 @@
                     lFileName       = lName;
                 }
             
-            Util.log('minify: file ' + path.basename(lFileName) + ' readed');
+            Util.log('minify: file ' + path.basename(lFileName) + ' read');
                 
             var lExt            = Util.getExtension(lFileName),
                 lMinFileName    = getName(lFileName, lExt);
@@ -196,7 +196,7 @@
                 Util.log(pError);
             else{
                 pName = path.basename(pName);
-                Util.log('minify: file ' + pName + ' writed...');
+                Util.log('minify: file ' + pName + ' written...');
             }
             
             Util.exec(pCallBack, pData);

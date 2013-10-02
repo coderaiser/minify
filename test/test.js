@@ -13,7 +13,7 @@
         uglify      = main.require('uglify-js'),
         
         Data,
-        ErrorMsg    =   'can\'n load uglify-js          \n' +
+        ErrorMsg    =   'can\'t load uglify-js          \n' +
                         'npm install uglify-js          \n' +
                         'https://github.com/mishoo/UglifyJS';
     
