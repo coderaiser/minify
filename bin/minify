@@ -35,7 +35,7 @@
          minify.optimize(lIn, {
             callback: function(pData){
                 fs.writeFile(lOut, pData, function(pError){
-                    Util.log(pError || 'minify: ' + 'file ' + lOut +' writed');
+                    Util.log(pError || 'minify: ' + 'file ' + lOut +' written');
                 });
             }
         });
