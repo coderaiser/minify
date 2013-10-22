@@ -33,6 +33,7 @@
         "css-b64-images": "0.2.3"
     },
     "main": "./minify",
+    "license": "MIT",
     "engines": {
         "node": ">= 0.4.0"
     }
