@@ -1,3 +1,6 @@
+---
+layout: default
+---
 Minify v0.2.2 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
 ===============
 [NPMIMGURL]:                https://badge.fury.io/js/minify.png
