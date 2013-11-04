@@ -1,0 +1,13 @@
+markdown        : redcarpet
+name            : Minify
+title           : Minify
+tagLine         : Minifier of js, css, html and img
+viewOn          : View Project on
+download        : Download
+maintainedBy    : This project is maintained by
+yandex          : 48e59eacd66f1bbd
+ga              : UA-33536569-5
+canonical       : coderaiser.github.io/minify
+repoName        : coderaiser/minify/edit/dev/HELP.md
+improveText     : "Find typo? Help fix it."
+repoSource      : coderaiser/minify
