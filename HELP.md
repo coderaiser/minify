@@ -30,13 +30,16 @@ or
 Command Line
 ---------------
 For use in command line just write something like:
+
 ```
 minify <input-file> <output-file>
 ```
 or just 
+
 ```
 minify <input-file>>
 ```
+
 to see output in screen.
 
 API
@@ -44,6 +47,7 @@ API
 **Minify** module contains some api for interacting from another js files.
 
 To use **Minify** functions it sould be connected first. It's doing like always.
+
 ```js
 minify = require('minify');
 ```
@@ -71,12 +75,14 @@ minify.optimize('client.js', {
 ```
 
 if a couple files:
+
 ```js
 minify.optimize(['client.js',
     'style.css']);
 ```
 
 if post processing needed 
+
 ```js
 minify.optimize({
     'client.js' : function(pFinalCode){}
@@ -84,12 +90,14 @@ minify.optimize({
 ```
 
 if post image converting needed (works with css only)
+
 ```js
 minify.optimize([{'style.css': {img: true, merge: true} },
     'index.html']);
 ```    
 
 if only need the name of minified file (from min directory)
+
 ```js
 minify.optimize('client.js', {
     returnName  : true
