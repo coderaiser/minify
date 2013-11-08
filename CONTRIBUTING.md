@@ -10,7 +10,7 @@ or by [link](https://github.com/coderaiser/minify/tree/dev "Dev version").
 
 Commit
 ---------------
-Format of the commit message: **type(scope): subject**
+Format of the commit message: **type(scope) subject**
 
 **Type**:
 - feature

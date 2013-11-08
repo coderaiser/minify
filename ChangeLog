@@ -1,3 +1,10 @@
+2013.11.08, v0.2.3
+
+update:
+- clean-css: 1.1.x -> 2.0.x
+- update clean-css, uglify-js to all minor versions
+- clean-css: update to v1.1.3
+
 2013.10.01, v0.2.2
 
 update:
