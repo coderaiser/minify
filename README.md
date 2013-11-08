@@ -8,5 +8,5 @@ Minify v0.2.2 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][Dependen
 [BuildStatusURL]:           //travis-ci.org/coderaiser/minify  "Build Status"
 [DependencyStatusURL]:      //gemnasium.com/coderaiser/minify "Dependency Status"
 
-**Minify** - a [minifier](http://coderaiser.github.io/minify "Minify") of js, css, html and img files,
+[Minify](http://coderaiser.github.io/minify "Minify") - a minifier of js, css, html and img files,
 used in [Cloud Commander](http://cloudcmd.io "Cloud Commander") project.
