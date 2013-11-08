@@ -1,7 +1,8 @@
 ---
 layout: default
 ---
-Minify v0.2.2 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
+
+Minify v0.2.3 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
 ===============
 [NPMIMGURL]:                https://badge.fury.io/js/minify.png
 [BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=master
@@ -13,9 +14,8 @@ Minify v0.2.2 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][Dependen
 [DependencyStatusURL]:      //gemnasium.com/coderaiser/minify "Dependency Status"
 [FlattrURL]:                https://flattr.com/submit/auto?user_id=coderaiser&url=github.com/coderaiser/minify&title=minify&language=&tags=github&category=software
 
-**Minify** - a minifier of js, css, html and img files,
-used in [Cloud Commander](http://cloudcmd.io "Cloud Commander")
-project.
+[Minify](http://coderaiser.github.io/minify "Minify") - a minifier of js, css, html and img files,
+used in [Cloud Commander](http://cloudcmd.io "Cloud Commander") project.
 
 [![Flattr][FlattrIMGURL]][FlattrURL]
 
@@ -135,6 +135,7 @@ Getting dev version of **Minify**:
 
 Version history
 ---------------
+- *2013.11.08*, **[v0.2.3](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.3.zip)**
 - *2013.10.01*, **[v0.2.2](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.2.zip)**
 - *2013.08.01*, **[v0.2.1](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.1.zip)**
 - *2013.04.22*, **[v0.2.0](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.0.zip)**
