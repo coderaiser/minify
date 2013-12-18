@@ -107,7 +107,7 @@ minify.optimize('client.js', {
 });
 ```
 
-**MinFolder** - varible thet contains folder name, where minimized files stored.
+**MinFolder** - variable that contains folder name, where minimized files stored.
                 (could not be changed for now).
                 
 Additional modules:
