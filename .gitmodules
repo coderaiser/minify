@@ -1,3 +1,4 @@
 [submodule "_layouts"]
 	path = _layouts
 	url = http://github.com/coderaiser/_layouts
+	branch = master
