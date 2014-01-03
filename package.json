@@ -10,7 +10,7 @@
         "html",
         "base64"
     ],
-    "version": "0.2.3",
+    "version": "0.2.4",
     "author": {
         "name": "coderaiser",
         "email": "mnemonic.enemy@gmail.com"
@@ -27,7 +27,7 @@
     },
     "preferGlobal": false,
     "dependencies": {
-        "uglify-js": "2.4.x",
+        "uglify-js": "2.4.7",
         "clean-css": "2.0.x",
         "html-minifier": "0.5.4",
         "css-b64-images": "0.2.3"

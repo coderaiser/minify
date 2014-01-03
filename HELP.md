@@ -1,4 +1,4 @@
-Minify v0.2.3 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
+Minify v0.2.4 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
 ===============
 [NPMIMGURL]:                https://badge.fury.io/js/minify.png
 [BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=master
@@ -107,7 +107,7 @@ minify.optimize('client.js', {
 });
 ```
 
-**MinFolder** - varible thet contains folder name, where minimized files stored.
+**MinFolder** - variable that contains folder name, where minimized files stored.
                 (could not be changed for now).
                 
 Additional modules:
