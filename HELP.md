@@ -131,6 +131,7 @@ Getting dev version of **Minify**:
 
 Version history
 ---------------
+- *2014.01.03*, **[v0.2.4](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.4.zip)**
 - *2013.11.08*, **[v0.2.3](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.3.zip)**
 - *2013.10.01*, **[v0.2.2](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.2.zip)**
 - *2013.08.01*, **[v0.2.1](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.1.zip)**
