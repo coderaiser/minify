@@ -2,7 +2,7 @@
 layout: default
 ---
 
-Minify v0.2.3 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
+Minify v0.2.4 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
 ===============
 [NPMIMGURL]:                https://badge.fury.io/js/minify.png
 [BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=master
@@ -111,7 +111,7 @@ minify.optimize('client.js', {
 });
 ```
 
-**MinFolder** - varible thet contains folder name, where minimized files stored.
+**MinFolder** - variable that contains folder name, where minimized files stored.
                 (could not be changed for now).
                 
 Additional modules:
@@ -135,6 +135,7 @@ Getting dev version of **Minify**:
 
 Version history
 ---------------
+- *2014.01.03*, **[v0.2.4](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.4.zip)**
 - *2013.11.08*, **[v0.2.3](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.3.zip)**
 - *2013.10.01*, **[v0.2.2](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.2.zip)**
 - *2013.08.01*, **[v0.2.1](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.1.zip)**
