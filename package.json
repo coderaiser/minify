@@ -27,7 +27,7 @@
     },
     "preferGlobal": false,
     "dependencies": {
-        "uglify-js": "2.4.7",
+        "uglify-js": "2.4.x",
         "clean-css": "2.0.x",
         "html-minifier": "0.5.x",
         "css-b64-images": "0.2.3"
