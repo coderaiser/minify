@@ -19,22 +19,15 @@
     
         MinFolder   = DIR + 'min/';
     
-    function makeFolder(pExist) {
-        /* Trying to create folder min
-         * where woud be minifyed versions
-         * of files 511(10)=777(8)
-         * rwxrwxrwx
-         */
-        if (!pExist)
-            fs.mkdir(MinFolder, 511, function(pError) {
-                if (pError) {
-                    Util.log(pError);
-                    MinFolder = '/';
-                }
-            });
-    }
-    
-    fs.exists(MinFolder, makeFolder);
+    /* Trying to create folder min
+     * where woud be minifyed versions
+     * of files 511(10)=777(8)
+     * rwxrwxrwx
+     */
+    fs.exists(MinFolder, function makeFolder(exist) {
+        if (!exist)
+            fs.mkdir(MinFolder, 511, Util.log.bind(Util));
+    });
     
     /**
      * function minificate js,css and html files
