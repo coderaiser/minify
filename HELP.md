@@ -55,11 +55,11 @@ extension **.min** (*.min.js, *.min.css, *.min.html).
 If directory could be created **minify.MinFolder** would countain stirng 'min/',
 in any other case - '/'.
 
-**optimize**(*pFiles_a*) - function which minificate js, html and
+**optimize**(*files*) - function which minificate js, html and
 css-files.
- - **pFiles_a**                     - varible, wich contain array of file
+ - **files**                     - varible, wich contain array of file
 names or string, if name single.
- - **pOptions**(optional)           - object contain main options.
+ - **options**(optional)           - object contain main options.
 
 **Examples**:
 
@@ -69,30 +69,38 @@ minify.optimize('client.js');
 
 ```js
 minify.optimize('client.js', {
-    callback: func(pMinData){}
+    callback: func(minData) {
+    }
 });
 ```
 
 if a couple files:
 
 ```js
-minify.optimize(['client.js',
-    'style.css']);
+minify.optimize([
+    'client.js',
+    'style.css'
+]);
 ```
 
 if post processing needed 
 
 ```js
 minify.optimize({
-    'client.js' : function(pFinalCode){}
+    'client.js' : function(minData) {
+    }
 });
 ```
 
 if post image converting needed (works with css only)
 
 ```js
-minify.optimize([{'style.css': {img: true, merge: true} },
-    'index.html']);
+minify.optimize([{
+    'style.css': {
+        img: true,
+        merge: true
+        }
+    }, 'index.html']);
 ```    
 
 if only need the name of minified file (from min directory)
@@ -100,9 +108,9 @@ if only need the name of minified file (from min directory)
 ```js
 minify.optimize('client.js', {
     returnName  : true
-    callback    : function(pParams){
-        var lName = pParams && pParams.name;
-        console.log(lName)
+    callback    : function(params) {
+        var name = params && params.name;
+        console.log(name)
     }
 });
 ```
