@@ -106,13 +106,8 @@ minify.optimize([{
 if only need the name of minified file (from min directory)
 
 ```js
-minify.optimize('client.js', {
-    returnName  : true
-    callback    : function(params) {
-        var name = params && params.name;
-        console.log(name)
-    }
-});
+var hashName = minify.getName('client.js');
+console.log(hashName);
 ```
 
 **MinFolder** - variable that contains folder name, where minimized files stored.
