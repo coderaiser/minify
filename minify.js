@@ -38,12 +38,12 @@
      *                          {'style.css': true}
      *                       or {'style.css':{minimize: true, func: function() {}}
      *
-     * @param pOptions  -   object contain main options
+     * @param options  -   object contain main options
      *
      * Example: 
      * {callback: func(pData) {}}
      */
-    function optimize(files, pOptions) {
+    function optimize(files, options) {
         var i,
             name        = '',
             lAllCSS     = '',
@@ -93,22 +93,20 @@
                 
                 ++lReadedFilesCount;
                 
-                if (isLastFile()) {
+                if (isLastFile())
                     saveAllCSS(lOptimizeParams, lAllCSS);
-                }
                 
                 writeFile(lMinFileName, data, function(pData) {
-                    if (pOptions) {
-                        if (pOptions.returnName)
-                             Util.exec(pOptions.callback, {
+                    if (options)
+                        if (options.returnName)
+                             Util.exec(options.callback, {
                                  name: lMinFileName
                              });
                          else
-                            Util.exec(pOptions.callback, pData);
-                    }
+                            Util.exec(options.callback, pData);
                     });
-                },function(pCallBack) {
-                    img.optimize(filename, data, pCallBack);
+                }, function(callback) {
+                    img.optimize(filename, data, callback);
             });
         };
         
