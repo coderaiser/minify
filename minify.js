@@ -5,7 +5,6 @@
 (function() {
     'use strict';
     
-   
     var DIR         = __dirname +'/',
         LIBDIR      = DIR + 'lib/',
         main        = require(LIBDIR + 'main'),
@@ -16,7 +15,6 @@
         path        = main.path,
         Util        = main.util,
         
-    
         MinFolder   = DIR + 'min/';
     
     /* Trying to create folder min
@@ -39,9 +37,6 @@
      *                       or {'style.css':{minimize: true, func: function() {}}
      *
      * @param options  -   object contain main options
-     *
-     * Example: 
-     * {callback: func(pData) {}}
      */
     function optimize(files, options) {
         var i,
@@ -52,9 +47,9 @@
             
             /**
              * Processing of files
-             * @param pFileData_o {name, data}
+             * @param fileData {name, data}
              */
-            dataReaded_f = function(fileData) {
+            onDataRead  = function(fileData) {
                 var name,
                     filename    = fileData.name,
                     data        = fileData.data,
@@ -128,9 +123,9 @@
             Util.log('minify: reading file ' + path.basename(name) + '...');
             
             /* if it's last file send true */
-             fs.readFile(name, Util.call(fileReaded, {
+             fs.readFile(name, Util.call(fileRead, {
                 name    : files[i],
-                callback: dataReaded_f
+                callback: onDataRead
             }));
         }
     }
@@ -139,28 +134,24 @@
      * function get name of file in min folder
      * @param pName
      */
-    function getName(pName, pExt) {
-        var lRet;
+    function getName(name, ext) {
+        var ret, minFileName;
         
-        if (Util.isString(pName)) {
-        
-            var lExt        = pExt || Util.getExtension(pName),
-                lMinFileName = crypto.createHash('sha1')
-                    .update(pName)
-                    .digest('hex') + lExt;
+        if (Util.isString(name)) {
+            if (!ext)
+                ext         = Util.getExtension(name);
             
-            lRet = MinFolder + lMinFileName;
+            minFileName = crypto.createHash('sha1')
+                .update(name)
+                .digest('hex') + ext;
+            
+            ret = MinFolder + minFileName;
         }
         
-        return lRet;
+        return ret;
     }
     
-    /* Функция создаёт асинхроную версию 
-     * для чтения файла
-     * @pFileName       - имя считываемого файла
-     * @pProcessFunc    - функция обработки файла
-     */
-    function fileReaded(pParams) {
+    function fileRead(pParams) {
         var p, d, lData,
             lRet =  Util.checkObj(pParams, ['error', 'data']) &&
                     Util.checkObjTrue(pParams.params, ['name', 'callback']);
@@ -184,23 +175,25 @@
      * и выводит ошибку или сообщает,
      * что файл успешно записан
      */
-    function writeFile(pName, pData, pCallBack) {
-        fs.writeFile(pName, pData, function(pError) {
-            if (pError)
-                Util.log(pError);
-            else{
-                pName = path.basename(pName);
-                Util.log('minify: file ' + pName + ' written...');
+    function writeFile(name, data, callback) {
+        fs.writeFile(name, data, function(error) {
+            if (error)
+                Util.log(error);
+            else {
+                name = path.basename(name);
+                Util.log('minify: file ' + name + ' written...');
             }
             
-            Util.exec(pCallBack, pData);
+            Util.exec(callback, data);
         });
     }
     
-    function saveAllCSS(pParams, pData) {
-       if (pParams && pParams.merge) {
-           var lPath = MinFolder + 'all.min.css';
-           writeFile(lPath, pData);
+    function saveAllCSS(params, data) {
+        var path;
+        
+        if (params && params.merge) {
+           path = MinFolder + 'all.min.css';
+           writeFile(path, data);
         }
     }
         
