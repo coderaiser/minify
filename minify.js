@@ -102,7 +102,7 @@
                     });
                 }, function(callback) {
                     img.optimize(filename, data, callback);
-            });
+                });
         };
         
           if (!Util.isArray(files))
