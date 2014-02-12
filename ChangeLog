@@ -1,3 +1,16 @@
+2014.02.12, v0.2.5
+
+fix:
+- (img) if path was relative img do not put to css
+- (img) change dir
+
+feature:
+- add util.io
+- (img) add MAX_SIZE: 100kb
+- update css-b64-images v0.2.x
+- uglify-js: v2.4.7 -> v2.4.x
+- html-minify: v0.5.4 -> 0.5.x
+
 2014.01.03, v0.2.4
 
 fix:

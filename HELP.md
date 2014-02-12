@@ -1,4 +1,4 @@
-Minify v0.2.4 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
+Minify v0.2.5 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
 ===============
 [NPMIMGURL]:                https://badge.fury.io/js/minify.png
 [BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=dev
@@ -134,6 +134,7 @@ Getting dev version of **Minify**:
 
 Version history
 ---------------
+- *2014.02.12*, **[v0.2.5](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.5.zip)**
 - *2014.01.03*, **[v0.2.4](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.4.zip)**
 - *2013.11.08*, **[v0.2.3](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.3.zip)**
 - *2013.10.01*, **[v0.2.2](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.2.zip)**
