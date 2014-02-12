@@ -119,6 +119,7 @@ Additional modules:
 - [clean-css] (https://github.com/GoalSmashers/clean-css)
 - [html-minifier] (https://github.com/kangax/html-minifier)
 - [css-b64-images] (https://github.com/Filirom1/css-base64-images)
+- [util.io] (https://github.com/coderaiser/util.io)
 
 Install addtitional modules:
 
