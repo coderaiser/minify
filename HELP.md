@@ -121,9 +121,9 @@ Additional modules:
 - [css-b64-images] (https://github.com/Filirom1/css-base64-images)
 - [util.io] (https://github.com/coderaiser/util.io)
 
-Install addtitional modules:
+Install additional modules (in minify folder):
 
-    npm i uglify-js clean-css html-minifier css-b64-images
+    npm install
 
 Contributing
 ---------------
