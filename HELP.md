@@ -150,4 +150,4 @@ Version history
 - *2012.07.19*, **[v0.1.3](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.3.zip)**
 - *2012.07.14*, **[v0.1.2](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.2.zip)**
 - *2012.07.11*, **[v0.1.1](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.1.zip)**
-- *2012.00.00*, **[v0.1.0](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.0.zip)**
+- *2012.07.09*, **[v0.1.0](//github.com/coderaiser/minify-archive/raw/master/minify-v0.1.0.zip)**
