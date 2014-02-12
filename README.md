@@ -1,7 +1,7 @@
-Minify v0.2.4 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
+Minify v0.2.5 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
 ===============
 [NPMIMGURL]:                https://badge.fury.io/js/minify.png
-[BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=master
+[BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=dev
 [DependencyStatusIMGURL]:   https://gemnasium.com/coderaiser/minify.png
 [FlattrIMGURL]:             http://api.flattr.com/button/flattr-badge-large.png
 [NPMURL]:                   //npmjs.org/package/minify

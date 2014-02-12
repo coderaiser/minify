@@ -2,10 +2,9 @@
  * конвертации картинок в css-стилях 
  * в base64 и помещения их в файл стилей
  */
-(function(){
+(function() {
     'use strict';
     
-   
     var DIR         = __dirname +'/',
         LIBDIR      = DIR + 'lib/',
         main        = require(LIBDIR + 'main'),
@@ -16,127 +15,117 @@
         path        = main.path,
         Util        = main.util,
         
-    
         MinFolder   = DIR + 'min/';
     
-    function makeFolder(pExist){
-        /* Trying to create folder min
-         * where woud be minifyed versions
-         * of files 511(10)=777(8)
-         * rwxrwxrwx
-         */
-        if(!pExist)
-            fs.mkdir(MinFolder, 511, function(pError){
-                if(pError){
-                    Util.log(pError);
-                    MinFolder = '/';
-                }
-            });
-    }
-    
-    fs.exists(MinFolder, makeFolder);
+    /* Trying to create folder min
+     * where woud be minifyed versions
+     * of files 511(10)=777(8)
+     * rwxrwxrwx
+     */
+    fs.exists(MinFolder, function makeFolder(exist) {
+        if (!exist)
+            fs.mkdir(MinFolder, 511, Util.log.bind(Util));
+    });
     
     /**
      * function minificate js,css and html files
-     * @param pFiles_a  -   array of js, css and html file names or string, if name
+     * @param files  -   array of js, css and html file names or string, if name
      *                      single, or object if postProcessing neaded
-     *                          {'client.js': function(pFinalCode){} }
+     *                          {'client.js': function(pFinalCode) {} }
      *                      or convertion images to base64 neaded
      *                          {'style.css': true}
-     *                       or {'style.css':{minimize: true, func: function(){}}
+     *                       or {'style.css':{minimize: true, func: function() {}}
      *
-     * @param pOptions  -   object contain main options
-     *
-     * Example: 
-     * {callback: func(pData){}}
+     * @param options  -   object contain main options
      */
-    function optimize(pFiles, pOptions){
-        var lFiles = Util.isArray(pFiles) ? pFiles : [pFiles],
-            
-            lName       = '',
+    function optimize(files, options) {
+        var i,
+            name        = '',
             lAllCSS     = '',
             /* varible contains all readed files count */
             lReadedFilesCount = 0,
             
             /**
              * Processing of files
-             * @param pFileData_o {name, data}
+             * @param fileData {name, data}
              */
-            dataReaded_f = function(pFileData_o){
-                function isLastFile(){
-                    return lReadedFilesCount === lFiles.length;
-                }
-                
-                var lFileName   = pFileData_o.name,
-                    lData       = pFileData_o.data,
+            onDataRead  = function(fileData) {
+                var name,
+                    filename    = fileData.name,
+                    data        = fileData.data,
                     lOptimizeParams;
                 
-                if( Util.isObject(lFileName) ){
-                    var lName;
-                    for(lName in lFileName){
+                function isLastFile() {
+                    return lReadedFilesCount === files.length;
+                }
+                
+                if (Util.isObject(filename)) {
+                    for (name in filename) {
                         break;
                     }
                     
-                    lOptimizeParams = lFileName[lName];
-                    lFileName       = lName;
+                    lOptimizeParams = fileName[name];
+                    fileName        = name;
                 }
             
-            Util.log('minify: file ' + path.basename(lFileName) + ' read');
+            Util.log('minify: file ' + path.basename(filename) + ' read');
                 
-            var lExt            = Util.getExtension(lFileName),
-                lMinFileName    = getName(lFileName, lExt);
+            var lExt            = Util.getExtension(filename),
+                lMinFileName    = getName(filename, lExt);
                 
-            lData = main.optimize({
+            data = main.optimize({
                 ext : lExt,
-                data: lData
+                data: data
             });
                 
-            Util.ifExec(lExt !== '.css', function(pOptData){
-                var lRet = Util.isString(pOptData);
-                if(lRet){
-                    lData    = pOptData;
+            Util.ifExec(lExt !== '.css', function(pOptData) {
+                var ret = Util.isString(pOptData);
+                
+                if (ret) {
+                    data    = pOptData;
                     lAllCSS += pOptData;
                 }
                 
                 ++lReadedFilesCount;
                 
-                if ( isLastFile() ){
+                if (isLastFile())
                     saveAllCSS(lOptimizeParams, lAllCSS);
-                }
                 
-                writeFile(lMinFileName, lData, function(pData){
-                    if(pOptions){
-                        if(pOptions.returnName)
-                             Util.exec(pOptions.callback, {
+                writeFile(lMinFileName, data, function(pData) {
+                    if (options)
+                        if (options.returnName)
+                             Util.exec(options.callback, {
                                  name: lMinFileName
                              });
                          else
-                            Util.exec(pOptions.callback, pData);
-                    }
+                            Util.exec(options.callback, pData);
                     });
-                },function(pCallBack){
-                    img.optimize(lFileName, lData, pCallBack);
-            });
+                }, function(callback) {
+                    img.optimize(filename, data, callback);
+                });
         };
         
+          if (!Util.isArray(files))
+                files = [files];
+        
         /* moving thru all elements of js files array */
-        for(var i = 0; lFiles[i]; i++){
+        for (i = 0; files[i]; i++) {
             /* if postProcessing function exist
              * getting file name and pass next
              */
-            var lPostProcessing_o = lFiles[i];
-            if( Util.isObject(lPostProcessing_o) )
-                for(lName in lPostProcessing_o)
+            var lPostProcessing_o = files[i];
+            if (Util.isObject(lPostProcessing_o))
+                for (name in lPostProcessing_o)
                     break;
             else
-                lName = lFiles[i];
+                name = files[i];
             
-            Util.log('minify: reading file ' + path.basename(lName) + '...');
+            Util.log('minify: reading file ' + path.basename(name) + '...');
             
             /* if it's last file send true */
-             fs.readFile(lName, Util.call(fileReaded, {
-                name    : lFiles[i],
-                callback: dataReaded_f
+             fs.readFile(name, Util.call(fileRead, {
+                name    : files[i],
+                callback: onDataRead
             }));
         }
     }
@@ -145,33 +134,29 @@
      * function get name of file in min folder
      * @param pName
      */
-    function getName(pName, pExt){
-        var lRet;
+    function getName(name, ext) {
+        var ret, minFileName;
         
-        if( Util.isString(pName) ){
-        
-            var lExt        = pExt || Util.getExtension(pName),
-                lMinFileName = crypto.createHash('sha1')
-                    .update(pName)
-                    .digest('hex') + lExt;
+        if (Util.isString(name)) {
+            if (!ext)
+                ext         = Util.getExtension(name);
             
-            lRet = MinFolder + lMinFileName;
+            minFileName = crypto.createHash('sha1')
+                .update(name)
+                .digest('hex') + ext;
+            
+            ret = MinFolder + minFileName;
         }
         
-        return lRet;
+        return ret;
     }
     
-    /* Функция создаёт асинхроную версию 
-     * для чтения файла
-     * @pFileName       - имя считываемого файла
-     * @pProcessFunc    - функция обработки файла
-     */
-    function fileReaded(pParams){
+    function fileRead(pParams) {
         var p, d, lData,
             lRet =  Util.checkObj(pParams, ['error', 'data']) &&
                     Util.checkObjTrue(pParams.params, ['name', 'callback']);
         
-        if(lRet){
+        if (lRet) {
             p = pParams,
             d = p.params;
             
@@ -190,23 +175,25 @@
      * и выводит ошибку или сообщает,
      * что файл успешно записан
      */
-    function writeFile(pName, pData, pCallBack){
-        fs.writeFile(pName, pData, function(pError){
-            if(pError)
-                Util.log(pError);
-            else{
-                pName = path.basename(pName);
-                Util.log('minify: file ' + pName + ' written...');
+    function writeFile(name, data, callback) {
+        fs.writeFile(name, data, function(error) {
+            if (error)
+                Util.log(error);
+            else {
+                name = path.basename(name);
+                Util.log('minify: file ' + name + ' written...');
             }
             
-            Util.exec(pCallBack, pData);
+            Util.exec(callback, data);
         });
     }
     
-    function saveAllCSS(pParams, pData){
-       if(pParams && pParams.merge){
-           var lPath = MinFolder + 'all.min.css';
-           writeFile(lPath, pData);
+    function saveAllCSS(params, data) {
+        var path;
+        
+        if (params && params.merge) {
+           path = MinFolder + 'all.min.css';
+           writeFile(path, data);
         }
     }
         

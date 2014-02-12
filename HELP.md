@@ -1,10 +1,10 @@
-Minify v0.2.4 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
+Minify v0.2.5 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL]
 ===============
 [NPMIMGURL]:                https://badge.fury.io/js/minify.png
-[BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=master
+[BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=dev
 [DependencyStatusIMGURL]:   https://gemnasium.com/coderaiser/minify.png
 [FlattrIMGURL]:             http://api.flattr.com/button/flattr-badge-large.png
-[NPM_INFO_IMG]:             https://nodei.co/npm/minify.png?downloads=true&&stars
+[NPM_INFO_IMG]:             https://nodei.co/npm/minify.png?stars
 [NPMURL]:                   //npmjs.org/package/minify
 [BuildStatusURL]:           //travis-ci.org/coderaiser/minify  "Build Status"
 [DependencyStatusURL]:      //gemnasium.com/coderaiser/minify "Dependency Status"
@@ -55,11 +55,11 @@ extension **.min** (*.min.js, *.min.css, *.min.html).
 If directory could be created **minify.MinFolder** would countain stirng 'min/',
 in any other case - '/'.
 
-**optimize**(*pFiles_a*) - function which minificate js, html and
+**optimize**(*files*) - function which minificate js, html and
 css-files.
- - **pFiles_a**                     - varible, wich contain array of file
+ - **files**                     - varible, wich contain array of file
 names or string, if name single.
- - **pOptions**(optional)           - object contain main options.
+ - **options**(optional)           - object contain main options.
 
 **Examples**:
 
@@ -69,42 +69,45 @@ minify.optimize('client.js');
 
 ```js
 minify.optimize('client.js', {
-    callback: func(pMinData){}
+    callback: func(minData) {
+    }
 });
 ```
 
 if a couple files:
 
 ```js
-minify.optimize(['client.js',
-    'style.css']);
+minify.optimize([
+    'client.js',
+    'style.css'
+]);
 ```
 
 if post processing needed 
 
 ```js
 minify.optimize({
-    'client.js' : function(pFinalCode){}
+    'client.js' : function(minData) {
+    }
 });
 ```
 
 if post image converting needed (works with css only)
 
 ```js
-minify.optimize([{'style.css': {img: true, merge: true} },
-    'index.html']);
+minify.optimize([{
+    'style.css': {
+        img: true,
+        merge: true
+        }
+    }, 'index.html']);
 ```    
 
 if only need the name of minified file (from min directory)
 
 ```js
-minify.optimize('client.js', {
-    returnName  : true
-    callback    : function(pParams){
-        var lName = pParams && pParams.name;
-        console.log(lName)
-    }
-});
+var hashName = minify.getName('client.js');
+console.log(hashName);
 ```
 
 **MinFolder** - variable that contains folder name, where minimized files stored.
@@ -116,10 +119,11 @@ Additional modules:
 - [clean-css] (https://github.com/GoalSmashers/clean-css)
 - [html-minifier] (https://github.com/kangax/html-minifier)
 - [css-b64-images] (https://github.com/Filirom1/css-base64-images)
+- [util.io] (https://github.com/coderaiser/util.io)
 
-Install addtitional modules:
+Install additional modules (in minify folder):
 
-    npm i uglify-js clean-css html-minifier css-b64-images
+    npm install
 
 Contributing
 ---------------
@@ -131,6 +135,8 @@ Getting dev version of **Minify**:
 
 Version history
 ---------------
+- *2014.02.12*, **[v0.2.5](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.5.zip)**
+- *2014.01.03*, **[v0.2.4](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.4.zip)**
 - *2013.11.08*, **[v0.2.3](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.3.zip)**
 - *2013.10.01*, **[v0.2.2](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.2.zip)**
 - *2013.08.01*, **[v0.2.1](//github.com/coderaiser/minify-archive/raw/master/minify-v0.2.1.zip)**
