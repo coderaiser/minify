@@ -4,7 +4,7 @@ Minify v0.2.5 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][Dependen
 [BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=dev
 [DependencyStatusIMGURL]:   https://gemnasium.com/coderaiser/minify.png
 [FlattrIMGURL]:             http://api.flattr.com/button/flattr-badge-large.png
-[NPM_INFO_IMG]:             https://nodei.co/npm/minify.png?downloads=true&&stars
+[NPM_INFO_IMG]:             https://nodei.co/npm/minify.png?stars
 [NPMURL]:                   //npmjs.org/package/minify
 [BuildStatusURL]:           //travis-ci.org/coderaiser/minify  "Build Status"
 [DependencyStatusURL]:      //gemnasium.com/coderaiser/minify "Dependency Status"
