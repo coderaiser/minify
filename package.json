@@ -31,7 +31,7 @@
         "clean-css": "2.0.x",
         "html-minifier": "0.5.x",
         "css-b64-images": "0.2.x",
-        "util.io"       : "0.7.x"
+        "util.io"       : "0.8.x"
     },
     "main": "./minify",
     "license": "MIT",
