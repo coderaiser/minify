@@ -1,3 +1,11 @@
+2014.03.03, v0.2.6
+
+fix:
+- (minify) fileRead: call -> bind
+- (img) if path was relative img do not put to css
+- (img) change dir
+
+
 2014.02.12, v0.2.5
 
 fix:

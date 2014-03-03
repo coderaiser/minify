@@ -122,8 +122,7 @@
             
             Util.log('minify: reading file ' + path.basename(name) + '...');
             
-            /* if it's last file send true */
-             fs.readFile(name, Util.call(fileRead, {
+             fs.readFile(name, 'utf8', Util.bind(fileRead, {
                 name    : files[i],
                 callback: onDataRead
             }));
@@ -151,23 +150,14 @@
         return ret;
     }
     
-    function fileRead(pParams) {
-        var p, d, lData,
-            lRet =  Util.checkObj(pParams, ['error', 'data']) &&
-                    Util.checkObjTrue(pParams.params, ['name', 'callback']);
+    function fileRead(params, error, data) {
+        Util.log(error);
         
-        if (lRet) {
-            p = pParams,
-            d = p.params;
-            
-            Util.log(p.error);
-            lData = p.data && p.data.toString();
-            
-            Util.exec(d.callback, {
-                name: d.name,
-                data: lData
+        if (params)
+            Util.exec(params.callback, {
+                name: params.name,
+                data: data
             });
-        }
     }
     
     /*
