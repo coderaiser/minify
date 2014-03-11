@@ -1,4 +1,4 @@
-(function(){
+(function() {
     'use strict';
     
     var DIR         = __dirname + '/../',
@@ -18,20 +18,20 @@
                         'https://github.com/mishoo/UglifyJS';
     
     fs.readFile(filename, function(pError, pData) {
-        if(pError)
+        if (pError)
             return util.log(pError);
             
         Data = pData.toString();
         
-        minify.optimize(filename,{
+        minify.optimize(filename, {
             callback : jsCompare
         });
         
     });
     
     
-    function jsCompare(pData){
-        fs.rmdir('min', function(){
+    function jsCompare(pData) {
+        fs.rmdir('min', function() {
             var lUglify = _uglifyJS(Data),
                 lResult = lUglify === pData;
             
@@ -39,15 +39,17 @@
         });
     }
     
-    function _uglifyJS(pData){
-        var lRet;
+    function _uglifyJS(pData) {
+        var lRet, lResult;
         
-        if(uglify){
-            var lResult = uglify.minify(pData, {fromString: true});
-            lRet = lResult.code;
-        }
-        else{
-            lRet = pData;
+        if (uglify) {
+            lResult = uglify.minify(pData, {
+                fromString: true
+            });
+            
+            lRet    = lResult.code;
+        } else {
+            lRet    = pData;
             util.log(ErrorMsg);
         }
         
