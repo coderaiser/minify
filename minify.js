@@ -40,10 +40,9 @@
      */
     function optimize(files, options) {
         var i,
-            name        = '',
-            lAllCSS     = '',
-            /* varible contains all readed files count */
-            lReadedFilesCount = 0,
+            name                = '',
+            lAllCSS             = '',
+            readedFilesCount    = 0,
             
             /**
              * Processing of files
@@ -56,7 +55,7 @@
                     lOptimizeParams;
                 
                 function isLastFile() {
-                    return lReadedFilesCount === files.length;
+                    return readedFilesCount === files.length;
                 }
                 
                 if (Util.isObject(filename)) {
@@ -78,15 +77,15 @@
                 data: data
             });
                 
-            Util.ifExec(lExt !== '.css', function(pOptData) {
-                var ret = Util.isString(pOptData);
+            Util.ifExec(lExt !== '.css', function(optimizedData) {
+                var ret = Util.isString(optimizedData);
                 
                 if (ret) {
-                    data    = pOptData;
-                    lAllCSS += pOptData;
+                    data    = optimizedData;
+                    lAllCSS += optimizedData;
                 }
                 
-                ++lReadedFilesCount;
+                ++readedFilesCount;
                 
                 if (isLastFile())
                     saveAllCSS(lOptimizeParams, lAllCSS);
