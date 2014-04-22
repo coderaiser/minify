@@ -10,7 +10,8 @@
         os          = require('os'),
         main        = require(LIBDIR + 'main'),
         img         = main.require(LIBDIR + 'img'),
-        
+        platform    = process.platform,
+        WIN32       = platform === 'win32',
         crypto      = main.crypto,
         fs          = main.fs,
         path        = main.path,
@@ -21,6 +22,9 @@
     if (os.tmpdir) {
         TMPDIR      = os.tmpdir();
         MinFolder   = TMPDIR + '/minify/';
+        
+        if (!WIN32)
+            MinFolder += process.getuid() + '/';
     } else {
         MinFolder   = DIR + '/min/';
     }
