@@ -7,6 +7,8 @@
     
     var DIR         = __dirname +'/',
         LIBDIR      = DIR + 'lib/',
+        os          = require('os'),
+        TMPDIR      = os.tmpdir(),
         main        = require(LIBDIR + 'main'),
         img         = main.require(LIBDIR + 'img'),
         
@@ -15,7 +17,7 @@
         path        = main.path,
         Util        = main.util,
         
-        MinFolder   = DIR + 'min/';
+        MinFolder   = TMPDIR + '/minify/';
     
     /* Trying to create folder min
      * where woud be minifyed versions
