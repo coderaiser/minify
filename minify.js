@@ -68,7 +68,7 @@
     * Processing of files
     * @param fileData {name, data}
     */
-    function onDataRead(fileData, data) {
+    function onDataRead(fileData, error, data) {
         var ext, minFileName, 
             readFilesCount  = 0,
             options         = fileData.options,
@@ -76,34 +76,38 @@
         
         Util.log('minify: file ' + path.basename(filename) + ' read');
         
-        ext         = Util.getExtension(filename);
-        minFileName = getName(filename, ext);
-            
-        data = main.optimize({
-            ext : ext,
-            data: data
-        });
-            
-        Util.ifExec(ext !== '.css', function(optimizedData) {
-            var ret = Util.isString(optimizedData);
-            
-            if (ret)
-                data    = optimizedData;
-            
-            ++readFilesCount;
-            
-            writeFile(minFileName, data, function(dataMin) {
-                if (options)
-                    if (options.returnName)
-                         Util.exec(options.callback, {
-                             name: minFileName
-                         });
-                     else
-                        Util.exec(options.callback, dataMin);
-                });
-            }, function(callback) {
-                img.optimize(filename, data, callback);
+        if (error) {
+            options.callback(error);
+        } else {
+            ext         = Util.getExtension(filename);
+            minFileName = getName(filename, ext);
+                
+            data        = main.optimize({
+                ext : ext,
+                data: data
             });
+                
+            Util.ifExec(ext !== '.css', function(optimizedData) {
+                var ret = Util.isString(optimizedData);
+                
+                if (ret)
+                    data    = optimizedData;
+                
+                ++readFilesCount;
+                
+                writeFile(minFileName, data, function(dataMin) {
+                    if (options)
+                        if (options.returnName)
+                             Util.exec(options.callback, null, {
+                                 name: minFileName
+                             });
+                         else
+                            Util.exec(options.callback, null, dataMin);
+                    });
+                }, function(callback) {
+                    img.optimize(filename, data, callback);
+                });
+        }
     }
     
     /**
@@ -131,7 +135,7 @@
         Util.log(error);
         
         if (params)
-            Util.exec(params.callback, params, data);
+            Util.exec(params.callback, params, error, data);
     }
     
     /*
