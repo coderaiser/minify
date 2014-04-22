@@ -18,18 +18,17 @@
         path        = main.path,
         Util        = main.util,
         
-        TMPDIR, MinFolder, Folder;
+        TMPDIR, MinFolder;
     
     if (os.tmpdir) {
         TMPDIR      = os.tmpdir();
-        Folder      = TMPDIR + '/minify/';
+        MinFolder      = TMPDIR + '/minify/';
         
         if (!WIN32)
-            MinFolder = Folder + process.getuid() + '/';
+            MinFolder += process.getuid() + '/';
     } else {
         MinFolder   = DIR + '/min/';
     }
-    
     
     /* Trying to create folder min
      * where woud be minifyed versions
@@ -37,7 +36,7 @@
      * rwxrwxrwx
      */
     function makeDir() {
-        fs.exists(Folder, function makeFolder(exist) {
+        fs.exists(MinFolder, function makeFolder(exist) {
             if (!exist && mkdirp)
                 mkdirp(MinFolder, 511, Util.log.bind(Util));
         });
