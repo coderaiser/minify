@@ -37,102 +37,69 @@
     
     /**
      * function minificate js,css and html files
-     * @param files  -   array of js, css and html file names or string, if name
-     *                      single, or object if postProcessing neaded
-     *                          {'client.js': function(pFinalCode) {} }
-     *                      or convertion images to base64 neaded
-     *                          {'style.css': true}
-     *                       or {'style.css':{minimize: true, func: function() {}}
-     *
-     * @param options  -   object contain main options
+     * 
+     * @param files     -   js, css or html file path
+     * @param options   -   object contain main options
      */
-    function optimize(filesParam, options) {
-        var i, postProcessing_o, isObj,
-            isArray             = Util.isArray(filesParam),
-            files               = isArray ? filesParam : [filesParam],
-            name                = '',
-            lAllCSS             = '',
-            readedFilesCount    = 0,
-            
-            /**
-             * Processing of files
-             * @param fileData {name, data}
-             */
-            onDataRead  = function(fileData) {
-                var name, lOptimizeParams,
-                    filename    = fileData.name,
-                    isObj       = Util.isObject(filename),
-                    data        = fileData.data,
-                    isLastFile  = function() {
-                        return readedFilesCount === files.length;
-                    };
-                
-                if (isObj) {
-                    for (name in filename) {
-                        break;
-                    }
-                    
-                    lOptimizeParams = filename[name];
-                    filename        = name;
-                }
-            
-                Util.log('minify: file ' + path.basename(filename) + ' read');
-                    
-                var lExt            = Util.getExtension(filename),
-                    lMinFileName    = getName(filename, lExt);
-                    
-                data = main.optimize({
-                    ext : lExt,
-                    data: data
-                });
-                    
-                Util.ifExec(lExt !== '.css', function(optimizedData) {
-                    var ret = Util.isString(optimizedData);
-                    
-                    if (ret) {
-                        data    = optimizedData;
-                        lAllCSS += optimizedData;
-                    }
-                    
-                    ++readedFilesCount;
-                    
-                    if (isLastFile())
-                        saveAllCSS(lOptimizeParams, lAllCSS);
-                    
-                    writeFile(lMinFileName, data, function(pData) {
-                        if (options)
-                            if (options.returnName)
-                                 Util.exec(options.callback, {
-                                     name: lMinFileName
-                                 });
-                             else
-                                Util.exec(options.callback, pData);
-                        });
-                    }, function(callback) {
-                        img.optimize(filename, data, callback);
-                    });
-            };
+    function optimize(file, options) {
+        var name,
+            isObj   = Util.isObject(file);
         
-        /* moving thru all elements of js files array */
-        for (i = 0; files[i]; i++) {
-            /* if postProcessing function exist
-             * getting file name and pass next
-             */
-            postProcessing_o    = files[i];
-            isObj               = Util.isObject(postProcessing_o);
+        if (isObj)
+            name    = Object.keys(file)[0];
+        else
+            name    = file;
+        
+        Util.log('minify: reading file ' + path.basename(name) + '...');
+        
+         fs.readFile(name, 'utf8', Util.bind(fileRead, {
+            name            : name,
+            optimizeParams  : file,
+            options         : options,
+            callback        : onDataRead
+        }));
+    }
+    
+   /**
+    * Processing of files
+    * @param fileData {name, data}
+    */
+    function onDataRead(fileData, data) {
+        var ext, minFileName, 
+            readFilesCount  = 0,
+            options         = fileData.options,
+            filename        = fileData.name;
+        
+        Util.log('minify: file ' + path.basename(filename) + ' read');
+        
+        ext         = Util.getExtension(filename);
+        minFileName = getName(filename, ext);
             
-            if (isObj)
-                name = Object.keys(postProcessing_o)[0];
-            else
-                name = files[i];
+        data = main.optimize({
+            ext : ext,
+            data: data
+        });
             
-            Util.log('minify: reading file ' + path.basename(name) + '...');
+        Util.ifExec(ext !== '.css', function(optimizedData) {
+            var ret = Util.isString(optimizedData);
             
-             fs.readFile(name, 'utf8', Util.bind(fileRead, {
-                name    : files[i],
-                callback: onDataRead
-            }));
-        }
+            if (ret)
+                data    = optimizedData;
+            
+            ++readFilesCount;
+            
+            writeFile(minFileName, data, function(dataMin) {
+                if (options)
+                    if (options.returnName)
+                         Util.exec(options.callback, {
+                             name: minFileName
+                         });
+                     else
+                        Util.exec(options.callback, dataMin);
+                });
+            }, function(callback) {
+                img.optimize(filename, data, callback);
+            });
     }
     
     /**
@@ -160,10 +127,7 @@
         Util.log(error);
         
         if (params)
-            Util.exec(params.callback, {
-                name: params.name,
-                data: data
-            });
+            Util.exec(params.callback, params, data);
     }
     
     /*
@@ -184,15 +148,6 @@
         });
     }
     
-    function saveAllCSS(params, data) {
-        var path;
-        
-        if (params && params.merge) {
-           path = MinFolder + 'all.min.css';
-           writeFile(path, data);
-        }
-    }
-        
     exports.getName     = getName;
     exports.optimize    = optimize;
     exports.MinFolder   = MinFolder;

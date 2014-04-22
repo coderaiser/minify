@@ -74,15 +74,6 @@ minify.optimize('client.js', {
 });
 ```
 
-if a couple files:
-
-```js
-minify.optimize([
-    'client.js',
-    'style.css'
-]);
-```
-
 if post processing needed 
 
 ```js
@@ -95,12 +86,12 @@ minify.optimize({
 if post image converting needed (works with css only)
 
 ```js
-minify.optimize([{
+minify.optimize({
     'style.css': {
         img: true,
         merge: true
         }
-    }, 'index.html']);
+    }, 'index.html');
 ```    
 
 if only need the name of minified file (from min directory)
