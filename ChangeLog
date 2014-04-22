@@ -1,3 +1,14 @@
+2014.04.22, v0.3.0
+fix:
+- access for a couple users
+- check is tmpdir exists
+
+feature:
+- callback: params -> error, params
+- rm ability to process array of files
+- change min dir: /tmp/minify
+
+
 2014.03.03, v0.2.6
 
 fix:

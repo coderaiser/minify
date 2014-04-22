@@ -1,4 +1,4 @@
-Minify v0.2.6 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![License][LicenseIMGURL]][LicenseURL] [![Flattr][FlattrIMGURL]][FlattrURL]
+Minify v0.3.0 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![License][LicenseIMGURL]][LicenseURL] [![Flattr][FlattrIMGURL]][FlattrURL]
 ===============
 [NPMIMGURL]:                https://badge.fury.io/js/minify.png
 [BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=dev
@@ -50,16 +50,13 @@ To use **Minify** functions it sould be connected first. It's doing like always.
 ```js
 minify = require('minify');
 ```
-All of minification functions save files in **./min** directory with
-extension **.min** (*.min.js, *.min.css, *.min.html).
-If directory could be created **minify.MinFolder** would countain stirng 'min/',
-in any other case - '/'.
+After minification file would be saved in temporary directory.
 
-**optimize**(*files*) - function which minificate js, html and
+**optimize**(*file*) - function which minificate js, html and
 css-files.
- - **files**                     - varible, wich contain array of file
-names or string, if name single.
- - **options**(optional)           - object contain main options.
+
+ - **file**                 - path to file
+ - **options**(optional)    - object contain main options.
 
 **Examples**:
 
