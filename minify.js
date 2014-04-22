@@ -10,6 +10,7 @@
         os          = require('os'),
         main        = require(LIBDIR + 'main'),
         img         = main.require(LIBDIR + 'img'),
+        mkdirp      = main.require('mkdirp'),
         platform    = process.platform,
         WIN32       = platform === 'win32',
         crypto      = main.crypto,
@@ -17,27 +18,30 @@
         path        = main.path,
         Util        = main.util,
         
-        TMPDIR, MinFolder;
+        TMPDIR, MinFolder, Folder;
     
     if (os.tmpdir) {
         TMPDIR      = os.tmpdir();
-        MinFolder   = TMPDIR + '/minify/';
+        Folder      = TMPDIR + '/minify/';
         
         if (!WIN32)
-            MinFolder += process.getuid() + '/';
+            MinFolder = Folder + process.getuid() + '/';
     } else {
         MinFolder   = DIR + '/min/';
     }
+    
     
     /* Trying to create folder min
      * where woud be minifyed versions
      * of files 511(10)=777(8)
      * rwxrwxrwx
      */
-    fs.exists(MinFolder, function makeFolder(exist) {
-        if (!exist)
-            fs.mkdir(MinFolder, 511, Util.log.bind(Util));
-    });
+    function makeDir() {
+        fs.exists(Folder, function makeFolder(exist) {
+            if (!exist && mkdirp)
+                mkdirp(MinFolder, 511, Util.log.bind(Util));
+        });
+    }
     
     /**
      * function minificate js,css and html files
@@ -48,6 +52,8 @@
     function optimize(file, options) {
         var name,
             isObj   = Util.isObject(file);
+        
+        makeDir();
         
         if (isObj)
             name    = Object.keys(file)[0];
