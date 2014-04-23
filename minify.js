@@ -125,7 +125,9 @@
     
     /**
      * function get name of file in min folder
-     * @param pName
+     * 
+     * @param name
+     * @param ext
      */
     function getName(name, ext) {
         var ret, minFileName;
