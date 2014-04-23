@@ -35,10 +35,15 @@
      * of files 511(10)=777(8)
      * rwxrwxrwx
      */
-    function makeDir() {
-        fs.exists(MinFolder, function makeFolder(exist) {
-            if (!exist && mkdirp)
-                mkdirp(MinFolder, 511, Util.log.bind(Util));
+    function makeDir(callback) {
+        fs.exists(MinFolder, function(exist) {
+            var func = function(status, error) {
+                Util.exec(callback, error);
+            };
+            
+            Util.ifExec(exist || !mkdirp, func, function(callback) {
+                mkdirp(MinFolder, 511, callback);
+            });
         });
     }
     
@@ -49,24 +54,27 @@
      * @param options   -   object contain main options
      */
     function optimize(file, options) {
-        var name,
-            isObj   = Util.isObject(file);
-        
-        makeDir();
-        
-        if (isObj)
-            name    = Object.keys(file)[0];
-        else
-            name    = file;
-        
-        Util.log('minify: reading file ' + path.basename(name) + '...');
-        
-         fs.readFile(name, 'utf8', Util.bind(fileRead, {
-            name            : name,
-            optimizeParams  : file,
-            options         : options,
-            callback        : onDataRead
-        }));
+        makeDir(function(error) {
+            var name,
+                isObj   = Util.isObject(file);
+            
+            if (error)
+                Util.log(error);
+            
+            if (isObj)
+                name    = Object.keys(file)[0];
+            else
+                name    = file;
+            
+            Util.log('minify: reading file ' + path.basename(name) + '...');
+            
+             fs.readFile(name, 'utf8', Util.bind(fileRead, {
+                name            : name,
+                optimizeParams  : file,
+                options         : options,
+                callback        : onDataRead
+            }));
+        });
     }
     
    /**
