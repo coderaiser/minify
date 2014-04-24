@@ -38,7 +38,7 @@
     function makeDir(callback) {
         fs.exists(MinFolder, function(exist) {
             var func = function(status, error) {
-                Util.exec(callback, error);
+                callback(error);
             };
             
             Util.ifExec(exist || !mkdirp, func, function(callback) {
@@ -111,11 +111,11 @@
                 writeFile(minFileName, data, function(dataMin) {
                     if (options)
                         if (options.returnName)
-                             Util.exec(options.callback, null, {
+                             options.callback({
                                  name: minFileName
                              });
                          else
-                            Util.exec(options.callback, null, dataMin);
+                            options.callback(dataMin);
                     });
                 }, function(callback) {
                     img.optimize(filename, data, callback);
@@ -150,7 +150,7 @@
         Util.log(error);
         
         if (params)
-            Util.exec(params.callback, params, error, data);
+            params.callback(params, error, data);
     }
     
     /*
@@ -167,7 +167,7 @@
                 Util.log('minify: file ' + name + ' written...');
             }
             
-            Util.exec(callback, data);
+            callback(data);
         });
     }
     
