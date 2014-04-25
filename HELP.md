@@ -58,6 +58,11 @@ css-files.
  - **file**                 - path to file
  - **options**(optional)    - object contain main options.
 
+Possible options:
+ - callback
+ - notLog
+ - returnName
+
 **Examples**:
 
 ```js
@@ -66,7 +71,8 @@ minify.optimize('client.js');
 
 ```js
 minify.optimize('client.js', {
-    callback: func(minData) {
+    notLog  : true,
+    callback: func(error, minData) {
     }
 });
 ```
@@ -80,16 +86,6 @@ minify.optimize({
 });
 ```
 
-if post image converting needed (works with css only)
-
-```js
-minify.optimize({
-    'style.css': {
-        img: true,
-        merge: true
-        }
-    }, 'index.html');
-```    
 
 if only need the name of minified file (from min directory)
 
