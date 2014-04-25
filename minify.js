@@ -101,30 +101,33 @@
             ext         = Util.getExtension(filename);
             minFileName = getName(filename, ext);
                 
-            data        = main.optimize({
+            main.optimize({
                 ext : ext,
                 data: data
-            });
-            
-            Util.ifExec(ext !== '.css', function(optimizedData) {
-                var ret = Util.isString(optimizedData);
-                
-                if (ret)
-                    data    = optimizedData;
-                
-                ++readFilesCount;
-                
-                writeFile(minFileName, data, notLog, function(dataMin) {
-                    if (options)
-                        if (options.returnName)
-                             Util.exec(options.callback, null, {
-                                 name: minFileName
-                             });
-                         else
-                            Util.exec(options.callback, null, dataMin);
-                    });
-                }, function(callback) {
-                    img.optimize(filename, data, callback);
+            }, function(error, data) {
+                if (error)
+                    Util.exec(options.callback, error);
+                else
+                    Util.ifExec(ext !== '.css', function(optimizedData) {
+                        var ret = Util.isString(optimizedData);
+                        
+                        if (ret)
+                            data    = optimizedData;
+                        
+                        ++readFilesCount;
+                        
+                        writeFile(minFileName, data, notLog, function(dataMin) {
+                            if (options)
+                                if (options.returnName)
+                                     Util.exec(options.callback, null, {
+                                         name: minFileName
+                                     });
+                                 else
+                                    Util.exec(options.callback, null, dataMin);
+                            });
+                        }, function(callback) {
+                            img.optimize(filename, data, callback);
+                        });
                 });
         }
     }
