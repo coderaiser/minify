@@ -2,7 +2,7 @@
 layout: default
 ---
 
-Minify v0.3.4 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![License][LicenseIMGURL]][LicenseURL] [![Flattr][FlattrIMGURL]][FlattrURL]
+Minify v0.4.0 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![License][LicenseIMGURL]][LicenseURL] [![Flattr][FlattrIMGURL]][FlattrURL]
 ===============
 [NPMIMGURL]:                https://badge.fury.io/js/minify.png
 [BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=dev
@@ -62,6 +62,11 @@ css-files.
  - **file**                 - path to file
  - **options**(optional)    - object contain main options.
 
+Possible options:
+ - callback
+ - notLog
+ - returnName
+
 **Examples**:
 
 ```js
@@ -70,7 +75,8 @@ minify.optimize('client.js');
 
 ```js
 minify.optimize('client.js', {
-    callback: func(minData) {
+    notLog  : true,
+    callback: func(error, minData) {
     }
 });
 ```
@@ -84,16 +90,6 @@ minify.optimize({
 });
 ```
 
-if post image converting needed (works with css only)
-
-```js
-minify.optimize({
-    'style.css': {
-        img: true,
-        merge: true
-        }
-    }, 'index.html');
-```    
 
 if only need the name of minified file (from min directory)
 
@@ -124,3 +120,4 @@ Getting dev version of **Minify**:
 
     git clone git://github.com/coderaiser/minify.git
     git checkout dev
+    
