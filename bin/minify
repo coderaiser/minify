@@ -3,43 +3,46 @@
 /* minify binary
  * usage: node minify <input-file> <output-file>
  */
-(function(){
+(function() {
     'use strict';
     
     var minify      = require('../minify'),
-        main        = require('../lib/main'),
-        fs          = main.fs,
-        Util        = main.util,
+        fs          = require('fs'),
+        Util        = require('util.io'),
         
-        lPack       = main.mainpackage,
-        lVersion    = lPack.version,
+        Pack        = require('../package.json'),
+        Version     = Pack.version,
+        
+        log         = console.log.bind(console),
         
         Argv        = process.argv,
-        lIn         = Argv[2],
-        lOut        = Argv[3];
+        In          = Argv[2],
+        Out         = Argv[3];
     
-    if ( !lIn || Util.strCmp(lIn, ['-h', '--help'])) {
+    if (!In || Util.strCmp(In, ['-h', '--help']))
       console.log('usage:\n'                            +
                   'minify <input-file> <output-file>\n' +
                   'or for output to screen:\n'          +
                   'minify <input-file>\n');
-    } else if ( Util.strCmp(lIn, ['-v', '--version']) ) {
-        console.log('v' + lVersion);
-    } else if( lIn && !lOut)
-        minify.optimize(Argv[2], {
-            callback: function(pData){
-                Util.log(pData);
+    else if (Util.strCmp(In, ['-v', '--version']) )
+        log('v' + Version);
+    else if (In && !Out)
+        minify.optimize(In, {
+            callback: function(error, data) {
+                log(data);
             }
         });
-    else if( lOut ) {
-         minify.optimize(lIn, {
-            callback: function(pData){
-                fs.writeFile(lOut, pData, function(pError){
-                    Util.log(pError || 'minify: ' + 'file ' + lOut +' written');
-                });
+    else if (Out)
+         minify.optimize(In, {
+            callback: function(error, data) {
+                if (error)
+                    log(error);
+                else
+                    fs.writeFile(Out, data, function(error) {
+                        var msg = 'minify: ' + 'file ' + Out +' written';
+                        
+                        log(error || msg);
+                    });
             }
         });
-    }
-    
 })();
-
