@@ -1,3 +1,9 @@
+2014.04.25, v0.4.0
+
+feature:
+- (minify) add options: notLog
+
+
 2014.04.25, v0.3.4
 
 fix:
