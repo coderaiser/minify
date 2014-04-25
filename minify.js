@@ -55,18 +55,22 @@
      */
     function optimize(file, options) {
         makeDir(function(error) {
-            var name,
+            var name, basename, msg,
+                notLog  = options.notLog,
                 isObj   = Util.isObject(file);
             
             if (error)
-                Util.log(error);
+                log(error, notLog);
             
             if (isObj)
                 name    = Object.keys(file)[0];
             else
                 name    = file;
             
-            Util.log('minify: reading file ' + path.basename(name) + '...');
+            basename    = path.basename(name);
+            msg         ='minify: reading file ' + basename + '...';
+            
+            log(msg, notLog);
             
              fs.readFile(name, 'utf8', Util.bind(fileRead, {
                 name            : name,
@@ -85,9 +89,11 @@
         var ext, minFileName, 
             readFilesCount  = 0,
             options         = fileData.options,
-            filename        = fileData.name;
+            notLog          = options.notLog,
+            filename        = fileData.name,
+            basename        = path.basename(filename);
         
-        Util.log('minify: file ' + path.basename(filename) + ' read');
+        log('minify: file ' + basename + ' read', notLog);
         
         if (error) {
             options.callback(error);
@@ -108,7 +114,7 @@
                 
                 ++readFilesCount;
                 
-                writeFile(minFileName, data, function(dataMin) {
+                writeFile(minFileName, data, notLog, function(dataMin) {
                     if (options)
                         if (options.returnName)
                              Util.exec(options.callback, null, {
@@ -147,8 +153,6 @@
     }
     
     function fileRead(params, error, data) {
-        Util.log(error);
-        
         if (params)
             Util.exec(params.callback, params, error, data);
     }
@@ -158,17 +162,20 @@
      * и выводит ошибку или сообщает,
      * что файл успешно записан
      */
-    function writeFile(name, data, callback) {
+    function writeFile(name, data, notLog, callback) {
         fs.writeFile(name, data, function(error) {
-            if (error)
-                Util.log(error);
-            else {
-                name = path.basename(name);
-                Util.log('minify: file ' + name + ' written...');
-            }
+            var basename = path.basename(name),
+                msg = 'minify: file ' + basename + ' written...';
+            
+            log(error || msg, notLog);
             
             Util.exec(callback, data);
         });
+    }
+    
+    function log(msg, notLog) {
+        if (!notLog)
+            Util.log(msg);
     }
     
     exports.getName     = getName;
