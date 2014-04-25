@@ -37,11 +37,9 @@
      */
     function makeDir(callback) {
         fs.exists(MinFolder, function(exist) {
-            var func = function(status, error) {
-                Util.exec(callback, error);
-            };
+            var func = Util.retExec(callback, null);
             
-            Util.ifExec(exist || !mkdirp, func, function(callback) {
+            Util.ifExec(exist || !mkdirp, func, function() {
                 mkdirp(MinFolder, 511, callback);
             });
         });
@@ -108,7 +106,7 @@
                 if (error)
                     Util.exec(options.callback, error);
                 else
-                    Util.ifExec(ext !== '.css', function(optimizedData) {
+                    Util.ifExec(ext !== '.css', function(error, optimizedData) {
                         var ret = Util.isString(optimizedData);
                         
                         if (ret)
