@@ -81,7 +81,7 @@ if post processing needed
 
 ```js
 minify.optimize({
-    'client.js' : function(minData) {
+    'client.js' : function(error, minData) {
     }
 });
 ```
