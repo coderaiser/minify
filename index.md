@@ -34,8 +34,6 @@ minify client.js util.js > all.js
 minify screen.css reset.css > all.css
 ```
 
-to see output in screen.
-
 API
 ---------------
 **Minify** module contains some api for interacting from another js files.
