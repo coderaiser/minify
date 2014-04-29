@@ -1,3 +1,9 @@
+2014.04.29, v0.5.0
+
+feature:
+- (bin) params: in out -> in1 in2 inN > out
+
+
 2014.04.25, v0.4.1
 
 fix:
