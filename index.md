@@ -1,6 +1,5 @@
 Minify v0.5.0 
 ===============
-[NPMIMGURL]:                https://badge.fury.io/js/minify.png
 [NPM_INFO_IMG]:             https://nodei.co/npm/minify.png?stars
 
 [Minify](http://coderaiser.github.io/minify "Minify") - a minifier of js, css, html and img files,
