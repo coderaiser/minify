@@ -1,8 +1,4 @@
----
-layout: default
----
-
-Minify v0.4.1 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![License][LicenseIMGURL]][LicenseURL] [![Flattr][FlattrIMGURL]][FlattrURL]
+Minify v0.5.0 
 ===============
 [NPMIMGURL]:                https://badge.fury.io/js/minify.png
 [BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=dev
@@ -35,12 +31,13 @@ Command Line
 For use in command line just write something like:
 
 ```
-minify <input-file> <output-file>
+minify <input-file1> <input-file2> <input-fileN> > output
 ```
-or just 
+For example:
 
 ```
-minify <input-file>>
+minify client.js util.js > all.js
+minify screen.css reset.css > all.css
 ```
 
 to see output in screen.
@@ -85,7 +82,7 @@ if post processing needed
 
 ```js
 minify.optimize({
-    'client.js' : function(minData) {
+    'client.js' : function(error, minData) {
     }
 });
 ```
@@ -120,4 +117,3 @@ Getting dev version of **Minify**:
 
     git clone git://github.com/coderaiser/minify.git
     git checkout dev
-    
