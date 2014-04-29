@@ -7,7 +7,6 @@
     'use strict';
     
     var minify      = require('../minify'),
-        fs          = require('fs'),
         Util        = require('util.io'),
         
         Pack        = require('../package.json'),
@@ -16,33 +15,20 @@
         log         = console.log.bind(console),
         
         Argv        = process.argv,
-        In          = Argv[2],
-        Out         = Argv[3];
+        files       = Util.slice(Argv, 2),
+        In          = files[0];
     
     if (!In || Util.strCmp(In, ['-h', '--help']))
-      console.log('usage:\n'                            +
-                  'minify <input-file> <output-file>\n' +
-                  'or for output to screen:\n'          +
-                  'minify <input-file>\n');
+        log('minify <input-file1> <input-file2> <inputfileN>\n');
     else if (Util.strCmp(In, ['-v', '--version']) )
         log('v' + Version);
-    else if (In && !Out)
-        minify.optimize(In, {
-            callback: function(error, data) {
-                log(data);
-            }
-        });
-    else if (Out)
-         minify.optimize(In, {
-            callback: function(error, data) {
-                if (error)
-                    log(error);
-                else
-                    fs.writeFile(Out, data, function(error) {
-                        var msg = 'minify: ' + 'file ' + Out +' written';
-                        
-                        log(error || msg);
-                    });
-            }
+    else if (In)
+        files.forEach(function(current) {
+            minify.optimize(current, {
+                notLog  : true,
+                callback: function(error, data) {
+                    log(error || data);
+                }
+            });
         });
 })();

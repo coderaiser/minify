@@ -31,12 +31,13 @@ Command Line
 For use in command line just write something like:
 
 ```
-minify <input-file> <output-file>
+minify <input-file1> <input-file2> <input-fileN> > output
 ```
-or just 
+For example:
 
 ```
-minify <input-file>>
+minify client.js util.js > all.js
+minify screen.css reset.css > all.css
 ```
 
 to see output in screen.
