@@ -12,7 +12,7 @@ Install
 
 You can install minify just like that:
 
-    npm i minify
+    npm i minify -g
 or
     
     git clone git://github.com/coderaiser/minify
