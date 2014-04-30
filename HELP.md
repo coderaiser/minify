@@ -28,6 +28,9 @@ For example:
 ```
 minify client.js util.js > all.js
 minify screen.css reset.css > all.css
+
+cat client.js | minify -js
+cat *.css | minify -css
 ```
 
 API
@@ -41,6 +44,7 @@ minify = require('minify');
 ```
 After minification file would be saved in temporary directory.
 
+## optimize
 **optimize**(*file*) - function which minificate js, html and
 css-files.
 
@@ -75,7 +79,24 @@ minify.optimize({
 });
 ```
 
+## optimizeData
+Gets data on input.
+Parameters:
+- Object with data and extensions (`.js`, `.css`, `img`)
+- Callback
 
+**Example**:
+
+```js
+    minify.optimizeData({
+        ext: '.js',
+        data: 'function hello() { if (2 > 3) console.log('for real')}'
+    }, function(error, data) {
+        console.log(error, data);
+    });
+```
+
+## getName
 if only need the name of minified file (from min directory)
 
 ```js
