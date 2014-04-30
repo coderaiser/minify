@@ -5,7 +5,7 @@
 (function() {
     'use strict';
     
-    var DIR         = __dirname +'/',
+    var DIR         = __dirname + '/',
         LIBDIR      = DIR + 'lib/',
         os          = require('os'),
         main        = require(LIBDIR + 'main'),
@@ -29,6 +29,11 @@
     } else {
         MinFolder   = DIR + '/min/';
     }
+    
+    exports.getName         = getName;
+    exports.optimize        = optimize;
+    exports.optimizeData    = main.optimize;
+    exports.MinFolder       = MinFolder;
     
     /* Trying to create folder min
      * where woud be minifyed versions
@@ -178,9 +183,5 @@
         if (!notLog)
             Util.log(msg);
     }
-    
-    exports.getName     = getName;
-    exports.optimize    = optimize;
-    exports.MinFolder   = MinFolder;
     
 })();
