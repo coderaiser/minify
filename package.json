@@ -30,7 +30,7 @@
     "dependencies": {
         "uglify-js": "2.4.x",
         "clean-css": "2.1.x",
-        "html-minifier": "0.5.x",
+        "html-minifier": "~0.6.x",
         "css-b64-images": "0.2.x",
         "util.io"       : "0.8.x",
         "mkdirp": "~0.4.0"
