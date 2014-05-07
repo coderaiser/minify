@@ -33,7 +33,7 @@
         "html-minifier": "~0.6.x",
         "css-b64-images": "0.2.x",
         "util.io"       : "0.8.x",
-        "mkdirp": "~0.4.0"
+        "mkdirp": "~0.5.x"
     },
     "main": "./minify",
     "license": "MIT",
