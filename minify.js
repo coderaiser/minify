@@ -18,15 +18,18 @@
         path        = main.path,
         Util        = main.util,
         
-        TMPDIR, MinFolder;
+        MinifyDir, TMPDIR, MinFolder;
     
     if (os.tmpdir) {
         TMPDIR      = os.tmpdir();
-        MinFolder      = TMPDIR + '/minify/';
+        MinFolder   =
+        MinifyDir   = TMPDIR + '/minify/';
         
         if (!WIN32)
             MinFolder += process.getuid() + '/';
     } else {
+        
+        MinifyDir   = 
         MinFolder   = DIR + '/min/';
     }
     
@@ -35,17 +38,24 @@
     exports.optimizeData    = main.optimize;
     exports.MinFolder       = MinFolder;
     
-    /* Trying to create folder min
+    /* 
+     * Trying to create folder min
      * where woud be minifyed versions
-     * of files 511(10)=777(8)
-     * rwxrwxrwx
      */
     function makeDir(callback) {
         fs.exists(MinFolder, function(exist) {
             var func = Util.retExec(callback, null);
             
             Util.ifExec(exist || !mkdirp, func, function() {
-                mkdirp(MinFolder, 511, callback);
+                mkdirp(MinFolder, function(error) {
+                    /* make dir with 777 mode do not work properly
+                     * so change mode after creation
+                     */
+                    if (!error)
+                        fs.chmod(MinifyDir, '777', callback);
+                    else
+                        callback(error);
+                });
             });
         });
     }
