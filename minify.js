@@ -71,7 +71,7 @@
                 name    = file;
             
             basename    = path.basename(name);
-            msg         ='minify: reading file ' + basename + '...';
+            msg         = 'minify: reading file ' + basename + '...';
             
             log(msg, notLog);
             
