@@ -45,16 +45,16 @@
     function makeDir(callback) {
         fs.exists(MinFolder, function(exist) {
             var func = Util.retExec(callback, null);
-            
             Util.ifExec(exist || !mkdirp, func, function() {
+                var ANY_MASK    = 0,
+                    umask       = process.umask(ANY_MASK);
+                /* 
+                 * change creation mask to any
+                 * save current mask
+                 */
                 mkdirp(MinFolder, function(error) {
-                    /* make dir with 777 mode do not work properly
-                     * so change mode after creation
-                     */
-                    if (!error)
-                        fs.chmod(MinifyDir, '777', callback);
-                    else
-                        callback(error);
+                    process.umask(umask);
+                    callback(error);
                 });
             });
         });
