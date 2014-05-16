@@ -1,4 +1,4 @@
-Minify v0.5.1
+Minify v0.6.0
 ===============
 [NPM_INFO_IMG]:             https://nodei.co/npm/minify.png?stars
 

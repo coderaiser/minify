@@ -1,3 +1,22 @@
+2014.05.16, v0.6.0
+
+fix:
+- (minify) set 777 mode to /tmi/minify directory
+
+feature:
+- (html) add css optimization
+- (css) add tryCatch
+- (html) add optimizition of inline js
+- (js) add tryCatch
+- (package) add cheerio, entities
+- (package) util.io v0.1.0
+- (package) util.io v0.9
+- (minify) chmod -> process.umask
+- (package) mkdirp v0.5.0
+- (package) html-minifier v0.6.0
+- (package) add homepage
+
+
 2014.04.30, v0.5.1
 
 feature:
