@@ -33,7 +33,9 @@
         "html-minifier": "~0.6.x",
         "css-b64-images": "0.2.x",
         "util.io"       : "1.0.x",
-        "mkdirp": "~0.5.x"
+        "mkdirp": "~0.5.x",
+        "cheerio":"0.16.x",
+        "entities": "1.1.1"
     },
     "main": "./minify",
     "license": "MIT",
