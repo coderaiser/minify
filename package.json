@@ -1,45 +1,48 @@
 {
-    "name": "minify",
-    "description": "Minifier of js, css, html and img",
-    "homepage": "http://coderaiser.github.io/minify",
-    "keywords": [
-        "minify",
-        "minimize",
-        "js",
-        "css",
-        "img",
-        "html",
-        "base64"
-    ],
-    "version": "0.6.0",
-    "author": {
-        "name": "coderaiser",
-        "email": "mnemonic.enemy@gmail.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "http://github.com/coderaiser/minify.git"
-    },
-    "bin": {
-        "minify": "./bin/minify"
-    },
-    "scripts": {
-        "test": "node test/test.js"
-    },
-    "preferGlobal": false,
-    "dependencies": {
-        "uglify-js": "2.4.x",
-        "clean-css": "2.1.x",
-        "html-minifier": "~0.6.x",
-        "css-b64-images": "0.2.x",
-        "util.io"       : "1.0.x",
-        "mkdirp": "~0.5.x",
-        "cheerio":"0.16.x",
-        "entities": "1.1.1"
-    },
-    "main": "./minify",
-    "license": "MIT",
-    "engines": {
-        "node": ">= 0.4.0"
-    }
+  "name": "minify",
+  "description": "Minifier of js, css, html and img",
+  "homepage": "http://coderaiser.github.io/minify",
+  "keywords": [
+    "minify",
+    "minimize",
+    "js",
+    "css",
+    "img",
+    "html",
+    "base64"
+  ],
+  "version": "0.6.0",
+  "author": {
+    "name": "coderaiser",
+    "email": "mnemonic.enemy@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/coderaiser/minify.git"
+  },
+  "bin": {
+    "minify": "./bin/minify"
+  },
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "preferGlobal": false,
+  "dependencies": {
+    "uglify-js": "2.4.x",
+    "clean-css": "2.1.x",
+    "html-minifier": "~0.6.x",
+    "css-b64-images": "0.2.x",
+    "util.io": "1.0.x",
+    "mkdirp": "~0.5.x",
+    "cheerio": "0.16.x",
+    "entities": "1.1.1"
+  },
+  "main": "./minify",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.4.0"
+  },
+  "devDependencies": {
+    "util.io": "^1.0.0"
+  }
 }
