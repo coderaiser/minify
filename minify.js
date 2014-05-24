@@ -85,7 +85,7 @@
             
             log(msg, notLog);
             
-             fs.readFile(name, 'utf8', Util.bind(fileRead, {
+             fs.readFile(name, 'utf8', Util.exec.with(fileRead, {
                 name            : name,
                 optimizeParams  : file,
                 options         : options,
