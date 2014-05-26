@@ -2,57 +2,41 @@
     'use strict';
     
     var DIR         = __dirname + '/../',
-        LIBDIR      = DIR + 'lib/',
-        main        = require(LIBDIR + 'main'),
         
-        util        = main.util,
-        fs          = main.fs,
+        fs          = require('fs'),
         filename    = DIR + 'test/test.js',
         
-        minify      = main.rootrequire('minify'),
-        uglify      = main.require('uglify-js'),
-        
-        Data,
-        ErrorMsg    =   'can\'t load uglify-js          \n' +
-                        'npm install uglify-js          \n' +
-                        'https://github.com/mishoo/UglifyJS';
+        minify      = require(DIR + 'minify'),
+        uglify      = require('uglify-js');
     
-    fs.readFile(filename, function(pError, pData) {
-        if (pError)
-            return util.log(pError);
+    fs.readFile(filename, 'utf8', function(error, data) {
+        var uglified;
+        
+        if (error) {
+            throw(error);
+        } else {
+            uglified    = _uglifyJS(data);
             
-        Data = pData.toString();
-        
-        minify.optimize(filename, {
-            callback : jsCompare
-        });
-        
-    });
-    
-    
-    function jsCompare(pData) {
-        fs.rmdir('min', function() {
-            var lUglify = _uglifyJS(Data),
-                lResult = lUglify === pData;
-            
-           return util.log('uglify-js: ' + lResult);
-        });
-    }
-    
-    function _uglifyJS(pData) {
-        var lRet, lResult;
-        
-        if (uglify) {
-            lResult = uglify.minify(pData, {
-                fromString: true
+            minify.optimizeData({
+                ext: '.js',
+                data: data,
+            }, function(error, data) {
+                var result = error || uglified !== data;
+                
+                if (result)
+                    throw('uglify-js: Not OK');
+                else
+                    console.log('uglify-js: OK');
             });
             
-            lRet    = lResult.code;
-        } else {
-            lRet    = pData;
-            util.log(ErrorMsg);
         }
+    });
+    
+    function _uglifyJS(data) {
+        var result = uglify.minify(data, {
+            fromString: true
+        });
         
-        return lRet;
+        return result.code;
     }
 })();
