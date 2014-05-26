@@ -35,7 +35,7 @@
     "html-minifier": "~0.6.x",
     "mkdirp": "~0.5.x",
     "uglify-js": "2.4.x",
-    "util.io": "^1.1.1"
+    "util.io": "1.1.x"
   },
   "main": "./minify",
   "license": "MIT",
