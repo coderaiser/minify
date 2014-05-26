@@ -122,9 +122,9 @@
                     Util.exec(options.callback, error);
                 else
                     Util.exec.if(ext !== '.css', function(error, optimizedData) {
-                        var ret = Util.isString(optimizedData);
+                        var isStr   = Util.isString(optimizedData);
                         
-                        if (ret)
+                        if (isStr)
                             data    = optimizedData;
                         
                         ++readFilesCount;
