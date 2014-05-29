@@ -1,4 +1,4 @@
-Minify v0.6.0 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![License][LicenseIMGURL]][LicenseURL] [![Flattr][FlattrIMGURL]][FlattrURL]
+Minify v0.6.1 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![License][LicenseIMGURL]][LicenseURL] [![Flattr][FlattrIMGURL]][FlattrURL]
 ===============
 [NPMIMGURL]:                https://badge.fury.io/js/minify.png
 [BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=dev
