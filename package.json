@@ -29,7 +29,7 @@
   "preferGlobal": false,
   "dependencies": {
     "cheerio": "~0.17.x",
-    "clean-css": "2.1.x",
+    "clean-css": "2.2.x",
     "css-b64-images": "0.2.x",
     "html-minifier": "~0.6.x",
     "mkdirp": "~0.5.x",
