@@ -28,10 +28,9 @@
   },
   "preferGlobal": false,
   "dependencies": {
-    "cheerio": "0.16.x",
+    "cheerio": "~0.17.x",
     "clean-css": "2.1.x",
     "css-b64-images": "0.2.x",
-    "entities": "1.1.1",
     "html-minifier": "~0.6.x",
     "mkdirp": "~0.5.x",
     "uglify-js": "2.4.x",
