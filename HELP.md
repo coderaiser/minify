@@ -118,11 +118,3 @@ Additional modules:
 Install additional modules (in minify folder):
 
     npm install
-
-Contributing
----------------
-If you would like to contribute - send pull request to dev branch.
-Getting dev version of **Minify**:
-
-    git clone git://github.com/coderaiser/minify.git
-    git checkout dev
