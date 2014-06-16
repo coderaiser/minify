@@ -24,7 +24,7 @@
     "minify": "./bin/minify"
   },
   "scripts": {
-    "test": "node test/test.js"
+    "test": "gulp default"
   },
   "preferGlobal": false,
   "dependencies": {
