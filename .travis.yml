@@ -8,7 +8,6 @@ before_install:
 
 script:
   - gulp default
-  - node test/test.js
 
 notifications:
     email:

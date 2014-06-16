@@ -9,34 +9,36 @@
         minify      = require(DIR + 'minify'),
         uglify      = require('uglify-js');
     
-    fs.readFile(filename, 'utf8', function(error, data) {
-        var uglified;
-        
-        if (error) {
-            throw(error);
-        } else {
-            uglified    = _uglifyJS(data);
+    exports.uglify  = function() {
+        fs.readFile(filename, 'utf8', function(error, data) {
+            var uglified;
             
-            minify.optimizeData({
-                ext: '.js',
-                data: data,
-            }, function(error, data) {
-                var result = error || uglified !== data;
+            if (error) {
+                throw(error);
+            } else {
+                uglified    = _uglifyJS(data);
                 
-                if (result)
-                    throw('uglify-js: Not OK');
-                else
-                    console.log('uglify-js: OK');
-            });
-            
-        }
-    });
-    
-    function _uglifyJS(data) {
-        var result = uglify.minify(data, {
-            fromString: true
+                minify.optimizeData({
+                    ext: '.js',
+                    data: data,
+                }, function(error, data) {
+                    var result = error || uglified !== data;
+                    
+                    if (result)
+                        throw('uglify-js: Not OK');
+                    else
+                        console.log('uglify-js: OK');
+                });
+                
+            }
         });
         
-        return result.code;
-    }
+        function _uglifyJS(data) {
+            var result = uglify.minify(data, {
+                fromString: true
+            });
+            
+            return result.code;
+        }
+    };
 })();

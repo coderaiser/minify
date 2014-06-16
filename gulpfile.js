@@ -6,6 +6,7 @@
         
         Util        = require('util-io'),
         fs          = require('fs'),
+        test        = require('./test/test'),
         exec        = require('child_process').exec,
         Info        = require('./package'),
         
@@ -21,6 +22,10 @@
             .pipe(jshint())
             .pipe(jshint.reporter())
             .on('error', onError);
+    });
+    
+    gulp.task('test', function() {
+       test.uglify();
     });
     
     gulp.task('changelog', function() {
@@ -51,7 +56,7 @@
             });
     });
     
-    gulp.task('default', ['jshint']);
+    gulp.task('default', ['jshint', 'test']);
     
     function onError(params) {
         console.log(params.message);
