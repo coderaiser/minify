@@ -6,9 +6,6 @@
 before_install:
   - npm install gulp -g
 
-script:
-  - gulp default
- 
 notifications:
     email:
         on_success: never
