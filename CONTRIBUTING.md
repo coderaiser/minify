@@ -1,25 +1,24 @@
 Brunch
 ---------------
 If you would like to contribute - send pull request to dev branch.
-Getting dev version of **Minify**:
+Getting dev version of **Cloud Commander**:
 
     git clone git://github.com/coderaiser/minify.git
-    git checkout dev
+    cd cloudcmd && git checkout dev
 
-or by [link](https://github.com/coderaiser/minify/tree/dev "Dev version").
+or by [link](https://github.com/coderaiser/cloudcmd/tree/dev "Dev version").
 
 Commit
 ---------------
 Format of the commit message: **type(scope) subject**
 
 **Type**:
-- feature
-- fix (bug fix)
-- docs (documentation)
-- style (formatting, missing semi colons, …)
-- refactor
-- test (when adding missing tests)
-- chore (maintain)
+- feature(scope) subject
+- fix(scope) subject
+- docs(scope) subject
+- refactor(scope) subject
+- test(scope) subject
+- chore(scope) subject
 
 **Scope**:
 Scope could be anything specifying place of the commit change.
