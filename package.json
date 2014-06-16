@@ -41,5 +41,8 @@
   "engines": {
     "node": ">= 0.4.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "gulp": "~3.8.x",
+    "gulp-jshint": "~1.6.x"
+  }
 }
