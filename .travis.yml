@@ -6,6 +6,9 @@
 before_install:
   - npm install gulp -g
 
+script:
+  - node test/test.js
+
 notifications:
     email:
         on_success: never
