@@ -2,7 +2,7 @@
 layout: default
 ---
 
-Minify v0.6.1
+Minify v0.6.2
 ===============
 [NPM_INFO_IMG]:             https://nodei.co/npm/minify.png?stars
 
@@ -122,11 +122,3 @@ Additional modules:
 Install additional modules (in minify folder):
 
     npm install
-
-Contributing
----------------
-If you would like to contribute - send pull request to dev branch.
-Getting dev version of **Minify**:
-
-    git clone git://github.com/coderaiser/minify.git
-    git checkout dev
