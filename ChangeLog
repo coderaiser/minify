@@ -1,3 +1,24 @@
+2014.06.16, v0.6.2
+
+fix:
+- (main) strict mode -> use strict
+- (main) util.io -> util-io
+
+feature:
+- (gulp) add test
+- (travis) script: add test
+- (jshintrc) add
+- (travis) add test
+- (travis) rm script
+- (package) test: add gulp
+- (gulp) add
+- (package) util-io v1.2
+- (package) clean-css v2.2
+- (package) cheerio v0.17.0, rm entities
+- (package) util.io -> util-io
+- (travis) add notifications
+
+
 2014.05.29, v0.6.1
 
 fix:
