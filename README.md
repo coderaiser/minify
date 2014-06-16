@@ -1,9 +1,9 @@
-Minify v0.6.1 [![NPM version][NPMIMGURL]][NPMURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![License][LicenseIMGURL]][LicenseURL]
+Minify v0.6.1 [![License][LicenseIMGURL]][LicenseURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![NPM version][NPMIMGURL]][NPMURL]
 ===============
-[NPMIMGURL]:                https://badge.fury.io/js/minify.png
-[BuildStatusIMGURL]:        https://secure.travis-ci.org/coderaiser/minify.png?branch=dev
-[DependencyStatusIMGURL]:   https://gemnasium.com/coderaiser/minify.png
-[LicenseIMGURL]:            https://img.shields.io/badge/license-MIT-317BF9.svg
+[NPMIMGURL]:                https://img.shields.io/npm/v/minify.svg?style=flat
+[BuildStatusIMGURL]:        https://img.shields.io/travis/coderaiser/minify/dev.svg?style=flat
+[DependencyStatusIMGURL]:   https://img.shields.io/gemnasium/coderaiser/minify.png?style=flat
+[LicenseIMGURL]:            https://img.shields.io/badge/license-MIT-317BF9.svg?style=flat
 [NPM_INFO_IMG]:             https://nodei.co/npm/minify.png?stars
 [NPMURL]:                   //npmjs.org/package/minify
 [LicenseURL]:               https://tldrlegal.com/license/mit-license "MIT License"
