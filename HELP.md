@@ -9,7 +9,7 @@ Install
 ---------------
 ![NPM_INFO][NPM_INFO_IMG]
 
-You can install minify just like that:
+You can install minify via [npm](https://www.npmjs.org/):
 
     npm i minify -g
 or
@@ -18,10 +18,11 @@ or
 
 Command Line
 ---------------
-For use in command line just write something like:
+Command line syntax:
 
 ```
 minify <input-file1> <input-file2> <input-fileN> > output
+stdout | minify -flag
 ```
 For example:
 
@@ -35,21 +36,20 @@ cat *.css | minify -css
 
 API
 ---------------
-**Minify** module contains some api for interacting from another js files.
+The **Minify** module contains an api for interacting with other js files.
 
-To use **Minify** functions it sould be connected first. It's doing like always.
+To use the **Minify** functions it sould be connected first.
 
 ```js
 minify = require('minify');
 ```
-After minification file would be saved in temporary directory.
+After minification, a file will be saved in the temporary directory.
 
 ## optimize
-**optimize**(*file*) - function which minificate js, html and
-css-files.
+**optimize**(*file*) - function to minificate js, html and css-files.
 
- - **file**                 - path to file
- - **options**(optional)    - object contain main options.
+ - **file**                 - path to file.
+ - **options**(optional)    - object contains main options.
 
 Possible options:
  - callback
@@ -70,7 +70,7 @@ minify.optimize('client.js', {
 });
 ```
 
-if post processing needed 
+if post processing is needed: 
 
 ```js
 minify.optimize({
@@ -97,14 +97,14 @@ Parameters:
 ```
 
 ## getName
-if only need the name of minified file (from min directory)
+returns only the name of a minified file (from min directory).
 
 ```js
 var hashName = minify.getName('client.js');
 console.log(hashName);
 ```
 
-**MinFolder** - variable that contains folder name, where minimized files stored.
+**MinFolder** - variable that contains the folder name, where minimized files stored.
                 (could not be changed for now).
                 
 Additional modules:
