@@ -1,4 +1,4 @@
-Minify v0.6.3 [![License][LicenseIMGURL]][LicenseURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![NPM version][NPMIMGURL]][NPMURL]
+Minify v0.6.4 [![License][LicenseIMGURL]][LicenseURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![NPM version][NPMIMGURL]][NPMURL]
 ===============
 [NPMIMGURL]:                https://img.shields.io/npm/v/minify.svg?style=flat
 [BuildStatusIMGURL]:        https://img.shields.io/travis/coderaiser/minify/dev.svg?style=flat

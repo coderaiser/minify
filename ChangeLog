@@ -1,3 +1,9 @@
+2014.07.4, v0.6.4
+
+fix:
+- (bin) util.io -> util-io
+
+
 2014.07.1, v0.6.3
 
 feature:
