@@ -7,7 +7,7 @@
     'use strict';
     
     var minify      = require('../minify'),
-        Util        = require('util.io'),
+        Util        = require('util-io'),
         
         Pack        = require('../package.json'),
         Version     = Pack.version,
