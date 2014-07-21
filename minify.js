@@ -44,8 +44,7 @@
      */
     function makeDir(callback) {
         fs.exists(MinFolder, function(exist) {
-            var func = Util.exec.ret(callback, null);
-            Util.exec.if(exist || !mkdirp, func, function() {
+            Util.exec.if(exist || !mkdirp, callback, function() {
                 var ANY_MASK    = 0,
                     umask       = process.umask(ANY_MASK);
                 /* 
