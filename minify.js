@@ -40,13 +40,16 @@
     
     /* 
      * Trying to create folder min
-     * where woud be minifyed versions
+     * where woud be minify versions
      */
     function makeDir(callback) {
         fs.exists(MinFolder, function(exist) {
-            Util.exec.if(exist || !mkdirp, callback, function() {
-                var ANY_MASK    = 0,
-                    umask       = process.umask(ANY_MASK);
+            var ANY_MASK    = 0,
+                umask       = process.umask(ANY_MASK);
+                    
+            if (exist || !mkdirp)
+                callback(null);
+            else
                 /* 
                  * change creation mask to any
                  * save current mask
@@ -55,7 +58,6 @@
                     process.umask(umask);
                     callback(error);
                 });
-            });
         });
     }
     
