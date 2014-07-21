@@ -65,17 +65,16 @@ minify.optimize('client.js');
 ```js
 minify.optimize('client.js', {
     notLog  : true,
-    callback: func(error, minData) {
-    }
+}, func(error, minData) {
+
 });
 ```
 
 if post processing is needed: 
 
 ```js
-minify.optimize({
-    'client.js' : function(error, minData) {
-    }
+minify.optimize('client.js', function(error, minData) {
+
 });
 ```
 

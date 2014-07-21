@@ -67,7 +67,12 @@
      * @param files     -   js, css or html file path
      * @param options   -   object contain main options
      */
-    function optimize(file, options) {
+    function optimize(file, options, callback) {
+        if (!callback)
+            callback = options;
+        
+        Util.checkArgs(arguments, ['file', 'callback']);
+        
         makeDir(function(error) {
             var name, basename, msg,
                 notLog  = options.notLog,
@@ -86,12 +91,12 @@
             
             log(msg, notLog);
             
-             fs.readFile(name, 'utf8', Util.exec.with(fileRead, {
-                name            : name,
-                optimizeParams  : file,
-                options         : options,
-                callback        : onDataRead
-            }));
+            fs.readFile(name, 'utf8', function(error, data) {
+                if (error)
+                    callback(error);
+                else
+                    onDataRead(file, data, options, callback);
+            });
         });
     }
     
@@ -99,51 +104,45 @@
     * Processing of files
     * @param fileData {name, data}
     */
-    function onDataRead(fileData, error, data) {
+    function onDataRead(filename, data, options, callback) {
         var ext, minFileName, 
             readFilesCount  = 0,
-            options         = fileData.options,
             notLog          = options.notLog,
-            filename        = fileData.name,
+            returnName      = options.returnName,
             basename        = path.basename(filename);
         
         log('minify: file ' + basename + ' read', notLog);
         
-        if (error) {
-            options.callback(error);
-        } else {
-            ext         = Util.getExtension(filename);
-            minFileName = getName(filename, ext);
-                
-            main.optimize({
-                ext : ext,
-                data: data
-            }, function(error, data) {
-                if (error)
-                    Util.exec(options.callback, error);
-                else
-                    Util.exec.if(ext !== '.css', function(error, optimizedData) {
-                        var isStr   = Util.isString(optimizedData);
-                        
-                        if (isStr)
-                            data    = optimizedData;
-                        
-                        ++readFilesCount;
-                        
-                        writeFile(minFileName, data, notLog, function(dataMin) {
-                            if (options)
-                                if (options.returnName)
-                                     Util.exec(options.callback, null, {
-                                         name: minFileName
-                                     });
-                                 else
-                                    Util.exec(options.callback, null, dataMin);
-                            });
-                        }, function(callback) {
-                            img.optimize(filename, data, callback);
+        ext         = Util.getExtension(filename);
+        minFileName = getName(filename, ext);
+            
+        main.optimize({
+            ext : ext,
+            data: data
+        }, function(error, data) {
+            if (error)
+                callback(error);
+            else
+                Util.exec.if(ext !== '.css', function(error, optimizedData) {
+                    var isStr   = Util.isString(optimizedData);
+                    
+                    if (isStr)
+                        data    = optimizedData;
+                    
+                    ++readFilesCount;
+                    
+                    writeFile(minFileName, data, notLog, function(dataMin) {
+                        if (returnName)
+                             callback(null, {
+                                 name: minFileName
+                             });
+                         else
+                            callback(null, dataMin);
                         });
-                });
-        }
+                    }, function(callback) {
+                        img.optimize(filename, data, callback);
+                    });
+            });
     }
     
     /**
@@ -167,11 +166,6 @@
         }
         
         return ret;
-    }
-    
-    function fileRead(params, error, data) {
-        if (params)
-            Util.exec(params.callback, params, error, data);
     }
     
     /*
