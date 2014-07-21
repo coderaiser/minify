@@ -1,3 +1,11 @@
+2014.07.21, v0.7.0
+
+feature:
+- (gulp) add release
+- (minify) optimize: callback is last param
+- (package) gulp-jshint v1.7.1
+
+
 2014.07.4, v0.6.4
 
 fix:
