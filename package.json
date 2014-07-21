@@ -21,7 +21,7 @@
     "url": "http://github.com/coderaiser/minify.git"
   },
   "bin": {
-    "minify": "./bin/minify"
+    "minify": "bin/minify.js"
   },
   "scripts": {
     "test": "gulp default"
