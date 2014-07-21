@@ -27,8 +27,8 @@
         
         if (!WIN32)
             MinFolder += process.getuid() + '/';
-    } else {
         
+    } else {
         MinifyDir   = 
         MinFolder   = DIR + '/min/';
     }
