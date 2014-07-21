@@ -6,23 +6,28 @@
 (function() {
     'use strict';
     
-    var minify      = require('../minify'),
-        Util        = require('util-io'),
+    var Util        = require('util-io'),
         
         Pack        = require('../package.json'),
         Version     = Pack.version,
         Chunks      = '',
+        
         log         = function() {
             console.log.apply(console, arguments);
             process.exit();
         },
+        
+        getMinify   = function() {
+            return require('../minify');
+        },
+        
         Argv        = process.argv,
         files       = Util.slice(Argv, 2),
         In          = files[0];
     
     readStd(function() {
         if (Chunks && In) {
-            minify.optimizeData({
+            getMinify().optimizeData({
                 ext     : Util.replaceStr(In, '-', '.'),
                 data    : Chunks
             }, function(error, data) {
@@ -35,7 +40,7 @@
             log('v' + Version);
         else if (In)
             files.forEach(function(current) {
-                minify.optimize(current, {
+                getMinify().optimize(current, {
                     notLog  : true,
                     callback: function(error, data) {
                         log(error || data);
