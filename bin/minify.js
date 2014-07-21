@@ -42,9 +42,8 @@
             files.forEach(function(current) {
                 getMinify().optimize(current, {
                     notLog  : true,
-                    callback: function(error, data) {
-                        log(error || data);
-                    }
+                }, function(error, data) {
+                    log(error || data);
                 });
             });
     });
