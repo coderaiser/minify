@@ -46,9 +46,7 @@
             else if (changed || !exists)
                 minify(name, options, callback);
             else
-                if (options.quiet)
-                    callback();
-                else if (options.returnName)
+                if (options.returnName)
                     callback(null, nameMin);
                 else
                     fs.readFile(nameMin, 'utf8', callback);
@@ -131,7 +129,6 @@
             readFilesCount  = 0,
             notLog          = options.notLog,
             returnName      = options.returnName,
-            quiet           = options.quiet,
             basename        = path.basename(filename);
         
         log('minify: file ' + basename + ' read', notLog);
@@ -155,9 +152,7 @@
                     ++readFilesCount;
                     
                     writeFile(minFileName, data, notLog, function(dataMin) {
-                        if (quiet)
-                            callback();
-                        else if (returnName)
+                        if (returnName)
                             callback(null, minFileName);
                         else
                             callback(null, dataMin);
