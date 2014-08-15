@@ -1,6 +1,6 @@
 {
   "name": "minify",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "Minifier of js, css, html and img",
   "homepage": "http://coderaiser.github.io/minify",
   "keywords": [
@@ -36,7 +36,7 @@
     "uglify-js": "2.4.x",
     "util-io": "1.2.x"
   },
-  "main": "./minify",
+  "main": "lib/minify",
   "license": "MIT",
   "engines": {
     "node": ">= 0.4.0"
