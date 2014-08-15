@@ -59,7 +59,11 @@ Possible options:
 **Examples**:
 
 ```js
-minify.optimize('client.js');
+minify.optimize('client.js', {
+    returnName: true
+}, function(error, name) {
+    console.log(error || name);
+});
 ```
 
 ```js
