@@ -6,7 +6,7 @@
         fs          = require('fs'),
         filename    = DIR + 'test/test.js',
         
-        minify      = require(DIR + 'minify'),
+        minify      = require(DIR),
         uglify      = require('uglify-js');
     
     exports.uglify  = function() {

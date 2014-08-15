@@ -18,7 +18,7 @@
         },
         
         getMinify   = function() {
-            return require('../minify');
+            return require('..');
         },
         
         Argv        = process.argv,
