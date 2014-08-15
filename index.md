@@ -2,7 +2,7 @@
 layout: default
 ---
 
-Minify v0.7.1
+Minify v0.8.0
 ===============
 [NPM_INFO_IMG]:             https://nodei.co/npm/minify.png?stars
 
@@ -63,7 +63,11 @@ Possible options:
 **Examples**:
 
 ```js
-minify.optimize('client.js');
+minify.optimize('client.js', {
+    returnName: true
+}, function(error, name) {
+    console.log(error || name);
+});
 ```
 
 ```js
