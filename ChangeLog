@@ -1,3 +1,9 @@
+2014.08.15, v0.8.1
+
+fix:
+- (minify) minify -> lib/minify
+
+
 2014.08.15, v0.8.0
 
 feature:
