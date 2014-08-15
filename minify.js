@@ -10,7 +10,10 @@
         os          = require('os'),
         main        = require(LIBDIR + 'main'),
         img         = main.require(LIBDIR + 'img'),
+        
         mkdirp      = main.require('mkdirp'),
+        ischanged   = require('ischanged'),
+        
         WIN         = process.platform === 'win32',
         crypto      = main.crypto,
         fs          = main.fs,
@@ -19,13 +22,40 @@
         
         MinFolder   = getDir() || DIR + 'min/';
         
-    exports.getName         = getName;
     exports.optimize        = optimize;
+    exports.getName         = getName;
     exports.optimizeData    = main.optimize;
     exports.MinFolder       = MinFolder;
     
+    function optimize(name, options, callback) {
+        var isChanged, isExist,
+            exec    = Util.exec,
+            nameMin = getName(name);
+        
+        Util.checkArgs(arguments, ['name', 'callback']);
+        
+        if (!callback)
+            callback = options;
+        
+        isChanged   = exec.with(ischanged, name),
+        isExist     = exec.with(fs.lstat, nameMin);
+            
+        exec.parallel([isChanged, isExist], function(error, changed, exists) {
+             if (error)
+                callback(error);
+            else if (changed || !exists)
+                minify(name, options, callback);
+            else
+                if (options.quiet)
+                    callback();
+                else if (options.returnName)
+                    callback(null, nameMin);
+                else
+                    fs.readFile(nameMin, 'utf8', callback);
+        });
+    }
     
-     function getDir() {
+    function getDir() {
         var dir;
         
         if (os.tmpdir) {
@@ -59,7 +89,7 @@
      * @param files     -   js, css or html file path
      * @param options   -   object contain main options
      */
-    function optimize(file, options, callback) {
+    function minify(file, options, callback) {
         if (!callback)
             callback = options;
         
@@ -101,6 +131,7 @@
             readFilesCount  = 0,
             notLog          = options.notLog,
             returnName      = options.returnName,
+            quiet           = options.quiet,
             basename        = path.basename(filename);
         
         log('minify: file ' + basename + ' read', notLog);
@@ -124,11 +155,11 @@
                     ++readFilesCount;
                     
                     writeFile(minFileName, data, notLog, function(dataMin) {
-                        if (returnName)
-                             callback(null, {
-                                 name: minFileName
-                             });
-                         else
+                        if (quiet)
+                            callback();
+                        else if (returnName)
+                            callback(null, minFileName);
+                        else
                             callback(null, dataMin);
                         });
                     }, function(callback) {
