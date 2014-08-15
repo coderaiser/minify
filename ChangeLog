@@ -1,8 +1,5 @@
 2014.08.15, v0.8.0
 
-fix:
-
-
 feature:
 - (minify) rm quiet
 - (minify) add ischanged
