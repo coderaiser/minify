@@ -11,53 +11,45 @@
         main        = require(LIBDIR + 'main'),
         img         = main.require(LIBDIR + 'img'),
         mkdirp      = main.require('mkdirp'),
-        platform    = process.platform,
-        WIN32       = platform === 'win32',
+        WIN         = process.platform === 'win32',
         crypto      = main.crypto,
         fs          = main.fs,
         path        = main.path,
         Util        = main.util,
         
-        MinifyDir, TMPDIR, MinFolder;
-    
-    if (os.tmpdir) {
-        TMPDIR      = os.tmpdir();
-        MinFolder   =
-        MinifyDir   = TMPDIR + '/minify/';
+        MinFolder   = getDir() || DIR + 'min/';
         
-        if (!WIN32)
-            MinFolder += process.getuid() + '/';
-        
-    } else {
-        MinifyDir   = 
-        MinFolder   = DIR + '/min/';
-    }
-    
     exports.getName         = getName;
     exports.optimize        = optimize;
     exports.optimizeData    = main.optimize;
     exports.MinFolder       = MinFolder;
     
-    /* 
-     * Trying to create folder min
-     * where woud be minify versions
-     */
+    
+     function getDir() {
+        var dir;
+        
+        if (os.tmpdir) {
+            dir     = os.tmpdir();
+            dir     += '/minify';
+            
+            if (!WIN)
+                dir += '/' + process.getuid() + '/';
+        }
+        
+        return dir;
+    }
+    
     function makeDir(callback) {
-        fs.exists(MinFolder, function(exist) {
-            var ANY_MASK    = 0,
-                umask       = process.umask(ANY_MASK);
-                    
-            if (exist || !mkdirp)
-                callback(null);
+        var ANY_MASK    = 0,
+            umask       = process.umask(ANY_MASK);
+        
+        mkdirp(MinFolder, function(error) {
+            process.umask(umask);
+            
+            if (error && error.code === 'EEXIST')
+                callback();
             else
-                /* 
-                 * change creation mask to any
-                 * save current mask
-                 */
-                mkdirp(MinFolder, function(error) {
-                    process.umask(umask);
-                    callback(error);
-                });
+                callback(error);
         });
     }
     
