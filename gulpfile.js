@@ -84,12 +84,7 @@
     });
     
     gulp.task('docs', function() {
-        var history     = 'Version history\n---------------\n',
-            link        = '//github.com/cloudcmd/archive/raw/master/cloudcmd',
-            template    = '- *{{ date }}*, '    +
-                          '**[v{{ version }}]'   +
-                          '(' + link + '-v{{ version }}.zip)**\n',
-            version     = Info.version,
+        var version     = Info.version,
             versionNew  = getNewVersion(),
             msg         = 'ERROR: version is missing. gulp docs --v<version>';
         
@@ -97,14 +92,7 @@
             console.log(msg);
         } else {
             replaceVersion('README.md', version, versionNew);
-            replaceVersion('HELP.md', version, versionNew, function() {
-                var historyNew = history + Util.render(template, {
-                    date    : Util.getShortDate,
-                    version : versionNew
-                });
-                
-                replaceVersion('HELP.md', history, historyNew);
-            });
+            replaceVersion('HELP.md', version, versionNew);
         }
     });
     
