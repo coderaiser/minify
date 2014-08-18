@@ -1,3 +1,12 @@
+2014.08.18, v0.8.4
+
+fix:
+- (minify) uglify a couple files with cli
+
+feature:
+- (minify) error -> error.message
+
+
 2014.08.18, v0.8.3
 
 fix:
