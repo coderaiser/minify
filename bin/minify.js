@@ -12,9 +12,10 @@
         Version     = Pack.version,
         Chunks      = '',
         
+        exit        = process.exit,
+        
         log         = function() {
             console.log.apply(console, arguments);
-            process.exit();
         },
         
         getMinify   = function() {
@@ -26,26 +27,45 @@
         In          = files[0];
     
     readStd(function() {
+        var funcs;
+        
         if (Chunks && In) {
             getMinify().optimizeData({
                 ext     : Util.replaceStr(In, '-', '.'),
                 data    : Chunks
             }, function(error, data) {
                 log(error || data);
+                exit();
             });
-        }
-        else if (!In || Util.strCmp(In, ['-h', '--help']))
+        
+        } else if (!In || Util.strCmp(In, ['-h', '--help'])) {
             log('minify <input-file1> <input-file2> <inputfileN>\n');
-        else if (Util.strCmp(In, ['-v', '--version']) )
+            exit();
+        
+        } else if (Util.strCmp(In, ['-v', '--version']) ) {
             log('v' + Version);
-        else if (In)
-            files.forEach(function(current) {
-                getMinify().optimize(current, {
+            exit();
+        
+        } else if (In) {
+            funcs = files.map(function(current) {
+                var minify = getMinify();
+                
+                return minify.optimize.bind(null, current, {
                     notLog  : true,
-                }, function(error, data) {
-                    log(error || data);
                 });
             });
+            
+            Util.exec.parallel(funcs, function(error) {
+                var args = Util.slice(arguments, 1);
+                
+                if (error)
+                    log(error);
+                else
+                    log.apply(null, args);
+                
+                exit();
+            });
+        }
     });
     
     function readStd(callback) {
