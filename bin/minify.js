@@ -25,6 +25,8 @@
         Argv        = process.argv,
         files       = Util.slice(Argv, 2),
         In          = files[0];
+        
+        log.error   = console.error;
     
     readStd(function() {
         var funcs;
@@ -34,7 +36,11 @@
                 ext     : Util.replaceStr(In, '-', '.'),
                 data    : Chunks
             }, function(error, data) {
-                log(error || data);
+                if (error)
+                    log.error(error.message);
+                else
+                    log(data);
+                
                 exit();
             });
         
@@ -57,9 +63,8 @@
             
             Util.exec.parallel(funcs, function(error) {
                 var args = Util.slice(arguments, 1);
-                
                 if (error)
-                    log(error);
+                    log.error(error.message);
                 else
                     log.apply(null, args);
                 
