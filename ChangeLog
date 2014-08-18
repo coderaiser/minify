@@ -1,3 +1,15 @@
+2014.08.18, v0.8.3
+
+fix:
+- feature(gulp) if no features or not es do not add to changelog
+
+feature:
+- (minify) rm global.minify
+- (gulp) if no s or not fixes do not add to changelog
+- (gulp) rm history
+- (package) util-io v1.2.4
+
+
 2014.08.17, v0.8.2
 
 fix:
