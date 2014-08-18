@@ -27,7 +27,12 @@
         In          = files[0];
         
         log.error   = console.error;
-    console.log(isTTY)
+    
+    process.on('uncaughtException', function(error) {
+        if (error.code !== 'EPIPE')
+            log(error.message);
+    });
+    
     if (isTTY)
         minify();
     else
