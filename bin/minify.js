@@ -7,12 +7,10 @@
     'use strict';
     
     var Util        = require('util-io'),
+        pipe        = require('pipe-io'),
         
         Pack        = require('../package.json'),
         Version     = Pack.version,
-        Chunks      = '',
-        
-        exit        = process.exit,
         
         log         = function() {
             console.log.apply(console, arguments);
@@ -22,65 +20,58 @@
             return require('..');
         },
         
+        isTTY       = process.stdin.isTTY,
+        
         Argv        = process.argv,
         files       = Util.slice(Argv, 2),
         In          = files[0];
         
         log.error   = console.error;
+    console.log(isTTY)
+    if (isTTY)
+        minify();
+    else
+        pipe.getBody(process.stdin, function(error, chunks) {
+            minify(chunks);
+        });
     
-    readStd(function() {
-        var funcs;
-        
-        if (Chunks && In) {
+    function minify(chunks) {
+        if (chunks && In)
             getMinify().optimizeData({
                 ext     : Util.replaceStr(In, '-', '.'),
-                data    : Chunks
+                data    : chunks
             }, function(error, data) {
                 if (error)
                     log.error(error.message);
                 else
                     log(data);
-                
-                exit();
             });
         
-        } else if (!In || Util.strCmp(In, ['-h', '--help'])) {
+        else if (!In || Util.strCmp(In, ['-h', '--help']))
             log('minify <input-file1> <input-file2> <inputfileN>\n');
-            exit();
         
-        } else if (Util.strCmp(In, ['-v', '--version']) ) {
+        else if (Util.strCmp(In, ['-v', '--version']) )
             log('v' + Version);
-            exit();
         
-        } else if (In) {
-            funcs = files.map(function(current) {
-                var minify = getMinify();
-                
-                return minify.optimize.bind(null, current, {
-                    notLog  : true,
-                });
-            });
-            
-            Util.exec.parallel(funcs, function(error) {
-                var args = Util.slice(arguments, 1);
-                if (error)
-                    log.error(error.message);
-                else
-                    log.apply(null, args);
-                
-                exit();
-            });
-        }
-    });
+        else if (In)
+            uglifyFiles(files);
+    }
     
-    function readStd(callback) {
-        process.stdin.on('readable', function() {
-            var chunk = process.stdin.read();
+    function uglifyFiles(files) {
+        var funcs = files.map(function(current) {
+            var minify = getMinify();
             
-            if (chunk !== null)
-                Chunks += chunk;
+            return minify.optimize.bind(null, current, {
+                notLog  : true,
+            });
+        });
+        
+        Util.exec.parallel(funcs, function(error) {
+            var args = Util.slice(arguments, 1);
+            if (error)
+                log.error(error.message);
             else
-                callback();
+                log.apply(null, args);
         });
     }
 
