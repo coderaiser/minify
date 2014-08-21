@@ -106,7 +106,9 @@ var join        = require('minify'),
     port        = 1337,
     ip          = '0.0.0.0';
     
-app.use(minify());
+app.use(minify({
+    dir: __dirname
+}));
 
 app.use(express.static(__dirname));
 
