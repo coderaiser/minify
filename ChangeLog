@@ -1,3 +1,11 @@
+2014.08.21, v1.0.0
+
+feature:
+- (test) minify.optimizeData -> minify
+- (bin) minify.optimize -> minify
+- (minify) add middleware
+
+
 2014.08.21, v0.9.0
 
 fix:
