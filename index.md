@@ -2,7 +2,7 @@
 layout: default
 ---
 
-Minify v0.9.0
+Minify v1.0.0
 ===============
 [NPM_INFO_IMG]:             https://nodei.co/npm/minify.png?stars
 
@@ -26,7 +26,7 @@ Command line syntax:
 
 ```
 minify <input-file1> <input-file2> <input-fileN> > output
-stdout | minify -flag
+stdout | minify -<flag>
 ```
 For example:
 
@@ -42,51 +42,45 @@ API
 ---------------
 The **Minify** module contains an api for interacting with other js files.
 
-To use the **Minify** functions it sould be connected first.
 
 ```js
 minify = require('minify');
 ```
 After minification, a file will be saved in the temporary directory.
 
-## optimize
-**optimize**(*file*) - function to minificate js, html and css-files.
+minify - function to minificate js, html and css-files.
 
  - **file**                 - path to file.
- - **options**(optional)    - object contains main options.
+ - **options**(optional)    - object contains options.
+ - **callback**
 
 Possible options:
- - callback
- - notLog
+ - log
  - returnName
 
 **Examples**:
 
+## Optimize file
 ```js
-minify.optimize('client.js', {
-    returnName: true
+var minify = require('minify');
+
+minify('client.js', {
+    returnName  : true,
+    log         : true
 }, function(error, name) {
     console.log(error || name);
-});
-```
-
-```js
-minify.optimize('client.js', {
-    notLog  : true,
-}, func(error, minData) {
-
 });
 ```
 
 if post processing is needed: 
 
 ```js
-minify.optimize('client.js', function(error, minData) {
+minify('client.js', function(error, data) {
 
 });
 ```
 
-## optimizeData
+## Optimize data
 Gets data on input.
 Parameters:
 - Object with data and extensions (`.js`, `.css`, `img`)
@@ -95,12 +89,34 @@ Parameters:
 **Example**:
 
 ```js
-    minify.optimizeData({
-        ext: '.js',
-        data: 'function hello() { if (2 > 3) console.log('for real')}'
-    }, function(error, data) {
-        console.log(error, data);
-    });
+minify({
+    ext: '.js',
+    data: 'function hello() { if (2 > 3) console.log('for real')}'
+}, function(error, data) {
+    console.log(error, data);
+});
+```
+
+## Express middleware
+
+```js
+var join        = require('minify'),
+    http        = require('http'),
+    express     = require('express'),
+    
+    app         = express(),
+    server      = http.createServer(app),
+    
+    port        = 1337,
+    ip          = '0.0.0.0';
+    
+app.use(minify({
+    dir: __dirname
+}));
+
+app.use(express.static(__dirname));
+
+server.listen(port, ip);
 ```
 
 Additional modules:
