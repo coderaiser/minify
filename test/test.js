@@ -18,7 +18,7 @@
             } else {
                 uglified    = _uglifyJS(data);
                 
-                minify.optimizeData({
+                minify({
                     ext: '.js',
                     data: data,
                 }, function(error, data) {
