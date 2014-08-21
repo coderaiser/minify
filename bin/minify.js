@@ -70,7 +70,7 @@
     
     function processStream(chunks) {
         if (chunks && In)
-            getMinify().optimizeData({
+            getMinify()({
                 ext     : Util.replaceStr(In, '-', '.'),
                 data    : chunks
             }, function(error, data) {
@@ -85,7 +85,7 @@
         var funcs = files.map(function(current) {
             var minify = getMinify();
             
-            return minify.optimize.bind(null, current, {
+            return minify.bind(null, current, {
                 notLog  : true,
             });
         });
