@@ -1,3 +1,14 @@
+2014.08.21, v0.9.0
+
+fix:
+- (minify) work with streams in node spawn
+- (minify) pipe
+
+feature:
+- (minify) rm getName, MinFolder
+- (minify) if EPIPE do not show error
+
+
 2014.08.18, v0.8.4
 
 fix:
