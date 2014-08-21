@@ -99,17 +99,6 @@ Parameters:
     });
 ```
 
-## getName
-returns only the name of a minified file (from min directory).
-
-```js
-var hashName = minify.getName('client.js');
-console.log(hashName);
-```
-
-**MinFolder** - variable that contains the folder name, where minimized files stored.
-                (could not be changed for now).
-                
 Additional modules:
 ---------------
 - [UglifyJS] (https://github.com/mishoo/UglifyJS)
@@ -117,7 +106,3 @@ Additional modules:
 - [html-minifier] (https://github.com/kangax/html-minifier)
 - [css-b64-images] (https://github.com/Filirom1/css-base64-images)
 - [util-io] (http://coderaiser.github.io/util-io)
-
-Install additional modules (in minify folder):
-
-    npm install
