@@ -1,3 +1,9 @@
+2014.08.22, v1.0.1
+
+fix:
+- (minify) req.path -> req.url
+
+
 2014.08.21, v1.0.0
 
 feature:
