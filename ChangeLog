@@ -1,3 +1,9 @@
+2014.10.24, v1.0.6
+
+feature:
+- (minify) "Supported file types" -> "File type not supported"
+
+
 2014.10.24, v1.0.5
 
 fix:
