@@ -1,3 +1,12 @@
+2014.10.24, v1.0.5
+
+fix:
+- (minify) if not js, html, css - error
+
+feature:
+- (minify) change file ext first, read file after
+
+
 2014.09.29, v1.0.4
 
 feature:
