@@ -2,7 +2,7 @@
 layout: default
 ---
 
-Minify v1.0.6
+Minify v1.0.7
 ===============
 [NPM_INFO_IMG]:             https://nodei.co/npm/minify.png?stars
 
