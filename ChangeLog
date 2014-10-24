@@ -1,3 +1,9 @@
+2014.10.24, v1.0.7
+
+fix:
+- (minify) img.optimize -> getModule(img)(filename, data, callback)
+
+
 2014.10.24, v1.0.6
 
 feature:
