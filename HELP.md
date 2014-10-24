@@ -96,7 +96,7 @@ minify({
 ## Express middleware
 
 ```js
-var join        = require('minify'),
+var minify      = require('minify'),
     http        = require('http'),
     express     = require('express'),
     
