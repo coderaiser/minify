@@ -1,3 +1,10 @@
+2014.10.30, v1.0.8
+
+feature:
+- (minify) require all modules on start to improve speed
+- (gulp) add changelog from npm
+
+
 2014.10.24, v1.0.7
 
 fix:
