@@ -5,9 +5,10 @@
         jshint      = require('gulp-jshint'),
         
         Util        = require('util-io'),
+        changelog   = require('changelog-io'),
+        
         fs          = require('fs'),
         test        = require('./test/test'),
-        exec        = require('child_process').exec,
         Info        = require('./package'),
         
         LIB         = './lib/',
@@ -30,20 +31,6 @@
     
      gulp.task('changelog', function() {
         var version     = 'v' + Info.version,
-            name        = 'ChangeLog',
-            
-            gitTempl    = 'git log {{ version }}..HEAD --pretty=format:"- %s" --grep {{ category }} | sed  \'s/{{ category }}//g\'',
-            
-            gitFix      = Util.render(gitTempl, {
-               category : 'fix' ,
-               version  : version
-            }),
-            
-            gitFeature  = Util.render(gitTempl, {
-               category: 'feature',
-               version  : version
-            }),
-            
             versionNew  = getNewVersion();
         
         if (versionNew)
@@ -51,51 +38,12 @@
         else
             versionNew  = version + '?';
         
-        Util.exec.parallel([
-            Util.exec.with(fs.readFile, name, 'utf8'),
-            Util.exec.with(exec, gitFix),
-            Util.exec.with(exec, gitFeature),
-            ], function(error, fileData, fixData, featureData) {
-                var DATA        = 0,
-                    STD_ERR     = 1,
-                    fix         = fixData[DATA],
-                    feature     = featureData[DATA],
-                    date        = Util.getShortDate(),
-                    head        = date + ', ' + versionNew + '\n\n',
-                    data        = '';
-                
-                console.log(fix || feature);
-                
-                if (fix || feature) {
-                    data        = head;
-                    
-                    if (fix) {
-                        data    += 'fix:'       + '\n';
-                        data    += fix          + '\n\n';
-                    }
-                    
-                    if (feature) {
-                        data    += 'feature:'   + '\n';
-                        data    += feature      + '\n\n';
-                    }
-                    
-                    data        += '\n';
-                    data        += fileData;
-                }
-                
-                error   = error || fixData[STD_ERR] || featureData[STD_ERR];
-                
-                if (error)
-                    console.log(error);
-                else if (!data)
-                    console.log('No new feature and fix commits from v', version);
-                else
-                    fs.writeFile(name, data, function(error) {
-                        var msg = 'changelog: done';
-                        
-                        console.log(error || msg);
-                    });
-            });
+        changelog(versionNew, function(error, msg) {
+            if (error)
+                console.error(error.message);
+            else
+                console.log(msg);
+        });
     });
     
      gulp.task('package', function() {
