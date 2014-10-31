@@ -1,6 +1,5 @@
 .travis.yml
 .jshintrc
-.gitignore
 
 test
 gulpfile.js
