@@ -1,3 +1,10 @@
+2014.11.3, v1.0.11
+
+feature:
+- (package) rm pipe-io
+- (package) util-io v1.6.0
+
+
 2014.10.31, v1.0.10
 
 feature:
