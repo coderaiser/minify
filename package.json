@@ -36,7 +36,7 @@
     "pipe-io": "~0.9.4",
     "ponse": "~1.2.0",
     "uglify-js": "2.4.x",
-    "util-io": "~1.4.0"
+    "util-io": "~1.6.0"
   },
   "main": "lib/minify",
   "license": "MIT",
