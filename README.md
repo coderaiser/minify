@@ -5,10 +5,10 @@ Minify [![License][LicenseIMGURL]][LicenseURL] [![Dependency Status][DependencyS
 [DependencyStatusIMGURL]:   https://img.shields.io/gemnasium/coderaiser/minify.png?style=flat
 [LicenseIMGURL]:            https://img.shields.io/badge/license-MIT-317BF9.svg?style=flat
 [NPM_INFO_IMG]:             https://nodei.co/npm/minify.png?stars
-[NPMURL]:                   //npmjs.org/package/minify
+[NPMURL]:                   http://npmjs.org/package/minify
 [LicenseURL]:               https://tldrlegal.com/license/mit-license "MIT License"
-[BuildStatusURL]:           //travis-ci.org/coderaiser/minify  "Build Status"
-[DependencyStatusURL]:      //gemnasium.com/coderaiser/minify "Dependency Status"
+[BuildStatusURL]:           http://travis-ci.org/coderaiser/minify  "Build Status"
+[DependencyStatusURL]:      https://gemnasium.com/coderaiser/minify "Dependency Status"
 
 [Minify](http://coderaiser.github.io/minify "Minify") - a minifier of js, css, html and img files,
 used in [Cloud Commander](http://cloudcmd.io "Cloud Commander") project.
