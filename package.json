@@ -29,7 +29,6 @@
   "preferGlobal": false,
   "dependencies": {
     "clean-css": "2.2.x",
-    "css-b64-images": "0.2.x",
     "html-minifier": "~0.6.x",
     "ischanged": "~1.0.1",
     "mkdirp": "~0.5.x",
