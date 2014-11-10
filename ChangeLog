@@ -1,3 +1,12 @@
+2014.11.10, v1.0.13
+
+feature:
+- (package) css-b64-images v0.2.5
+- (gitignore) add npm-debug, rm min
+- (package) v1.0.12
+- (img) add local css-b64-images
+
+
 2014.11.6, v1.0.12
 
 feature:
