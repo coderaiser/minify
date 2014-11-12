@@ -101,7 +101,7 @@ Parameters:
 ```js
 minify({
     ext: '.js',
-    data: 'function hello() { if (2 > 3) console.log('for real')}'
+    data: 'function hello() { if (2 > 3) console.log(\'for real\')}'
 }, function(error, data) {
     console.log(error, data);
 });
