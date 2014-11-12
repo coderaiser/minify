@@ -53,6 +53,7 @@ minify - function to minificate js, html and css-files.
 Possible options:
  - log
  - returnName
+ - returnStream
 
 **Examples**:
 
@@ -65,6 +66,19 @@ minify('client.js', {
     log         : true
 }, function(error, name) {
     console.log(error || name);
+});
+```
+
+```js
+minify('client.js', {
+    returnStream  : true,
+}, function(error, stream) {
+    var streamWrite = fs.createWriteStream('client.min.js');
+    
+    if (error)
+        console.error(error.message);
+    else
+        stream.pipe(streamWrite);
 });
 ```
 
