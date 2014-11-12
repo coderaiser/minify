@@ -72,6 +72,19 @@ minify('client.js', {
 });
 ```
 
+```js
+minify('client.js', {
+    returnStream  : true,
+}, function(error, stream) {
+    var streamWrite = fs.createWriteStream('client.min.js');
+
+    if (error)
+        console.error(error.message);
+    else
+        stream.pipe(streamWrite);
+});
+```
+
 if post processing is needed: 
 
 ```js
