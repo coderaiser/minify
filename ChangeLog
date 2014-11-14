@@ -1,3 +1,11 @@
+2014.11.14, v1.3.0
+
+feature:
+- (minify) options: retName -> name, retStream -> stream
+- (package) v1.2.0
+- (minify) rm option log
+
+
 2014.11.13, v1.2.0
 
 feature:
