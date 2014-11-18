@@ -123,10 +123,7 @@ app.use(express.static(__dirname));
 server.listen(port, ip);
 ```
 
-Additional modules:
+License
 ---------------
-- [UglifyJS] (https://github.com/mishoo/UglifyJS)
-- [clean-css] (https://github.com/GoalSmashers/clean-css)
-- [html-minifier] (https://github.com/kangax/html-minifier)
-- [css-b64-images] (https://github.com/Filirom1/css-base64-images)
-- [util-io] (http://coderaiser.github.io/util-io)
+
+MIT
