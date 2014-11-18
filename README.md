@@ -10,5 +10,25 @@ Minify [![License][LicenseIMGURL]][LicenseURL] [![Dependency Status][DependencyS
 [BuildStatusURL]:           http://travis-ci.org/coderaiser/minify  "Build Status"
 [DependencyStatusURL]:      https://gemnasium.com/coderaiser/minify "Dependency Status"
 
-[Minify](http://coderaiser.github.io/minify "Minify") - a minifier of js, css, html and img files,
-used in [Cloud Commander](http://cloudcmd.io "Cloud Commander") project.
+[Minify](http://coderaiser.github.io/minify "Minify") - a minifier of js, css, html and img files.
+
+## Install
+
+```
+npm i minify --save
+```
+
+## How to use?
+
+```js
+minify('client.js', function(error, data) {
+    if (error)
+        console.error(error.message);
+    else
+        console.log(data);
+});
+```
+
+## License
+
+MIT
