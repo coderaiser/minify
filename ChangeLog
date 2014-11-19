@@ -1,3 +1,13 @@
+2014.11.19, v1.3.1
+
+fix:
+- (minify) first minimize error
+- (minify) getDir: join
+
+feature:
+- (minify) getDir: add path.join
+
+
 2014.11.14, v1.3.0
 
 feature:
