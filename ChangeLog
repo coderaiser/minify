@@ -1,3 +1,9 @@
+2014.11.27, v1.3.3
+
+feature:
+- (minify) util-io -> execon, checkup
+
+
 2014.11.20, v1.3.2
 
 fix:
