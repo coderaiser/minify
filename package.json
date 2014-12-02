@@ -38,7 +38,8 @@
     "mkdirp": "~0.5.x",
     "ponse": "~1.2.0",
     "uglify-js": "2.4.x",
-    "util-io": "~1.6.0"
+    "util-io": "~1.6.0",
+    "tomas": "~1.0.0"
   },
   "main": "lib/minify",
   "license": "MIT",
