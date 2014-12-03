@@ -103,25 +103,7 @@ minify({
 
 ## Express middleware
 
-```js
-var minify      = require('minify'),
-    http        = require('http'),
-    express     = require('express'),
-    
-    app         = express(),
-    server      = http.createServer(app),
-    
-    port        = 1337,
-    ip          = '0.0.0.0';
-    
-app.use(minify({
-    dir: __dirname
-}));
-
-app.use(express.static(__dirname));
-
-server.listen(port, ip);
-```
+To use as express middleware [mollify](https://github.com/coderaiser/node-mollify Mollify) could be used.
 
 License
 ---------------
