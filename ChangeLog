@@ -1,3 +1,9 @@
+2014.12.03, v1.4.0
+
+feature:
+- (minify) rm middleware
+
+
 2014.12.03, v1.3.6
 
 feature:
