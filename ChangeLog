@@ -1,3 +1,9 @@
+2014.12.03, v1.3.6
+
+feature:
+- (package) rm ischanged, mkdirp
+
+
 2014.12.02, v1.3.5
 
 fix:
