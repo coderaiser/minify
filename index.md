@@ -55,8 +55,13 @@ minify - function to minificate js, html and css-files.
  - **callback**
 
 Possible options:
+<<<<<<< HEAD
  - returnName
  - returnStream
+=======
+ - name
+ - stream
+>>>>>>> docs(index) v1.4.0
 
 **Examples**:
 
@@ -64,19 +69,15 @@ Possible options:
 ```js
 var minify = require('minify');
 
-minify('client.js', {
-    returnName  : true,
-}, function(error, name) {
+minify('client.js', 'name', function(error, name) {
     console.log(error || name);
 });
 ```
 
 ```js
-minify('client.js', {
-    returnStream  : true,
-}, function(error, stream) {
+minify('client.js', 'stream', function(error, stream) {
     var streamWrite = fs.createWriteStream('client.min.js');
-
+    
     if (error)
         console.error(error.message);
     else
@@ -111,30 +112,9 @@ minify({
 
 ## Express middleware
 
-```js
-var join        = require('minify'),
-    http        = require('http'),
-    express     = require('express'),
-    
-    app         = express(),
-    server      = http.createServer(app),
-    
-    port        = 1337,
-    ip          = '0.0.0.0';
-    
-app.use(minify({
-    dir: __dirname
-}));
+To use as express middleware [mollify](https://github.com/coderaiser/node-mollify Mollify) could be used.
 
-app.use(express.static(__dirname));
-
-server.listen(port, ip);
-```
-
-Additional modules:
+License
 ---------------
-- [UglifyJS] (https://github.com/mishoo/UglifyJS)
-- [clean-css] (https://github.com/GoalSmashers/clean-css)
-- [html-minifier] (https://github.com/kangax/html-minifier)
-- [css-b64-images] (https://github.com/Filirom1/css-base64-images)
-- [util-io] (http://coderaiser.github.io/util-io)
+
+MIT
