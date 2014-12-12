@@ -55,13 +55,8 @@ minify - function to minificate js, html and css-files.
  - **callback**
 
 Possible options:
-<<<<<<< HEAD
- - returnName
- - returnStream
-=======
  - name
  - stream
->>>>>>> docs(index) v1.4.0
 
 **Examples**:
 
