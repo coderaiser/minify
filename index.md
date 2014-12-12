@@ -55,7 +55,8 @@ minify - function to minificate js, html and css-files.
  - **callback**
 
 Possible options:
- - **name**
+ 
+- **name**
  - **stream**
 
 **Examples**:
