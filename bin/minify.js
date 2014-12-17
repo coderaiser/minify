@@ -21,7 +21,7 @@
         },
         
         Argv        = process.argv,
-        files       = Util.slice(Argv, 2),
+        files       = Argv.slice(2),
         In          = files[0];
         
         log.error   = function() {
@@ -91,7 +91,7 @@
         });
         
         Util.exec.parallel(funcs, function(error) {
-            var args = Util.slice(arguments, 1);
+            var args = [].slice.call(arguments, 1);
             
             if (error)
                 log.error(error.message);
