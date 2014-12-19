@@ -4,7 +4,7 @@
     var gulp        = require('gulp'),
         jshint      = require('gulp-jshint'),
         
-        Util        = require('util-io'),
+        exec        = require('execon'),
         changelog   = require('changelog-io'),
         
         fs          = require('fs'),
@@ -112,7 +112,7 @@
                         var msg = 'done: ' + name;
                         
                         console.log(error || msg);
-                        Util.exec(callback);
+                        exec(callback);
                     });
                 }
             });
