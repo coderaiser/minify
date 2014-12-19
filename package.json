@@ -33,8 +33,7 @@
     "html-minifier": "~0.6.x",
     "rendy": "~1.0.2",
     "tomas": "~1.0.0",
-    "uglify-js": "2.4.x",
-    "util-io": "~1.6.0"
+    "uglify-js": "2.4.x"
   },
   "main": "lib/minify",
   "license": "MIT",
