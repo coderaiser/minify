@@ -1,3 +1,14 @@
+2014.12.19, v1.4.2
+
+fix:
+- (minify) rm Util.slice
+
+feature:
+- (package) rm util-io
+- (package) add rendy
+- (package) v1.4.1
+
+
 2014.12.17, v1.4.1
 
 fix:
