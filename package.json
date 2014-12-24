@@ -26,7 +26,7 @@
   "preferGlobal": false,
   "dependencies": {
     "checkup": "~1.0.2",
-    "clean-css": "2.2.x",
+    "clean-css": "~3.0.1",
     "css-b64-images": "~0.2.5",
     "debug": "~2.1.0",
     "execon": "~1.0.1",
