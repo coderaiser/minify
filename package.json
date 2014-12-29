@@ -42,7 +42,6 @@
   },
   "devDependencies": {
     "gulp": "~3.8.x",
-    "gulp-jshint": "~1.8.4",
-    "changelog-io": "~1.2.1"
+    "gulp-jshint": "~1.8.4"
   }
 }
