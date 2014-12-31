@@ -1,3 +1,9 @@
+2014.12.31, v1.4.6
+
+feature:
+- (minify) rm notLog
+
+
 2014.12.31, v1.4.5
 
 fix:
