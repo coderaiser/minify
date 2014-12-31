@@ -1,3 +1,14 @@
+2014.12.31, v1.4.5
+
+fix:
+- (css) error -> errors
+- (minify) util -> exec
+
+feature:
+- (package) gulp-jshint v1.9.0
+- (gulp) rm changelog-io
+
+
 2014.12.24, v1.4.4
 
 feature:
