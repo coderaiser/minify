@@ -84,9 +84,7 @@
         var funcs = files.map(function(current) {
             var minify = getMinify();
             
-            return minify.bind(null, current, {
-                notLog  : true,
-            });
+            return minify.bind(null, current);
         });
         
         exec.parallel(funcs, function(error) {
