@@ -6,8 +6,7 @@
 (function() {
     'use strict';
     
-    var Util        = require('util-io'),
-        
+    var exec        = require('execon'),
         Pack        = require('../package.json'),
         Version     = Pack.version,
         
@@ -55,13 +54,13 @@
     }
     
     function minify() {
-        if (!In || Util.strCmp(In, ['-h', '--help']))
+        if (!In || /-h|--help/.test(In))
             log('minify <input-file1> <input-file2> <inputfileN>\n');
         
-        else if (Util.strCmp(In, ['-js', '-css', '-html']))
+        else if (/-js|-css|-html/.test(In))
             readStd(processStream);
         
-        else if (Util.strCmp(In, ['-v', '--version']) )
+        else if (/-v|--version/.test(In))
             log('v' + Version);
         
         else if (In)
@@ -71,7 +70,7 @@
     function processStream(chunks) {
         if (chunks && In)
             getMinify()({
-                ext     : Util.replaceStr(In, '-', '.'),
+                ext     : In.replace('-', '.'),
                 data    : chunks
             }, function(error, data) {
                 if (error)
@@ -90,7 +89,7 @@
             });
         });
         
-        Util.exec.parallel(funcs, function(error) {
+        exec.parallel(funcs, function(error) {
             var args = [].slice.call(arguments, 1);
             
             if (error)
