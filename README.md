@@ -1,7 +1,7 @@
 Minify [![License][LicenseIMGURL]][LicenseURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![NPM version][NPMIMGURL]][NPMURL]
 ===============
 [NPMIMGURL]:                https://img.shields.io/npm/v/minify.svg?style=flat
-[BuildStatusIMGURL]:        https://img.shields.io/travis/coderaiser/minify/dev.svg?style=flat
+[BuildStatusIMGURL]:        https://img.shields.io/travis/coderaiser/minify/master.svg?style=flat
 [DependencyStatusIMGURL]:   https://img.shields.io/gemnasium/coderaiser/minify.png?style=flat
 [LicenseIMGURL]:            https://img.shields.io/badge/license-MIT-317BF9.svg?style=flat
 [NPM_INFO_IMG]:             https://nodei.co/npm/minify.png?stars
