@@ -54,13 +54,13 @@
     }
     
     function minify() {
-        if (!In || /-h|--help/.test(In))
+        if (!In || /^(-h|--help)$/.test(In))
             log('minify <input-file1> <input-file2> <inputfileN>\n');
         
-        else if (/-js|-css|-html/.test(In))
+        else if (/^(-js|-css|-html)$/.test(In))
             readStd(processStream);
         
-        else if (/-v|--version/.test(In))
+        else if (/^(-v|--version)$/.test(In))
             log('v' + Version);
         
         else if (In)
