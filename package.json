@@ -30,7 +30,7 @@
     "css-b64-images": "~0.2.5",
     "debug": "~2.1.0",
     "execon": "~1.1.0",
-    "html-minifier": "~0.6.x",
+    "html-minifier": "~0.7.0",
     "rendy": "~1.0.2",
     "tomas": "~1.0.0",
     "uglify-js": "2.4.x"
