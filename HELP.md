@@ -11,10 +11,9 @@ Install
 
 You can install minify via [npm](https://www.npmjs.org/):
 
-    npm i minify -g
-or
-    
-    git clone git://github.com/coderaiser/minify
+```
+npm i minify -g
+```
 
 Command Line
 ---------------
