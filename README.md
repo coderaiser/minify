@@ -11,6 +11,7 @@ Minify [![License][LicenseIMGURL]][LicenseURL] [![Dependency Status][DependencyS
 [DependencyStatusURL]:      https://gemnasium.com/coderaiser/minify "Dependency Status"
 
 [Minify](http://coderaiser.github.io/minify "Minify") - a minifier of js, css, html and img files.
+To use `minify` as middleware try [Mollify](https://github.com/coderaiser/node-mollify "Mollify").
 
 ## Install
 

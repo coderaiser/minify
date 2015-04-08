@@ -5,6 +5,8 @@ Minify
 [Minify](http://coderaiser.github.io/minify "Minify") - a minifier of js, css, html and img files,
 used in [Cloud Commander](http://cloudcmd.io "Cloud Commander") project.
 
+To use `minify` as middleware try [Mollify](https://github.com/coderaiser/node-mollify "Mollify").
+
 Install
 ---------------
 ![NPM_INFO][NPM_INFO_IMG]
