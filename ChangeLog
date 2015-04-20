@@ -1,3 +1,10 @@
+2015.04.20, v1.4.11
+
+feature:
+- (package) clean-css v3.2.1
+- (package) gulp-jshint v1.10
+
+
 2015.03.10, v1.4.10
 
 feature:
