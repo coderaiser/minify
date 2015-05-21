@@ -31,7 +31,7 @@
     "debug": "~2.2.0",
     "execon": "~1.1.0",
     "html-minifier": "~0.7.0",
-    "rendy": "~1.0.2",
+    "rendy": "~1.1.0",
     "tomas": "~1.0.0",
     "uglify-js": "2.4.x"
   },
