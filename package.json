@@ -42,6 +42,6 @@
   },
   "devDependencies": {
     "gulp": "~3.8.x",
-    "gulp-jshint": "~1.10.0"
+    "gulp-jshint": "^1.10.0"
   }
 }
