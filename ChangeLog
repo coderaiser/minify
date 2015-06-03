@@ -1,3 +1,9 @@
+2015.06.03, v1.4.16
+
+feature:
+- (minify) log: rm "\n"
+
+
 2015.06.03, v1.4.15
 
 feature:
