@@ -55,7 +55,7 @@
     
     function minify() {
         if (!In || /^(-h|--help)$/.test(In))
-            log('minify <input-file1> <input-file2> <inputfileN>\n');
+            log('minify <input-file1> <input-file2> <inputfileN>');
         
         else if (/^(-js|-css|-html)$/.test(In))
             readStd(processStream);
