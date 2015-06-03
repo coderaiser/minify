@@ -1,3 +1,10 @@
+2015.06.03, v1.4.15
+
+feature:
+- (minify) exec.try -> tryCatch
+- (package) execon v1.2.0
+
+
 2015.06.01, v1.4.14
 
 feature:
