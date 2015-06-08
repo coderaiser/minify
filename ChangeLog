@@ -1,3 +1,12 @@
+2015.06.08, v1.4.17
+
+feature:
+- (package) rm checkup
+- (package) gulp v3.9.0
+- (travis) add iojs
+- (travis) rm before_install
+
+
 2015.06.03, v1.4.16
 
 feature:
