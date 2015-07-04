@@ -63,7 +63,7 @@
         else if (/^(-v|--version)$/.test(In))
             log('v' + Version);
         
-        else if (In)
+        else
             uglifyFiles(files);
     }
     
