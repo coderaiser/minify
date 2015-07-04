@@ -1,3 +1,10 @@
+2015.07.04, v1.4.19
+
+feature:
+- (minify) else if -> else
+- (minify) rm assert
+
+
 2015.06.08, v1.4.18
 
 feature:
