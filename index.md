@@ -9,16 +9,17 @@ Minify
 [Minify](http://coderaiser.github.io/minify "Minify") - a minifier of js, css, html and img files,
 used in [Cloud Commander](http://cloudcmd.io "Cloud Commander") project.
 
+To use `minify` as middleware try [Mollify](https://github.com/coderaiser/node-mollify "Mollify").
+
 Install
 ---------------
 ![NPM_INFO][NPM_INFO_IMG]
 
 You can install minify via [npm](https://www.npmjs.org/):
 
-    npm i minify -g
-or
-    
-    git clone git://github.com/coderaiser/minify
+```
+npm i minify -g
+```
 
 Command Line
 ---------------
@@ -26,7 +27,7 @@ Command line syntax:
 
 ```
 minify <input-file1> <input-file2> <input-fileN> > output
-stdout | minify -<flag>
+stdout | minify --<flag>
 ```
 For example:
 
@@ -34,8 +35,8 @@ For example:
 minify client.js util.js > all.js
 minify screen.css reset.css > all.css
 
-cat client.js | minify -js
-cat *.css | minify -css
+cat client.js | minify --js
+cat *.css | minify --css
 ```
 
 API
@@ -55,9 +56,8 @@ minify - function to minificate js, html and css-files.
  - **callback**
 
 Possible options:
- 
-- **name**
-- **stream**
+ - **name**
+ - **stream**
 
 **Examples**:
 
@@ -81,7 +81,7 @@ minify('client.js', 'stream', function(error, stream) {
 });
 ```
 
-if post processing is needed: 
+if post processing is need: 
 
 ```js
 minify('client.js', function(error, data) {
@@ -90,20 +90,22 @@ minify('client.js', function(error, data) {
 ```
 
 ## Optimize data
-Gets data on input.
+
 Parameters:
-- Object with data and extensions (`.js`, `.css`, `img`)
+- Data
 - Callback
 
 **Example**:
 
 ```js
-minify({
-    ext: '.js',
-    data: 'function hello() { if (2 > 3) console.log(\'for real\')}'
-}, function(error, data) {
+minify.js('function hello() { if (2 > 3) console.log(\'for real\')}', function(error, data) {
     console.log(error, data);
 });
+
+minify.css('div { color: #000000}', function(error, data) {
+    console.log(error, data);
+});
+
 ```
 
 ## Express middleware
