@@ -15,10 +15,6 @@
             process.stdin.pause();
         },
         
-        getMinify   = function() {
-            return require('..');
-        },
-        
         Argv        = process.argv,
         files       = Argv.slice(2),
         In          = files[0];
@@ -57,7 +53,7 @@
         if (!In || /^(-h|--help)$/.test(In))
             log('minify <input-file1> <input-file2> <inputfileN>');
         
-        else if (/^(-js|-css|-html)$/.test(In))
+        else if (/^--(js|css|html)$/.test(In))
             readStd(processStream);
         
         else if (/^(-v|--version)$/.test(In))
@@ -68,21 +64,24 @@
     }
     
     function processStream(chunks) {
-        if (chunks && In)
-            getMinify()({
-                ext     : In.replace('-', '.'),
-                data    : chunks
-            }, function(error, data) {
+        var name,
+            minify = require('..');
+        
+        if (chunks && In) {
+            name = In.replace('-', '');
+            
+            minify[name](chunks, function(error, data) {
                 if (error)
                     log.error(error.message);
                 else
                     log(data);
             });
+        }
     }
     
     function uglifyFiles(files) {
         var funcs = files.map(function(current) {
-            var minify = getMinify();
+            var minify = require('..');
             
             return minify.bind(null, current);
         });

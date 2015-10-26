@@ -23,7 +23,7 @@ Command line syntax:
 
 ```
 minify <input-file1> <input-file2> <input-fileN> > output
-stdout | minify -<flag>
+stdout | minify --<flag>
 ```
 For example:
 
@@ -31,8 +31,8 @@ For example:
 minify client.js util.js > all.js
 minify screen.css reset.css > all.css
 
-cat client.js | minify -js
-cat *.css | minify -css
+cat client.js | minify --js
+cat *.css | minify --css
 ```
 
 API
