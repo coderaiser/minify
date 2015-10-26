@@ -51,7 +51,7 @@
     
     function minify() {
         if (!In || /^(-h|--help)$/.test(In))
-            log('minify <input-file1> <input-file2> <inputfileN>');
+            help();
         
         else if (/^--(js|css|html)$/.test(In))
             readStd(processStream);
@@ -93,6 +93,18 @@
                 log.error(error.message);
             else
                 log.apply(null, args);
+        });
+    }
+    
+    function help() {
+        var bin         = require('../json/help'),
+            usage       = 'Usage: minify [options]';
+        
+        console.log(usage);
+        console.log('Options:');
+        
+        Object.keys(bin).forEach(function(name) {
+            console.log('  %s %s', name, bin[name]);
         });
     }
     
