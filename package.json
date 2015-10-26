@@ -28,7 +28,6 @@
     "quality": "npm run jshint && npm run jscs",
     "test": "npm run quality && npm run tape"
   },
-  "preferGlobal": false,
   "dependencies": {
     "clean-css": "~3.4.1",
     "css-b64-images": "~0.2.5",
