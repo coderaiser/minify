@@ -64,14 +64,14 @@
     });
     
     test('arguments: no', t => {
-        t.throws(minify, /name could not be empty!/, 'name empty check');
+        t.throws(minify, /name could not be empty!/, 'throw when name empty');
         t.end();
     });
     
     test('arguments: no callback', t => {
         let fn = name => () => minify(name);
         
-        t.throws(fn('hello.css'), /callback should be function!/, 'callback check');
+        t.throws(fn('hello.css'), /callback should be function!/, 'throw when callback not function');
         t.end();
     });
 })();
