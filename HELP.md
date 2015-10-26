@@ -77,7 +77,7 @@ minify('client.js', 'stream', function(error, stream) {
 });
 ```
 
-if post processing is needed: 
+if post processing is need: 
 
 ```js
 minify('client.js', function(error, data) {
@@ -86,20 +86,22 @@ minify('client.js', function(error, data) {
 ```
 
 ## Optimize data
-Gets data on input.
+
 Parameters:
-- Object with data and extensions (`.js`, `.css`, `img`)
+- Data
 - Callback
 
 **Example**:
 
 ```js
-minify({
-    ext: '.js',
-    data: 'function hello() { if (2 > 3) console.log(\'for real\')}'
-}, function(error, data) {
+minify.js('function hello() { if (2 > 3) console.log(\'for real\')}', function(error, data) {
     console.log(error, data);
 });
+
+minify.css('div { color: #000000}', function(error, data) {
+    console.log(error, data);
+});
+
 ```
 
 ## Express middleware
