@@ -21,9 +21,11 @@
     "minify": "bin/minify.js"
   },
   "scripts": {
-    "gulp": "gulp default",
     "tape": "tape test/minify.js",
-    "test": "npm run tape && npm run gulp"
+    "jshint": "jshint lib test",
+    "jscs": "jscs --esnext lib test",
+    "quality": "npm run jshint && npm run jscs",
+    "test": "npm run quality && npm run tape"
   },
   "preferGlobal": false,
   "dependencies": {
@@ -40,11 +42,10 @@
   "main": "lib/minify",
   "license": "MIT",
   "engines": {
-    "node": ">= 0.4.0"
+    "node": ">= 0.8.0"
   },
   "devDependencies": {
-    "gulp": "~3.9.0",
-    "gulp-jshint": "^1.10.0",
-    "tape": "~4.2.2"
+    "jshint": "^2.8.0",
+    "tape": "^4.2.2"
   }
 }
