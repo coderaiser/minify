@@ -24,6 +24,7 @@
     "tape": "tape test/minify.js",
     "jshint": "jshint lib test",
     "jscs": "jscs --esnext lib test",
+    "jscs-fix": "jscs --fix lib test",
     "quality": "npm run jshint && npm run jscs",
     "test": "npm run quality && npm run tape"
   },
@@ -45,6 +46,7 @@
     "node": ">= 0.8.0"
   },
   "devDependencies": {
+    "jscs": "^2.4.0",
     "jshint": "^2.8.0",
     "tape": "^4.2.2"
   }
