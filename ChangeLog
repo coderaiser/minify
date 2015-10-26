@@ -1,3 +1,20 @@
+2015.10.26, v2.0.0
+
+fix:
+- chore(jscs) 
+
+feature:
+- (package) rm preferGlobal
+- (minify) add help
+- (help) add
+- (minify) -flag -> --flag
+- (package) add jscs
+- (jscs) add
+- (package) gulp -> jshint
+- (travis) rm 0.10, 0.12
+- (test) add
+
+
 2015.10.26, v1.4.23
 
 feature:
