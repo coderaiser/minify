@@ -21,7 +21,9 @@
     "minify": "bin/minify.js"
   },
   "scripts": {
-    "test": "gulp default"
+    "gulp": "gulp default",
+    "tape": "tape test/minify.js",
+    "test": "npm run tape && npm run gulp"
   },
   "preferGlobal": false,
   "dependencies": {
@@ -42,6 +44,7 @@
   },
   "devDependencies": {
     "gulp": "~3.9.0",
-    "gulp-jshint": "^1.10.0"
+    "gulp-jshint": "^1.10.0",
+    "tape": "~4.2.2"
   }
 }
