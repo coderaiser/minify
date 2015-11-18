@@ -68,7 +68,7 @@
             minify = require('..');
         
         if (chunks && In) {
-            name = In.replace('-', '');
+            name = In.replace('--', '');
             
             minify[name](chunks, function(error, data) {
                 if (error)
