@@ -1,3 +1,9 @@
+2015.11.19, v2.0.2
+
+fix:
+- (minify) stdin (js, css, html) options: "-", "--"
+
+
 2015.11.14, v2.0.1
 
 feature:
