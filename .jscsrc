@@ -4,6 +4,7 @@
     "requireCapitalizedConstructors": false,
     "disallowTrailingWhitespace": "ignoreEmptyLines",
     "disallowTrailingComma": false,
+    "disallowUnusedVariables": true,
     "validateIndentation": false,
     "requireCurlyBraces": false,
     "requireVarDeclFirst": false,
@@ -12,8 +13,6 @@
         "beforeOpeningCurlyBrace": true
     },
     "excludeFiles": [
-        "node_modules/**",
-        "modules/**",
-        "bower_components/**"
+        "node_modules/**"
     ]
 }
