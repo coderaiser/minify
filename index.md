@@ -110,7 +110,7 @@ minify.css('div { color: #000000}', function(error, data) {
 
 ## Express middleware
 
-To use as express middleware [mollify](https://github.com/coderaiser/node-mollify Mollify) could be used.
+To use as express middleware [mollify](https://github.com/coderaiser/node-mollify "Mollify") could be used.
 
 License
 ---------------
