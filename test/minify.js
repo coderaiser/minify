@@ -1,6 +1,8 @@
 'use strict';
 
-const minify          = require('..'),
+const fs = require('fs');
+
+const minify        = require('..'),
     test            = require('tape'),
     CleanCSS        = require('clean-css'),
     uglify          = require('uglify-js'),
@@ -58,6 +60,19 @@ test('css', t => {
         const min = new CleanCSS().minify(css);
         
         t.equal(data, min.styles, 'css output should be equal');
+        t.end();
+    });
+});
+
+test.only('css: base64', (t) => {
+    const dir =  `${__dirname}/fixtures`;
+    const name = `${dir}/style.css`;
+    const nameMin = `${dir}/style.min.css`;
+    
+    const min = fs.readFileSync(nameMin, 'utf8');
+    
+    minify(name, (error, data) => {
+        t.equal(min, data);
         t.end();
     });
 });
