@@ -3,6 +3,7 @@
     - 4
 
 script:
+  - npm lint
   - npm test
 
 notifications:

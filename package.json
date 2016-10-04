@@ -21,12 +21,11 @@
     "minify": "bin/minify.js"
   },
   "scripts": {
-    "tape": "tape test/minify.js",
+    "test": "tape test/minify.js",
     "jshint": "jshint lib test",
     "jscs": "jscs --esnext lib test",
     "jscs-fix": "jscs --fix lib test",
-    "quality": "npm run jshint && npm run jscs",
-    "test": "npm run quality && npm run tape"
+    "lint": "npm run jshint && npm run jscs"
   },
   "dependencies": {
     "clean-css": "~3.4.1",
