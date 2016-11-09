@@ -30,7 +30,7 @@
   "dependencies": {
     "clean-css": "~3.4.1",
     "css-b64-images": "~0.2.5",
-    "debug": "~2.2.0",
+    "debug": "^2.3.0",
     "execon": "~1.2.0",
     "html-minifier": "^3.0.1",
     "rendy": "~1.1.0",
