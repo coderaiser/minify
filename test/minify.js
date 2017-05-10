@@ -2,17 +2,17 @@
 
 const fs = require('fs');
 
-const minify        = require('..'),
-    test            = require('tape'),
-    CleanCSS        = require('clean-css'),
-    uglify          = require('uglify-js'),
-    htmlMinifier    = require('html-minifier');
+const minify = require('..');
+const test = require('tape');
+const CleanCSS = require('clean-css');
+const uglify = require('uglify-js');
+const htmlMinifier = require('html-minifier');
 
-test('js', t => {
+test('js', (t) => {
     const js = 'function hello(world) {\nconsole.log(world);\n}';
     
     minify.js(js, (error, data) => {
-        const min = uglify.minify(data, {fromString: true}).code;
+        const min = uglify.minify(data).code;
         
         t.equal(data, min, 'js output should be equal');
         t.end();
@@ -64,7 +64,7 @@ test('css', t => {
     });
 });
 
-test.only('css: base64', (t) => {
+test('css: base64', (t) => {
     const dir =  `${__dirname}/fixtures`;
     const name = `${dir}/style.css`;
     const nameMin = `${dir}/style.min.css`;
