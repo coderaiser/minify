@@ -2,23 +2,23 @@
 
 'use strict';
 
-var exec        = require('execon'),
-    Pack        = require('../package.json'),
-    Version     = Pack.version,
-    
-    log         = function() {
-        console.log.apply(console, arguments);
-        process.stdin.pause();
-    },
-    
-    Argv        = process.argv,
-    files       = Argv.slice(2),
-    In          = files[0];
-    
-    log.error   = function() {
-        console.error.apply(console, arguments);
-        process.stdin.pause();
-    };
+var exec = require('execon');
+var Pack = require('../package.json');
+var Version = Pack.version;
+
+var log = function() {
+    console.log.apply(console, arguments);
+    process.stdin.pause();
+};
+
+var Argv = process.argv;
+var files = Argv.slice(2);
+var In = files[0];
+
+var log.error = function() {
+    console.error.apply(console, arguments);
+    process.stdin.pause();
+};
 
 process.on('uncaughtException', function(error) {
     if (error.code !== 'EPIPE')
@@ -28,18 +28,18 @@ process.on('uncaughtException', function(error) {
 minify();
 
 function readStd(callback) {
-    var stdin   = process.stdin,
-        chunks  = '',
-        read    = function() {
-            var chunk = stdin.read();
-            
-            if (chunk) {
-                chunks += chunk;
-            } else {
-                stdin.removeListener('readable', read);
-                callback(chunks);
-            }
-        };
+    var stdin = process.stdin;
+    var chunks = '';
+    var read = function() {
+        var chunk = stdin.read();
+        
+        if (chunk) {
+            chunks += chunk;
+        } else {
+            stdin.removeListener('readable', read);
+            callback(chunks);
+        }
+    };
     
     stdin.setEncoding('utf8');
     stdin.addListener('readable', read);
@@ -47,32 +47,31 @@ function readStd(callback) {
 
 function minify() {
     if (!In || /^(-h|--help)$/.test(In))
-        help();
+        return help();
     
-    else if (/^--(js|css|html)$/.test(In))
-        readStd(processStream);
+    if (/^--(js|css|html)$/.test(In))
+        return readStd(processStream);
     
-    else if (/^(-v|--version)$/.test(In))
-        log('v' + Version);
+    if (/^(-v|--version)$/.test(In))
+        return log('v' + Version);
     
-    else
-        uglifyFiles(files);
+    uglifyFiles(files);
 }
 
 function processStream(chunks) {
-    var name,
-        minify = require('..');
+    var minify = require('..');
     
-    if (chunks && In) {
-        name = In.replace('--', '');
+    if (!chunks || !In)
+        return;
+    
+    var name = In.replace('--', '');
+    
+    minify[name](chunks, function(error, data) {
+        if (error)
+            return log.error(error.message);
         
-        minify[name](chunks, function(error, data) {
-            if (error)
-                log.error(error.message);
-            else
-                log(data);
-        });
-    }
+        log(data);
+    });
 }
 
 function uglifyFiles(files) {
@@ -93,8 +92,8 @@ function uglifyFiles(files) {
 }
 
 function help() {
-    var bin         = require('../json/help'),
-        usage       = 'Usage: minify [options]';
+    var bin = require('../json/help');
+    var usage = 'Usage: minify [options]';
     
     console.log(usage);
     console.log('Options:');
