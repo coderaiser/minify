@@ -22,14 +22,17 @@ npm i minify --save
 ## How to use?
 
 ```js
-minify('client.js', function(error, data) {
+const minify = require('minify');
+
+minify('client.js', (error, data) => {
     if (error)
-        console.error(error.message);
-    else
-        console.log(data);
+        return console.error(error.message);
+    
+    console.log(data);
 });
 ```
 
 ## License
 
 MIT
+
