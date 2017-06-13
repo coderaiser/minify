@@ -22,10 +22,10 @@
   },
   "scripts": {
     "test": "tape test/minify.js",
-    "jshint": "jshint lib test",
-    "jscs": "jscs --esnext lib test",
-    "jscs-fix": "jscs --fix lib test",
-    "lint": "npm run jshint && npm run jscs"
+    "lint:jshint": "jshint lib test",
+    "lint:jscs": "jscs --esnext lib test",
+    "lint:eslint": "eslint lib test",
+    "lint": "redrun lint:*"
   },
   "dependencies": {
     "clean-css": "~3.4.1",
@@ -44,8 +44,10 @@
     "node": ">= 0.8.0"
   },
   "devDependencies": {
+    "eslint": "^4.0.0",
     "jscs": "^3.0.3",
     "jshint": "^2.8.0",
+    "redrun": "^5.9.15",
     "tape": "^4.2.2"
   }
 }
