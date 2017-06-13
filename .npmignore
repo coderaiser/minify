@@ -1,7 +1,5 @@
-.travis.yml
-.jshintrc
+.*
 
 test
-gulpfile.js
 
 CONTRIBUTING.md

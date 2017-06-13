@@ -2,25 +2,25 @@
 
 'use strict';
 
-var exec = require('execon');
-var Pack = require('../package.json');
-var Version = Pack.version;
+const exec = require('execon');
+const Pack = require('../package.json');
+const Version = Pack.version;
 
-var log = function() {
-    console.log.apply(console, arguments);
+const log = (...args) => {
+    console.log(...args);
     process.stdin.pause();
 };
 
-var Argv = process.argv;
-var files = Argv.slice(2);
-var In = files[0];
+const Argv = process.argv;
+const files = Argv.slice(2);
+const In = files[0];
 
-var log.error = function() {
-    console.error.apply(console, arguments);
+log.error = (...args) => {
+    console.error(...args);
     process.stdin.pause();
 };
 
-process.on('uncaughtException', function(error) {
+process.on('uncaughtException', (error) => {
     if (error.code !== 'EPIPE')
         log(error.message);
 });
@@ -28,17 +28,16 @@ process.on('uncaughtException', function(error) {
 minify();
 
 function readStd(callback) {
-    var stdin = process.stdin;
-    var chunks = '';
-    var read = function() {
-        var chunk = stdin.read();
+    const stdin = process.stdin;
+    let chunks = '';
+    const read = () => {
+        const chunk = stdin.read();
         
-        if (chunk) {
-            chunks += chunk;
-        } else {
-            stdin.removeListener('readable', read);
-            callback(chunks);
-        }
+        if (chunk)
+            return chunks += chunk;
+        
+        stdin.removeListener('readable', read);
+        callback(chunks);
     };
     
     stdin.setEncoding('utf8');
@@ -59,14 +58,14 @@ function minify() {
 }
 
 function processStream(chunks) {
-    var minify = require('..');
+    const minify = require('..');
     
     if (!chunks || !In)
         return;
     
-    var name = In.replace('--', '');
+    const name = In.replace('--', '');
     
-    minify[name](chunks, function(error, data) {
+    minify[name](chunks, (error, data) => {
         if (error)
             return log.error(error.message);
         
@@ -75,30 +74,28 @@ function processStream(chunks) {
 }
 
 function uglifyFiles(files) {
-    var funcs = files.map(function(current) {
-        var minify = require('..');
+    const funcs = files.map((current) => {
+        const minify = require('..');
         
         return minify.bind(null, current);
     });
     
-    exec.parallel(funcs, function(error) {
-        var args = [].slice.call(arguments, 1);
-        
+    exec.parallel(funcs, (error, ...args) => {
         if (error)
-            log.error(error.message);
-        else
-            log.apply(null, args);
+            return log.error(error.message);
+        
+        log.apply(null, args);
     });
 }
 
 function help() {
-    var bin = require('../json/help');
-    var usage = 'Usage: minify [options]';
+    const bin = require('../json/help');
+    const usage = 'Usage: minify [options]';
     
     console.log(usage);
     console.log('Options:');
     
-    Object.keys(bin).forEach(function(name) {
+    Object.keys(bin).forEach((name) => {
         console.log('  %s %s', name, bin[name]);
     });
 }
