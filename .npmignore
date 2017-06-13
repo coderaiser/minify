@@ -3,7 +3,8 @@
 bin
 lib
 test
-!legacy
+!legacy/bin
+!legacy/lib
 
 CONTRIBUTING.md
 
