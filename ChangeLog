@@ -1,3 +1,11 @@
+2017.06.13, v2.1.0
+
+feature:
+- (minify) es2015-ify
+- (package) eslint v4.0.0
+- (gitignore) package-lock
+
+
 2017.05.10, v2.0.14
 
 feature:
