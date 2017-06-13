@@ -3,5 +3,7 @@
 bin
 lib
 test
+!legacy
 
 CONTRIBUTING.md
+
