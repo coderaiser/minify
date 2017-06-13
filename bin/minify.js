@@ -3,7 +3,7 @@
 'use strict';
 
 const exec = require('execon');
-const Pack = require('../package.json');
+const Pack = require('../package');
 const Version = Pack.version;
 
 const log = (...args) => {
