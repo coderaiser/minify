@@ -89,7 +89,7 @@ function uglifyFiles(files) {
 }
 
 function help() {
-    const bin = require('../json/help');
+    const bin = require('../help');
     const usage = 'Usage: minify [options]';
     
     console.log(usage);

@@ -31,7 +31,8 @@
     "build": "redrun rm build:* legacy:*",
     "wisdom": "npm run build",
     "rm": "rimraf legacy",
-    "legacy:package": "echo \"module.exports = require('../package');\" > legacy/package.js"
+    "legacy:package": "echo \"module.exports = require('../package');\" > legacy/package.js",
+    "legacy:help": "echo \"module.exports = require('../help');\" > legacy/help.js"
   },
   "dependencies": {
     "clean-css": "~3.4.1",
