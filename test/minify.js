@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 
-const minify = require('..');
+const minify = require('../lib/minify');
 const test = require('tape');
 const CleanCSS = require('clean-css');
 const uglify = require('uglify-js');
