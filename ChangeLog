@@ -1,3 +1,9 @@
+2017.06.16, v2.1.7
+
+fix:
+- (minify) cannot find module (#43)
+
+
 2017.06.13, v2.1.6
 
 fix:
