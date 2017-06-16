@@ -43,7 +43,6 @@
     "debug": "^2.6.8",
     "execon": "^1.2.9",
     "html-minifier": "^3.0.1",
-    "rendy": "^1.1.0",
     "tomas": "^1.0.2",
     "try-catch": "~1.0.0",
     "uglify-js": "^3.0.3"
