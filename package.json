@@ -31,6 +31,7 @@
     "build": "redrun rm build:* legacy:*",
     "wisdom": "npm run build",
     "rm": "rimraf legacy",
+    "legacy:index": "echo \"module.exports = require('./lib/minify');\" > legacy/index.js",
     "legacy:package": "echo \"module.exports = require('../package');\" > legacy/package.js",
     "legacy:help": "echo \"module.exports = require('../help');\" > legacy/help.js"
   },
