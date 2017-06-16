@@ -1,3 +1,10 @@
+2017.06.16, v2.1.8
+
+feature:
+- (minify) rm rendy
+- (minify) add coverage
+
+
 2017.06.16, v2.1.7
 
 fix:
