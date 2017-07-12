@@ -38,7 +38,7 @@
     "legacy:help": "echo \"module.exports = require('../help');\" > legacy/help.js"
   },
   "dependencies": {
-    "clean-css": "~3.4.1",
+    "clean-css": "^4.1.6",
     "css-b64-images": "~0.2.5",
     "debug": "^2.6.8",
     "execon": "^1.2.9",
