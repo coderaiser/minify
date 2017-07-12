@@ -18,7 +18,7 @@
     "url": "http://github.com/coderaiser/minify.git"
   },
   "bin": {
-    "minify": "legacy/bin/minify.js"
+    "minify": "bin/minify.js"
   },
   "scripts": {
     "test": "tape test/minify.js",
@@ -27,15 +27,7 @@
     "lint:jshint": "jshint lib test",
     "lint:jscs": "jscs --esnext lib test",
     "lint:eslint": "eslint lib test",
-    "lint": "redrun lint:*",
-    "build:lib": "babel lib -d legacy/lib",
-    "build:bin": "babel bin -d legacy/bin",
-    "build": "redrun rm build:* legacy:*",
-    "wisdom": "npm run build",
-    "rm": "rimraf legacy",
-    "legacy:index": "echo \"module.exports = require('./lib/minify');\" > legacy/index.js",
-    "legacy:package": "echo \"module.exports = require('../package');\" > legacy/package.js",
-    "legacy:help": "echo \"module.exports = require('../help');\" > legacy/help.js"
+    "lint": "redrun lint:*"
   },
   "dependencies": {
     "clean-css": "^4.1.6",
@@ -47,10 +39,10 @@
     "try-catch": "~1.0.0",
     "uglify-js": "^3.0.3"
   },
-  "main": "legacy/lib/minify.js",
+  "main": "lib/minify.js",
   "license": "MIT",
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 4.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

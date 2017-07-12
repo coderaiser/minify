@@ -1,11 +1,5 @@
 .*
-
-bin
-lib
 test
-!legacy/bin
-!legacy/lib
-!legacy/package.json
 
 CONTRIBUTING.md
 
