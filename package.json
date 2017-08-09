@@ -32,7 +32,7 @@
   "dependencies": {
     "clean-css": "^4.1.6",
     "css-b64-images": "~0.2.5",
-    "debug": "^2.6.8",
+    "debug": "^3.0.0",
     "execon": "^1.2.9",
     "html-minifier": "^3.0.1",
     "tomas": "^1.0.2",
