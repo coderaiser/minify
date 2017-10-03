@@ -47,13 +47,13 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
+    "coveralls": "^3.0.0",
     "eslint": "^4.0.0",
     "jscs": "^3.0.3",
     "jshint": "^2.8.0",
+    "nyc": "^11.0.2",
     "redrun": "^5.9.15",
     "rimraf": "^2.6.1",
-    "tape": "^4.2.2",
-    "nyc": "^11.0.2",
-    "coveralls": "^2.13.1"
+    "tape": "^4.2.2"
   }
 }
