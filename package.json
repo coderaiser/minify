@@ -35,7 +35,7 @@
     "debug": "^3.0.0",
     "execon": "^1.2.9",
     "html-minifier": "^3.0.1",
-    "tomas": "^1.0.2",
+    "tomas": "^2.0.0",
     "try-catch": "~1.0.0",
     "uglify-js": "^3.0.3"
   },
