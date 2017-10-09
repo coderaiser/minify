@@ -1,3 +1,11 @@
+2017.10.09, v3.0.2
+
+feature:
+- (package) babel-preset-env v1.6.0
+- (package) tomas v2.0.0
+- (package) coveralls v3.0.0
+
+
 2017.08.09, v3.0.1
 
 feature:
