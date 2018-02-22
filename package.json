@@ -24,10 +24,9 @@
     "test": "tape test/minify.js",
     "coverage": "nyc npm test",
     "report": "nyc report --reporter=text-lcov | coveralls",
-    "lint:jshint": "jshint lib test",
-    "lint:jscs": "jscs --esnext lib test",
-    "lint:eslint": "eslint lib test",
-    "lint": "redrun lint:*"
+    "lint": "redrun lint:*",
+    "lint:bin": "eslint --rule no-console:0 bin",
+    "lint:lib": "eslint lib test"
   },
   "dependencies": {
     "clean-css": "^4.1.6",
@@ -49,8 +48,7 @@
     "babel-preset-env": "^1.6.0",
     "coveralls": "^3.0.0",
     "eslint": "^4.0.0",
-    "jscs": "^3.0.3",
-    "jshint": "^2.8.0",
+    "eslint-plugin-node": "^6.0.0",
     "nyc": "^11.0.2",
     "redrun": "^5.9.15",
     "rimraf": "^2.6.1",

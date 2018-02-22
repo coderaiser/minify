@@ -12,5 +12,11 @@
         "semi": "error",
         "no-use-before-define": ["error", "nofunc"]
     },
-  "extends": ["eslint:recommended"]
+  "extends": [
+      "eslint:recommended",
+      "plugin:node/recommended"
+  ],
+  "plugins": [
+      "node"
+  ]
 }
