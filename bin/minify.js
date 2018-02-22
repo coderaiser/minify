@@ -6,8 +6,8 @@ const exec = require('execon');
 const Pack = require('../package');
 const Version = Pack.version;
 
-const log = (...args) => {
-    console.log(...args);
+const log = function() {
+    console.log.apply(null, arguments);
     process.stdin.pause();
 };
 
@@ -15,8 +15,8 @@ const Argv = process.argv;
 const files = Argv.slice(2);
 const In = files[0];
 
-log.error = (...args) => {
-    console.error(...args);
+log.error = function() {
+    console.error.apply(null, arguments);
     process.stdin.pause();
 };
 
@@ -80,7 +80,9 @@ function uglifyFiles(files) {
         return minify.bind(null, current);
     });
     
-    exec.parallel(funcs, (error, ...args) => {
+    exec.parallel(funcs, (error) => {
+        const args = [].slice(arguments, 1);
+        
         if (error)
             return log.error(error.message);
         
