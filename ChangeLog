@@ -1,3 +1,12 @@
+2018.02.22, v3.0.4
+
+fix:
+- (minify) node v4 support (#46)
+
+feature:
+- (package) rm jscs, jshint
+
+
 2018.02.09, v3.0.3
 
 feature:
