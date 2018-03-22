@@ -80,8 +80,8 @@ function uglifyFiles(files) {
         return minify.bind(null, current);
     });
     
-    exec.parallel(funcs, (error) => {
-        const args = [].slice(arguments, 1);
+    exec.parallel(funcs, function (error) {
+        const args = [].slice.call(arguments, 1);
         
         if (error)
             return log.error(error.message);
