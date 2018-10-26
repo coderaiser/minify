@@ -16,20 +16,36 @@ To use `minify` as middleware try [Mollify](https://github.com/coderaiser/node-m
 ## Install
 
 ```
-npm i minify --save
+npm i minify
 ```
 
 ## How to use?
 
+`minify` can be used as a `promise`:
+
 ```js
 const minify = require('minify');
 
-minify('client.js', (error, data) => {
+minify('./client.js')
+    .then(console.log)
+    .catch(console.error);
+
+```
+
+Or with `async-await` and [try-to-catch](https://github.com/coderaiser/try-to-catch'):
+
+```js
+const minify = require('minify');
+const tryToCatch = require('try-to-catch');
+
+async () => {
+    const [error, data] = await tryToCatch(minify, './client.js');
+    
     if (error)
         return console.error(error.message);
     
     console.log(data);
-});
+}();
 ```
 
 ## License

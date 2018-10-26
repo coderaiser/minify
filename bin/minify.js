@@ -2,27 +2,26 @@
 
 'use strict';
 
-const exec = require('execon');
 const Pack = require('../package');
 const Version = Pack.version;
 
-const log = function() {
-    console.log.apply(null, arguments);
+const log = function(...args) {
+    console.log(...args);
     process.stdin.pause();
 };
 
 const Argv = process.argv;
 const files = Argv.slice(2);
-const In = files[0];
+const [In] = files;
 
-log.error = function() {
-    console.error.apply(null, arguments);
+log.error = function(e) {
+    console.error(e);
     process.stdin.pause();
 };
 
 process.on('uncaughtException', (error) => {
     if (error.code !== 'EPIPE')
-        log(error.message);
+        log(error);
 });
 
 minify();
@@ -65,29 +64,18 @@ function processStream(chunks) {
     
     const name = In.replace('--', '');
     
-    minify[name](chunks, (error, data) => {
-        if (error)
-            return log.error(error.message);
-        
-        log(data);
-    });
+    minify[name](chunks)
+        .then(log)
+        .catch(log.error);
 }
 
 function uglifyFiles(files) {
-    const funcs = files.map((current) => {
-        const minify = require('..');
-        
-        return minify.bind(null, current);
-    });
+    const minify = require('..');
+    const minifiers = files.map(minify);
     
-    exec.parallel(funcs, function (error) {
-        const args = [].slice.call(arguments, 1);
-        
-        if (error)
-            return log.error(error.message);
-        
-        log.apply(null, args);
-    });
+    Promise.all(minifiers)
+        .then(log)
+        .catch(log.error);
 }
 
 function help() {

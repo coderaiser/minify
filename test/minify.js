@@ -2,24 +2,25 @@
 
 const fs = require('fs');
 
-const minify = require('../lib/minify');
+const minify = require('..');
+
+const tryToCatch = require('try-to-catch');
 const test = require('tape');
 const CleanCSS = require('clean-css');
 const uglify = require('uglify-js');
 const htmlMinifier = require('html-minifier');
 
-test('js', (t) => {
+test('js', async (t) => {
     const js = 'function hello(world) {\nconsole.log(world);\n}';
     
-    minify.js(js, (error, data) => {
-        const min = uglify.minify(data).code;
-        
-        t.equal(data, min, 'js output should be equal');
-        t.end();
-    });
+    const data = await minify.js(js);
+    const min = uglify.minify(data).code;
+    
+    t.equal(data, min, 'js output should be equal');
+    t.end();
 });
 
-test('html', t => {
+test('html', async (t) => {
     const html    = '<html>\n<body>\nhello world\n</body></html>';
     
     const options = {
@@ -45,46 +46,38 @@ test('html', t => {
         minifyCSS:                      true
     };
     
-    minify.html(html, (error, data) => {
-        const min = htmlMinifier.minify(data, options);
-        
-        t.equal(data, min, 'html output should be equal');
-        t.end();
-    });
-});
-
-test('css', t => {
-    const css     =   'color: #FFFFFF';
+    const data = await minify.html(html);
+    const min = htmlMinifier.minify(data, options);
     
-    minify.css(css, (error, data) => {
-        const min = new CleanCSS().minify(css);
-        
-        t.equal(data, min.styles, 'css output should be equal');
-        t.end();
-    });
+    t.equal(data, min, 'html output should be equal');
+    t.end();
 });
 
-test('css: base64', (t) => {
+test('css', async (t) => {
+    const css = 'color: #FFFFFF';
+    
+    const data = await minify.css(css);
+    const {styles} = new CleanCSS().minify(css);
+    
+    t.equal(data, styles, 'css output should be equal');
+    t.end();
+});
+
+test('css: base64', async (t) => {
     const dir =  `${__dirname}/fixtures`;
     const name = `${dir}/style.css`;
     const nameMin = `${dir}/style.min.css`;
     
     const min = fs.readFileSync(nameMin, 'utf8');
     
-    minify(name, (error, data) => {
-        t.equal(min, data);
-        t.end();
-    });
-});
-
-test('arguments: no', t => {
-    t.throws(minify, /name could not be empty!/, 'throw when name empty');
+    const data = await minify(name);
+    t.equal(data, min, 'shooul equal');
     t.end();
 });
 
-test('arguments: no callback', t => {
-    const fn = name => () => minify(name);
-    
-    t.throws(fn('hello.css'), /callback should be function!/, 'throw when callback not function');
+test('arguments: no', async (t) => {
+    const [e] = await tryToCatch(minify);
+    t.equal(e.message, 'name could not be empty!', 'throw when name empty');
     t.end();
 });
+
