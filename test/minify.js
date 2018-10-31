@@ -69,9 +69,9 @@ test('css: base64', async (t) => {
     const nameMin = `${dir}/style.min.css`;
     
     const min = fs.readFileSync(nameMin, 'utf8');
-    
     const data = await minify(name);
-    t.equal(data, min, 'shooul equal');
+    
+    t.equal(data, min, 'should equal');
     t.end();
 });
 
