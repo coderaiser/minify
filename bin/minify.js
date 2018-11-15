@@ -58,15 +58,18 @@ function minify() {
 
 function processStream(chunks) {
     const minify = require('..');
+    const tryCatch = require('try-catch');
     
     if (!chunks || !In)
         return;
     
     const name = In.replace('--', '');
     
-    minify[name](chunks)
-        .then(log)
-        .catch(log.error);
+    const [e, data] = tryCatch(minify[name], chunks)
+    if (e)
+        return log.error(e);
+     
+     log(data);
 }
 
 function uglifyFiles(files) {
