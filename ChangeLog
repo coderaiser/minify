@@ -1,3 +1,12 @@
+2018.11.21, v4.1.0
+
+fix:
+- (minify) log
+
+feature:
+- (package) uglify-js -> terser: add support of es6
+
+
 2018.11.15, v4.0.3
 
 fix:
