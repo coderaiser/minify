@@ -77,9 +77,14 @@ function uglifyFiles(files) {
     const minifiers = files.map(minify);
     
     Promise.all(minifiers)
-        .then(log)
+        .then(logAll)
         .catch(log.error);
 }
+
+function logAll(array) {
+    for (const item of array)
+        log(item);
+};
 
 function help() {
     const bin = require('../help');
