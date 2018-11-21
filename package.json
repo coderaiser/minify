@@ -33,9 +33,9 @@
     "css-b64-images": "~0.2.5",
     "debug": "^4.1.0",
     "html-minifier": "^3.0.1",
+    "terser": "^3.10.12",
     "try-catch": "^2.0.0",
-    "try-to-catch": "^1.0.2",
-    "uglify-js": "^3.0.3"
+    "try-to-catch": "^1.0.2"
   },
   "main": "lib/minify.js",
   "license": "MIT",
