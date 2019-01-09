@@ -16,10 +16,27 @@ To use `minify` as middleware try [Mollify](https://github.com/coderaiser/node-m
 ## Install
 
 ```
-npm i minify
+npm i minify -g
 ```
 
 ## How to use?
+
+### CLI
+
+```js
+$ cat > hello.js
+const hello = 'world';
+
+for (let i = 0; i < hello.length; i++) {
+    console.log(hello[i]);
+}
+^D
+
+$ minify hello.js
+const hello="world";for(let l=0;l<hello.length;l++)console.log(hello[l]);
+```
+
+### Code Example
 
 `minify` can be used as a `promise`:
 
