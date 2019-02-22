@@ -50,5 +50,8 @@
     "redrun": "^7.0.2",
     "rimraf": "^2.6.1",
     "tape": "^4.2.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
