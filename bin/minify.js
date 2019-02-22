@@ -65,11 +65,11 @@ function processStream(chunks) {
     
     const name = In.replace('--', '');
     
-    const [e, data] = tryCatch(minify[name], chunks)
+    const [e, data] = tryCatch(minify[name], chunks);
     if (e)
         return log.error(e);
      
-     log(data);
+    log(data);
 }
 
 function uglifyFiles(files) {
@@ -84,7 +84,7 @@ function uglifyFiles(files) {
 function logAll(array) {
     for (const item of array)
         log(item);
-};
+}
 
 function help() {
     const bin = require('../help');

@@ -7,14 +7,14 @@ const minify = require('..');
 const tryToCatch = require('try-to-catch');
 const test = require('tape');
 const CleanCSS = require('clean-css');
-const uglify = require('uglify-js');
+const terser = require('terser');
 const htmlMinifier = require('html-minifier');
 
 test('js', async (t) => {
     const js = 'function hello(world) {\nconsole.log(world);\n}';
     
     const data = await minify.js(js);
-    const min = uglify.minify(data).code;
+    const min = terser.minify(data).code;
     
     t.equal(data, min, 'js output should be equal');
     t.end();
