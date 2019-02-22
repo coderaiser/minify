@@ -1,6 +1,6 @@
 {
   "name": "minify",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "Minifier of js, css, html and img",
   "homepage": "http://coderaiser.github.io/minify",
   "author": "coderaiser <mnemonic.enemy@gmail.com> (https://github.com/coderaiser)",
