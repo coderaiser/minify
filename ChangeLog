@@ -1,3 +1,14 @@
+2019.06.23, v4.1.2
+
+feature:
+- (package) html-minifier v4.0.0
+- (package) terser v4.0.0
+- (package) eslint v6.0.0
+- (minify) add madrun
+- (package) eslint-plugin-node v9.1.0
+- (package) nyc v14.1.1
+
+
 2019.02.22, v4.1.1
 
 fix:
