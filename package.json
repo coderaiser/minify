@@ -21,12 +21,14 @@
     "minify": "bin/minify.js"
   },
   "scripts": {
-    "test": "tape test/minify.js",
-    "coverage": "nyc npm test",
-    "report": "nyc report --reporter=text-lcov | coveralls",
-    "lint": "redrun lint:*",
-    "lint:bin": "eslint --rule no-console:0 bin",
-    "lint:lib": "eslint lib test"
+    "test": "madrun test",
+    "coverage": "madrun coverage",
+    "report": "madrun report",
+    "lint": "madrun lint",
+    "fix:lint": "madrun fix:lint",
+    "lint:bin": "madrun lint:bin",
+    "lint:lib": "madrun lint:lib",
+    "putout": "madrun putout"
   },
   "dependencies": {
     "clean-css": "^4.1.6",
@@ -46,10 +48,13 @@
     "coveralls": "^3.0.0",
     "eslint": "^5.7.0",
     "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-putout": "^1.5.0",
+    "madrun": "^2.1.2",
     "nyc": "^14.1.1",
+    "putout": "^4.32.0",
     "redrun": "^7.0.2",
     "rimraf": "^2.6.1",
-    "tape": "^4.2.2"
+    "supertape": "^1.2.3"
   },
   "publishConfig": {
     "access": "public"

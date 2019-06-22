@@ -5,7 +5,7 @@ const fs = require('fs');
 const minify = require('..');
 
 const tryToCatch = require('try-to-catch');
-const test = require('tape');
+const test = require('supertape');
 const CleanCSS = require('clean-css');
 const terser = require('terser');
 const htmlMinifier = require('html-minifier');
@@ -21,7 +21,7 @@ test('js', async (t) => {
 });
 
 test('html', async (t) => {
-    const html    = '<html>\n<body>\nhello world\n</body></html>';
+    const html = '<html>\n<body>\nhello world\n</body></html>';
     
     const options = {
         removeComments:                 true,
@@ -43,7 +43,7 @@ test('html', async (t) => {
         removeStyleLinkTypeAttributes:  true,
         
         minifyJS:                       true,
-        minifyCSS:                      true
+        minifyCSS:                      true,
     };
     
     const data = await minify.html(html);
@@ -64,7 +64,7 @@ test('css', async (t) => {
 });
 
 test('css: base64', async (t) => {
-    const dir =  `${__dirname}/fixtures`;
+    const dir = `${__dirname}/fixtures`;
     const name = `${dir}/style.css`;
     const nameMin = `${dir}/style.min.css`;
     

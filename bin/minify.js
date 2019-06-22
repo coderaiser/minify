@@ -27,7 +27,7 @@ process.on('uncaughtException', (error) => {
 minify();
 
 function readStd(callback) {
-    const stdin = process.stdin;
+    const {stdin} = process;
     let chunks = '';
     const read = () => {
         const chunk = stdin.read();
@@ -66,9 +66,10 @@ function processStream(chunks) {
     const name = In.replace('--', '');
     
     const [e, data] = tryCatch(minify[name], chunks);
+    
     if (e)
         return log.error(e);
-     
+    
     log(data);
 }
 
