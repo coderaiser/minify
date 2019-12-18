@@ -14,7 +14,7 @@ const Argv = process.argv;
 const files = Argv.slice(2);
 const [In] = files;
 
-log.error = function(e) {
+log.error = (e) => {
     console.error(e);
     process.stdin.pause();
 };

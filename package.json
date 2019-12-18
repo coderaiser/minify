@@ -42,7 +42,7 @@
   "main": "lib/minify.js",
   "license": "MIT",
   "engines": {
-    "node": ">= 8.0.0"
+    "node": ">= 10"
   },
   "devDependencies": {
     "coveralls": "^3.0.0",
