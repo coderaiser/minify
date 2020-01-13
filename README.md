@@ -42,8 +42,12 @@ const hello="world";for(let l=0;l<hello.length;l++)console.log(hello[l]);
 
 ```js
 const minify = require('minify');
+const options = {
+    removeAttributeQuotes: false,
+    removeOptionalTags: false
+};
 
-minify('./client.js')
+minify('./client.js', options)
     .then(console.log)
     .catch(console.error);
 
@@ -54,9 +58,13 @@ Or with `async-await` and [try-to-catch](https://github.com/coderaiser/try-to-ca
 ```js
 const minify = require('minify');
 const tryToCatch = require('try-to-catch');
+const options = {
+    removeAttributeQuotes: false,
+    removeOptionalTags: false
+};
 
 async () => {
-    const [error, data] = await tryToCatch(minify, './client.js');
+    const [error, data] = await tryToCatch(minify, './client.js', options);
     
     if (error)
         return console.error(error.message);
@@ -64,6 +72,25 @@ async () => {
     console.log(data);
 }();
 ```
+
+## Options
+
+The following options can be changed for HTML files. Defaults listed below:
+- removeComments:                 true
+- removeCommentsFromCDATA:        true
+- removeCDATASectionsFromCDATA:   true
+- collapseWhitespace:             true
+- collapseBooleanAttributes:      true
+- removeAttributeQuotes:          true
+- removeRedundantAttributes:      true
+- useShortDoctype:                true
+- removeEmptyAttributes:          true
+- removeEmptyElements:            false
+- removeOptionalTags:             true
+- removeScriptTypeAttributes:     true
+- removeStyleLinkTypeAttributes:  true
+- minifyJS:                       true
+- minifyCSS:                      true
 
 ## License
 
