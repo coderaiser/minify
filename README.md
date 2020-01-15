@@ -43,8 +43,10 @@ const hello="world";for(let l=0;l<hello.length;l++)console.log(hello[l]);
 ```js
 const minify = require('minify');
 const options = {
-    removeAttributeQuotes: false,
-    removeOptionalTags: false
+    html: {
+        removeAttributeQuotes: false,
+        removeOptionalTags: false
+    },
 };
 
 minify('./client.js', options)
@@ -59,8 +61,10 @@ Or with `async-await` and [try-to-catch](https://github.com/coderaiser/try-to-ca
 const minify = require('minify');
 const tryToCatch = require('try-to-catch');
 const options = {
-    removeAttributeQuotes: false,
-    removeOptionalTags: false
+    html: {
+        removeAttributeQuotes: false,
+        removeOptionalTags: false
+    }
 };
 
 async () => {
@@ -75,7 +79,34 @@ async () => {
 
 ## Options
 
-The following options can be changed for HTML files. Defaults listed below:
+The options object accepts configuration for `html`, `css`, `js`, and `img` like so:
+
+```
+const options = {
+    html: {
+        removeAttributeQuotes: false,
+    },
+    css: {
+        compatibility: '*',
+    },
+    js: {
+        ecma: 5,
+    },
+    img: {
+        maxSize: 4096,
+    }
+}
+```
+
+Full documentation for options that each file type accepts can be found on the pages of the libraries used by minify to process the files:
+- HTML: https://github.com/kangax/html-minifier
+- CSS: https://github.com/jakubpawlowicz/clean-css
+- JS: https://github.com/terser/terser
+- IMG: https://github.com/Filirom1/css-base64-images
+
+```
+
+minify sets a few defaults for HTML that may differ from the base `html-minifier` settings:
 - removeComments:                 true
 - removeCommentsFromCDATA:        true
 - removeCDATASectionsFromCDATA:   true
