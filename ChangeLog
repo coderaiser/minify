@@ -1,3 +1,11 @@
+2020.01.22, v5.1.0
+
+feature:
+- (package) eslint-plugin-node v11.0.0
+- (package) nyc v15.0.0
+- (minify) add ability to pass options to HTML, JS, CSS and IMG parsers (#52)
+
+
 2019.12.18, v5.0.0
 
 feature:
