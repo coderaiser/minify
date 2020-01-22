@@ -42,8 +42,14 @@ const hello="world";for(let l=0;l<hello.length;l++)console.log(hello[l]);
 
 ```js
 const minify = require('minify');
+const options = {
+    html: {
+        removeAttributeQuotes: false,
+        removeOptionalTags: false
+    },
+};
 
-minify('./client.js')
+minify('./client.js', options)
     .then(console.log)
     .catch(console.error);
 
@@ -54,9 +60,15 @@ Or with `async-await` and [try-to-catch](https://github.com/coderaiser/try-to-ca
 ```js
 const minify = require('minify');
 const tryToCatch = require('try-to-catch');
+const options = {
+    html: {
+        removeAttributeQuotes: false,
+        removeOptionalTags: false
+    }
+};
 
 async () => {
-    const [error, data] = await tryToCatch(minify, './client.js');
+    const [error, data] = await tryToCatch(minify, './client.js', options);
     
     if (error)
         return console.error(error.message);
@@ -64,6 +76,52 @@ async () => {
     console.log(data);
 }();
 ```
+
+## Options
+
+The options object accepts configuration for `html`, `css`, `js`, and `img` like so:
+
+```
+const options = {
+    html: {
+        removeAttributeQuotes: false,
+    },
+    css: {
+        compatibility: '*',
+    },
+    js: {
+        ecma: 5,
+    },
+    img: {
+        maxSize: 4096,
+    }
+}
+```
+
+Full documentation for options that each file type accepts can be found on the pages of the libraries used by minify to process the files:
+- HTML: https://github.com/kangax/html-minifier
+- CSS: https://github.com/jakubpawlowicz/clean-css
+- JS: https://github.com/terser/terser
+- IMG: https://github.com/Filirom1/css-base64-images
+
+```
+
+minify sets a few defaults for HTML that may differ from the base `html-minifier` settings:
+- removeComments:                 true
+- removeCommentsFromCDATA:        true
+- removeCDATASectionsFromCDATA:   true
+- collapseWhitespace:             true
+- collapseBooleanAttributes:      true
+- removeAttributeQuotes:          true
+- removeRedundantAttributes:      true
+- useShortDoctype:                true
+- removeEmptyAttributes:          true
+- removeEmptyElements:            false
+- removeOptionalTags:             true
+- removeScriptTypeAttributes:     true
+- removeStyleLinkTypeAttributes:  true
+- minifyJS:                       true
+- minifyCSS:                      true
 
 ## License
 
