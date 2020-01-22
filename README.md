@@ -104,8 +104,7 @@ Full documentation for options that each file type accepts can be found on the p
 - JS: https://github.com/terser/terser
 - IMG: https://github.com/Filirom1/css-base64-images
 
-```
-minify sets a few defaults for HTML that may differ from the base `html-minifier` settings:
+Minify sets a few defaults for HTML that may differ from the base `html-minifier` settings:
 - removeComments:                 true
 - removeCommentsFromCDATA:        true
 - removeCDATASectionsFromCDATA:   true
@@ -121,7 +120,6 @@ minify sets a few defaults for HTML that may differ from the base `html-minifier
 - removeStyleLinkTypeAttributes:  true
 - minifyJS:                       true
 - minifyCSS:                      true
-```
 
 ## License
 
