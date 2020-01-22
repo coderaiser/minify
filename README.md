@@ -81,7 +81,7 @@ async () => {
 
 The options object accepts configuration for `html`, `css`, `js`, and `img` like so:
 
-```
+```js
 const options = {
     html: {
         removeAttributeQuotes: false,
@@ -105,7 +105,6 @@ Full documentation for options that each file type accepts can be found on the p
 - IMG: https://github.com/Filirom1/css-base64-images
 
 ```
-
 minify sets a few defaults for HTML that may differ from the base `html-minifier` settings:
 - removeComments:                 true
 - removeCommentsFromCDATA:        true
@@ -122,6 +121,7 @@ minify sets a few defaults for HTML that may differ from the base `html-minifier
 - removeStyleLinkTypeAttributes:  true
 - minifyJS:                       true
 - minifyCSS:                      true
+```
 
 ## License
 
