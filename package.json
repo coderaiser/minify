@@ -36,7 +36,7 @@
     "debug": "^4.1.0",
     "html-minifier": "^4.0.0",
     "terser": "^4.0.0",
-    "try-catch": "^2.0.0",
+    "try-catch": "^3.0.0",
     "try-to-catch": "^2.0.0"
   },
   "main": "lib/minify.js",
