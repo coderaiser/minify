@@ -1,3 +1,10 @@
+2020.03.21, v5.1.1
+
+feature:
+- (package) try-to-catch v3.0.0
+- (package) try-catch v3.0.0
+
+
 2020.01.22, v5.1.0
 
 feature:
