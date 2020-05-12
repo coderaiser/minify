@@ -48,7 +48,7 @@
     "coveralls": "^3.0.0",
     "eslint": "^6.0.0",
     "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-putout": "^3.0.0",
+    "eslint-plugin-putout": "^4.0.2",
     "madrun": "^5.0.1",
     "nyc": "^15.0.0",
     "putout": "^8.3.0",
