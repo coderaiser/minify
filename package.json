@@ -20,6 +20,12 @@
   "bin": {
     "minify": "bin/minify.js"
   },
+  "nyc": {
+    "exclude": [
+      "**/*.spec.js",
+      "test"
+    ]
+  },
   "scripts": {
     "test": "madrun test",
     "coverage": "madrun coverage",
