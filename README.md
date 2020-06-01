@@ -23,6 +23,10 @@ npm i minify -g
 
 ### CLI
 
+The bash command below prompts the user to enter a code snippet to be saved in "hello.js". 
+
+Press `<enter>` after the closing `}` and then either ^D or ^C to finish the prompt.
+
 ```js
 $ cat > hello.js
 const hello = 'world';
@@ -31,9 +35,19 @@ for (let i = 0; i < hello.length; i++) {
     console.log(hello[i]);
 }
 ^D
+```
 
+Use the command `minify` followed by the path to and name of the js file intended to be minified. This will minify the code and output it to the screen.
+
+```js
 $ minify hello.js
 const hello="world";for(let l=0;l<hello.length;l++)console.log(hello[l]);
+```
+
+You can capture the output with the following:
+
+```js
+$ minify hello.js > hello.min.js
 ```
 
 ### Code Example
