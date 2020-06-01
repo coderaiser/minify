@@ -30,6 +30,7 @@ const hello = 'world';
 for (let i = 0; i < hello.length; i++) {
     console.log(hello[i]);
 }
+ // The bash command below prompts the user to enter a code snippet to be saved in "hello.js". Press <enter> after the closing `}` and then either ^D or ^C to finish the prompt.
 ^D
 
 $ minify hello.js
