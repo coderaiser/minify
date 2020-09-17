@@ -69,7 +69,7 @@ minify('./client.js', options)
 
 ```
 
-Or with `async-await` and [try-to-catch](https://github.com/coderaiser/try-to-catch'):
+Or with `async-await` and [try-to-catch](https://github.com/coderaiser/try-to-catch):
 
 ```js
 const minify = require('minify');
