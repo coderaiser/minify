@@ -14,14 +14,15 @@ test('js', async (t) => {
     const js = 'function hello(world) {\nconsole.log(world);\n}';
     
     const minifyOutput = await minify.js(js);
-    const terserOutput = terser.minify(js).code;
+    const {code} = await terser.minify(js);
     
-    t.equal(minifyOutput, terserOutput, 'js output should be equal');
+    t.equal(code, minifyOutput, 'js output should be equal');
     t.end();
 });
 
 test('js: with alternate options', async (t) => {
     const js = 'function isTrueFalse() { if (true !== false) { return true; } }';
+    const expected = 'function isTrueFalse(){return 1}';
     
     const options = {
         js: {
@@ -33,9 +34,8 @@ test('js: with alternate options', async (t) => {
     
     const minifyOutputWithoutOptions = await minify.js(js);
     const minifyOutput = await minify.js(js, options);
-    const terserOutput = terser.minify(js, options.js).code;
     
-    t.equal(minifyOutput, terserOutput, 'js output should be equal');
+    t.equal(expected, minifyOutput, 'js output should be equal');
     t.notEqual(minifyOutput, minifyOutputWithoutOptions, 'options should influence the output');
     t.end();
 });

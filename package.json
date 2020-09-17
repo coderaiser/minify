@@ -41,7 +41,7 @@
     "css-b64-images": "~0.2.5",
     "debug": "^4.1.0",
     "html-minifier": "^4.0.0",
-    "terser": "^4.0.0",
+    "terser": "^5.3.2",
     "try-catch": "^3.0.0",
     "try-to-catch": "^3.0.0"
   },
