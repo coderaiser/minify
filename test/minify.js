@@ -8,7 +8,7 @@ const tryToCatch = require('try-to-catch');
 const test = require('supertape');
 const CleanCSS = require('clean-css');
 const terser = require('terser');
-const htmlMinifier = require('html-minifier');
+const htmlMinifier = require('html-minifier-terser');
 
 test('js', async (t) => {
     const js = 'function hello(world) {\nconsole.log(world);\n}';
