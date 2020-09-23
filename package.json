@@ -49,7 +49,7 @@
   "main": "lib/minify.js",
   "license": "MIT",
   "engines": {
-    "node": ">= 10"
+    "node": ">=12"
   },
   "devDependencies": {
     "coveralls": "^3.0.0",
