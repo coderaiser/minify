@@ -1,3 +1,11 @@
+2020.09.23, v6.0.0
+
+feature:
+- (package) drop support of node < 12
+- (minify) html-minifier -> html-minifier-terser (#59)
+- (package) eslint-plugin-putout v5.1.1
+
+
 2020.09.17, v5.2.0
 
 feature:
