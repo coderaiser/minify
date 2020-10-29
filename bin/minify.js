@@ -56,16 +56,16 @@ function minify() {
     uglifyFiles(files);
 }
 
-function processStream(chunks) {
+async function processStream(chunks) {
     const minify = require('..');
-    const tryCatch = require('try-catch');
+    const tryToCatch = require('try-to-catch');
     
     if (!chunks || !In)
         return;
     
     const name = In.replace('--', '');
     
-    const [e, data] = tryCatch(minify[name], chunks);
+    const [e, data] = await tryToCatch(minify[name], chunks);
     
     if (e)
         return log.error(e);
