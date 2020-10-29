@@ -1,3 +1,9 @@
+2020.10.29, v6.0.1
+
+fix:
+- (minify) broken --js flag (#60)
+
+
 2020.09.23, v6.0.0
 
 feature:
