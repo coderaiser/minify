@@ -51,7 +51,7 @@
     "madrun": "^7.0.4",
     "nyc": "^15.0.0",
     "putout": "^14.0.3",
-    "supertape": "^2.0.1"
+    "supertape": "^4.9.1"
   },
   "publishConfig": {
     "access": "public"
