@@ -10,14 +10,13 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+      NAME: minify
+    
     strategy:
       matrix:
         node-version: [14.x, 15.x]
 
-    env:
-      NAME: minify
-    
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -37,5 +36,5 @@ jobs:
     
     - uses: EndBug/add-and-commit@v7
       with:
-        message: 'chore(${{ NAME }}) lint'
+        message: 'chore(${{ env.NAME }}) lint'
 
