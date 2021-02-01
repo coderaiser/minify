@@ -1,6 +1,7 @@
 package-lock.json
 node_modules
 npm-debug.log
+coverage
 
 .nyc_output
 *.swp
