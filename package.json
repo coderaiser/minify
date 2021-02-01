@@ -38,7 +38,7 @@
     "putout": "madrun putout"
   },
   "dependencies": {
-    "clean-css": "^4.1.6",
+    "clean-css": "^5.0.1",
     "css-b64-images": "~0.2.5",
     "debug": "^4.1.0",
     "html-minifier-terser": "^5.1.1",
