@@ -7,6 +7,8 @@ module.exports = {
     'coverage': () => 'nyc npm test',
     'report': () => 'nyc report --reporter=text-lcov | coveralls',
     'fix:lint': () => run('lint', '--fix'),
-    'lint': () => 'putout bin lib test .madrun.js',
+    'lint': () => 'putout .',
+    'fresh:lint': () => run('lint', '--fresh'),
+    'lint:fresh': () => run('lint', '--fresh'),
 };
 

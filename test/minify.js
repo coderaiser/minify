@@ -1,6 +1,6 @@
 'use strict';
 
-const fs = require('fs');
+const {readFile} = require('fs/promises');
 
 const minify = require('..');
 
@@ -35,7 +35,7 @@ test('js: with alternate options', async (t) => {
     const minifyOutputWithoutOptions = await minify.js(js);
     const minifyOutput = await minify.js(js, options);
     
-    t.equal(expected, minifyOutput, 'js output should be equal');
+    t.equal(minifyOutput, expected, 'js output should be equal');
     t.notEqual(minifyOutput, minifyOutputWithoutOptions, 'options should influence the output');
     t.end();
 });
@@ -44,26 +44,26 @@ test('html', async (t) => {
     const html = '<html>\n<body>\nhello world\n</body></html>';
     
     const options = {
-        removeComments:                 true,
-        removeCommentsFromCDATA:        true,
-        removeCDATASectionsFromCDATA:   true,
-        collapseWhitespace:             true,
-        collapseBooleanAttributes:      true,
-        removeAttributeQuotes:          true,
-        removeRedundantAttributes:      true,
-        useShortDoctype:                true,
-        removeEmptyAttributes:          true,
+        removeComments: true,
+        removeCommentsFromCDATA: true,
+        removeCDATASectionsFromCDATA: true,
+        collapseWhitespace: true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
         /* оставляем, поскольку у нас
          * в элемент fm генерируеться
          * таблица файлов
          */
-        removeEmptyElements:            false,
-        removeOptionalTags:             true,
-        removeScriptTypeAttributes:     true,
-        removeStyleLinkTypeAttributes:  true,
+        removeEmptyElements: false,
+        removeOptionalTags: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
         
-        minifyJS:                       true,
-        minifyCSS:                      true,
+        minifyJS: true,
+        minifyCSS: true,
     };
     
     const minifyOutput = await minify.html(html);
@@ -123,14 +123,15 @@ test('css: with alternate options', async (t) => {
 });
 
 test('css: base64', async (t) => {
-    const dir = `${__dirname}/fixtures`;
+    const dir = `${__dirname}/fixture`;
     const pathToCSS = `${dir}/style.css`;
     const pathToMinifiedCSS = `${dir}/style.min.css`;
     
-    const minifiedCSS = fs.readFileSync(pathToMinifiedCSS, 'utf8');
     const outputCSS = await minify(pathToCSS);
+    const result = `${outputCSS}\n`;
+    const expected = await readFile(pathToMinifiedCSS, 'utf8');
     
-    t.equal(outputCSS, minifiedCSS, 'should be equal');
+    t.equal(result, expected);
     t.end();
 });
 
