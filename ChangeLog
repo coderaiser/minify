@@ -1,3 +1,10 @@
+2021.02.15, v7.0.1
+
+feature:
+- (package) putout v15.1.1
+- (minify) rm useless getName (#63) (thanks to @atjn 🥳)
+
+
 2021.02.01, v7.0.0
 
 feature:
