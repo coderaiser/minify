@@ -44,11 +44,11 @@
     "node": ">=14"
   },
   "devDependencies": {
+    "c8": "^7.5.0",
     "eslint": "^7.0.0",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-putout": "^7.0.2",
     "madrun": "^8.6.4",
-    "nyc": "^15.0.0",
     "putout": "^15.1.1",
     "supertape": "^4.9.1"
   },
