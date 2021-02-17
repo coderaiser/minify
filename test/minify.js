@@ -131,13 +131,42 @@ test('css: base64', async (t) => {
     const result = `${outputCSS}\n`;
     const expected = await readFile(pathToMinifiedCSS, 'utf8');
     
-    t.equal(result, expected);
+    t.equal(result, expected, 'image should be inlined');
+    t.end();
+});
+
+test('css: base64 with alternate options', async (t) => {
+    const pathToCSS = `${__dirname}/fixture/style.css`;
+    const options = {img: {maxSize: 512}};
+    
+    const result = await minify(pathToCSS, options);
+    const expected = ".header{background-url:url('ok.png')}";
+    
+    t.equal(result, expected, 'image should not be inlined since options define it as too big');
+    t.end();
+});
+
+test('css: with errors', async (t) => {
+    const css = '@import "missing.css";';
+    
+    const [e] = await tryToCatch(minify.css, css);
+    
+    t.equal(e, 'Ignoring local @import of "missing.css" as resource is missing.', 'throw when clean-css reports an error');
     t.end();
 });
 
 test('arguments: no', async (t) => {
     const [e] = await tryToCatch(minify);
     t.equal(e.message, 'name could not be empty!', 'throw when name empty');
+    t.end();
+});
+
+test('unsupported file extension', async (t) => {
+    const pathToFile = `${__dirname}/fixture/unsupported.md`;
+
+    const [e] = await tryToCatch(minify, pathToFile);
+
+    t.equal(e?.message, 'File type "md" not supported.', 'throw when file extension is unsupported');
     t.end();
 });
 
