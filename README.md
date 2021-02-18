@@ -1,4 +1,4 @@
-# Minify [![License][LicenseIMGURL]][LicenseURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![NPM version][NPMIMGURL]][NPMURL]
+# Minify [![License][LicenseIMGURL]][LicenseURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![NPM version][NPMIMGURL]][NPMURL] [![Coverage Status][CoverageIMGURL]][CoverageURL]
 
 [NPMIMGURL]: https://img.shields.io/npm/v/minify.svg?style=flat
 [BuildStatusURL]: https://github.com/coderaiser/minify/actions/runs/525234132
@@ -9,6 +9,9 @@
 [NPMURL]: http://npmjs.org/package/minify
 [LicenseURL]: https://tldrlegal.com/license/mit-license "MIT License"
 [DependencyStatusURL]: https://david-dm.org/coderaiser/minify "Dependency Status"
+[CoverageURL]: https://coveralls.io/github/coderaiser/minify?branch=master
+[CoverageIMGURL]: https://coveralls.io/repos/coderaiser/minify/badge.svg?branch=master&service=github
+
 
 [Minify](http://coderaiser.github.io/minify "Minify") - a minifier of js, css, html and img files.
 To use `minify` as middleware try [Mollify](https://github.com/coderaiser/node-mollify "Mollify").
