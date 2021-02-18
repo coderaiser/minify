@@ -140,7 +140,7 @@ test('css: base64 with alternate options', async (t) => {
     const options = {img: {maxSize: 512}};
     
     const result = await minify(pathToCSS, options);
-    const expected = ".header{background-url:url('ok.png')}";
+    const expected = '.header{background-url:url(\'ok.png\')}';
     
     t.equal(result, expected, 'image should not be inlined since options define it as too big');
     t.end();
@@ -163,9 +163,9 @@ test('arguments: no', async (t) => {
 
 test('unsupported file extension', async (t) => {
     const pathToFile = `${__dirname}/fixture/unsupported.md`;
-
+    
     const [e] = await tryToCatch(minify, pathToFile);
-
+    
     t.equal(e?.message, 'File type "md" not supported.', 'throw when file extension is unsupported');
     t.end();
 });
