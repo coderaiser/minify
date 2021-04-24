@@ -49,7 +49,7 @@
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-putout": "^7.0.2",
     "madrun": "^8.6.4",
-    "putout": "^15.1.1",
+    "putout": "^16.10.1",
     "supertape": "^4.9.1"
   },
   "publishConfig": {
