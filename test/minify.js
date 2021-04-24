@@ -137,7 +137,11 @@ test('css: base64', async (t) => {
 
 test('css: base64 with alternate options', async (t) => {
     const pathToCSS = `${__dirname}/fixture/style.css`;
-    const options = {img: {maxSize: 512}};
+    const options = {
+        img: {
+            maxSize: 512,
+        },
+    };
     
     const result = await minify(pathToCSS, options);
     const expected = '.header{background-url:url(\'ok.png\')}';
