@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-      - run: npm run fix:lint
+      - run: npm run lint
       - run: npm run coverage
       - run: npm run report
       - name: Coveralls
