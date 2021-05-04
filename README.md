@@ -1,7 +1,7 @@
 # Minify [![License][LicenseIMGURL]][LicenseURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![NPM version][NPMIMGURL]][NPMURL] [![Coverage Status][CoverageIMGURL]][CoverageURL]
 
 [NPMIMGURL]: https://img.shields.io/npm/v/minify.svg?style=flat
-[BuildStatusURL]: https://github.com/coderaiser/minify/actions/runs/525234132
+[BuildStatusURL]: https://github.com/coderaiser/minify/actions
 [BuildStatusIMGURL]: https://github.com/coderaiser/minify/workflows/CI/badge.svg
 [DependencyStatusIMGURL]: https://img.shields.io/david/coderaiser/minify.svg?style=flat
 [LicenseIMGURL]: https://img.shields.io/badge/license-MIT-317BF9.svg?style=flat
