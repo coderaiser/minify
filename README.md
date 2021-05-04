@@ -12,7 +12,6 @@
 [CoverageURL]: https://coveralls.io/github/coderaiser/minify?branch=master
 [CoverageIMGURL]: https://coveralls.io/repos/coderaiser/minify/badge.svg?branch=master&service=github
 
-
 [Minify](http://coderaiser.github.io/minify "Minify") - a minifier of js, css, html and img files.
 To use `minify` as middleware try [Mollify](https://github.com/coderaiser/node-mollify "Mollify").
 
@@ -120,21 +119,25 @@ Full documentation for options that each file type accepts can be found on the p
 
 Minify sets a few defaults for HTML that may differ from the base `html-minifier` settings:
 
-- removeComments:                 true
-- removeCommentsFromCDATA:        true
-- removeCDATASectionsFromCDATA:   true
-- collapseWhitespace:             true
-- collapseBooleanAttributes:      true
-- removeAttributeQuotes:          true
-- removeRedundantAttributes:      true
-- useShortDoctype:                true
-- removeEmptyAttributes:          true
-- removeEmptyElements:            false
-- removeOptionalTags:             true
-- removeScriptTypeAttributes:     true
-- removeStyleLinkTypeAttributes:  true
-- minifyJS:                       true
-- minifyCSS:                      true
+```json
+{
+    "removeComments": true,
+    "removeCommentsFromCDATA": true,
+    "removeCDATASectionsFromCDATA": true,
+    "collapseWhitespace": true,
+    "collapseBooleanAttributes": true,
+    "removeAttributeQuotes": true,
+    "removeRedundantAttributes": true,
+    "useShortDoctype": true,
+    "removeEmptyAttributes": true,
+    "removeEmptyElements": false,
+    "removeOptionalTags": true,
+    "removeScriptTypeAttributes": true,
+    "removeStyleLinkTypeAttributes": true,
+    "minifyJS": true,
+    "minifyCSS": true
+}
+```
 
 ## License
 
