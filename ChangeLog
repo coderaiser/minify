@@ -1,3 +1,14 @@
+2021.05.04, v7.0.2
+
+fix:
+- (minify) rm useless HELP.md
+
+feature:
+- (package) putout v17.0.0
+- (package) supertape v5.2.0
+- (package) putout v16.10.1
+
+
 2021.02.15, v7.0.1
 
 feature:
