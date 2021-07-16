@@ -5,10 +5,10 @@ test('processOptions', (t) => {
     const testOptions = [
         'hello.js',
         'src/public/index.html',
-        '--html-options={\"htmlOptionMock\": \"htmlValueMak\"}',
-        '--js-options={\"jsOptionMock\": \"jsValueMak\"}',
-        '--css-options={\"cssOptionMock\": \"cssValueMak\"}',
-        '--img-options={\"imgOptionMock\": \"imgValueMak\"}',
+        '--html-options={\"htmlOptionMock\": \"htmlValueMock\"}',
+        '--js-options={\"jsOptionMock\": \"jsValueMock\"}',
+        '--css-options={\"cssOptionMock\": \"cssValueMock\"}',
+        '--img-options={\"imgOptionMock\": \"imgValueMock\"}',
     ]
     const [files, options] = processOptions(testOptions);
     t.deepEqual(files, ['hello.js',
