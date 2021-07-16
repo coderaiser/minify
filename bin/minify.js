@@ -4,7 +4,7 @@
 
 const Pack = require('../package');
 const Version = Pack.version;
-const processOptions = require("../lib/processOptions");
+const processOptions = require('../lib/processOptions');
 
 const log = function(...args) {
     console.log(...args);
@@ -55,7 +55,7 @@ function minify() {
         return log('v' + Version);
     
     const [files, options] = processOptions(cliParameters);
-
+    
     uglifyFiles(files, options);
 }
 
@@ -102,10 +102,10 @@ function help() {
 Examples:
   minify -h
     Print this message.
-
+  
   cat hello.js > minify --js > hello.min.js
     Minify js as part of a pipeline of stream processors.
-
+  
   minify hello.html --html-options="{\\"removeOptionalTags\\": false}" > hello.min.html
     Minify an html file, writing it to a new file, without removing optional tags.
 
