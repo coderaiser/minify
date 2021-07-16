@@ -15,16 +15,16 @@ test('processOptions', (t) => {
         'src/public/index.html']);
     t.deepEqual(options,  {
         "css":  {
-            "cssOptionMock": "cssValueMak",
+            "cssOptionMock": "cssValueMock",
         },
         "html":  {
-            "htmlOptionMock": "htmlValueMak",
+            "htmlOptionMock": "htmlValueMock",
         },
         "img":  {
-            "imgOptionMock": "imgValueMak",
+            "imgOptionMock": "imgValueMock",
         },
         "js":  {
-            "jsOptionMock": "jsValueMak",
+            "jsOptionMock": "jsValueMock",
         },
     })
 })
