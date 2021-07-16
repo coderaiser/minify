@@ -4,6 +4,7 @@
 
 const Pack = require('../package');
 const Version = Pack.version;
+const processOptions = require("../lib/processOptions");
 
 const log = function(...args) {
     console.log(...args);
@@ -92,51 +93,27 @@ function logAll(array) {
 function help() {
     const bin = require('../help');
     
-    console.log('Usage:');
-    console.log('  minify [options]');
-    console.log('    This will read from stdin and output to stdout.');
-    console.log('  minify filePath [options]');
-    console.log('    This will read from a file and output to stdout.');
-    console.log('');
-    console.log('Examples:');
-    console.log('  minify -h');
-    console.log('    Print this message.');
-    console.log('');
-    console.log('  cat hello.js > minify --js > hello.min.js');
-    console.log('    Minify js as part of a pipeline of stream processors.');
-    console.log('');
-    console.log('  minify hello.html --htmlOptions="{\\"removeOptionalTags\\": false}" > hello.min.html');
-    console.log('    Minify an html file, writing it to a new file, without removing optional tags.');
-    console.log('');
-    console.log('Options:');
+    const helpString = `Usage:
+  minify [options]
+    This will read from stdin and output to stdout.
+  minify filePath [options]
+    This will read from a file and output to stdout.
+
+Examples:
+  minify -h
+    Print this message.
+
+  cat hello.js > minify --js > hello.min.js
+    Minify js as part of a pipeline of stream processors.
+
+  minify hello.html --html-options="{\\"removeOptionalTags\\": false}" > hello.min.html
+    Minify an html file, writing it to a new file, without removing optional tags.
+
+Options:`;
+    
+    console.log(helpString);
     
     for (const name of Object.keys(bin)) {
         console.log('  %s %s', name, bin[name]);
     }
-}
-
-function processOptions(cliOptions) {
-    const options = {};
-    const files = [];
-
-    cliOptions.forEach((option) => {
-        const [key, val] = option.split('=');
-        switch (key) {
-            case '--htmlOptions':
-                options['html'] = JSON.parse(val);
-                break;
-            case '--imgOptions':
-                options['img'] = JSON.parse(val);
-                break;
-            case '--jsOptions':
-                options['js'] = JSON.parse(val);
-                break;
-            case '--cssOptions':
-                options['css'] = JSON.parse(val);
-                break;
-            default:
-                files.push(option)
-        }
-    })
-    return [files, options];
 }
