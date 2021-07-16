@@ -11,8 +11,8 @@ const log = function(...args) {
 };
 
 const Argv = process.argv;
-const files = Argv.slice(2);
-const [In] = files;
+const cliParameters = Argv.slice(2);
+const [In] = cliParameters;
 
 log.error = (e) => {
     console.error(e);
@@ -53,7 +53,9 @@ function minify() {
     if (/^(-v|--version)$/.test(In))
         return log('v' + Version);
     
-    uglifyFiles(files);
+    const [files, options] = processOptions(cliParameters);
+
+    uglifyFiles(files, options);
 }
 
 async function processStream(chunks) {
@@ -73,9 +75,9 @@ async function processStream(chunks) {
     log(data);
 }
 
-function uglifyFiles(files) {
+function uglifyFiles(files, options) {
     const minify = require('..');
-    const minifiers = files.map(minify);
+    const minifiers = files.map((file) => minify(file, options));
     
     Promise.all(minifiers)
         .then(logAll)
@@ -89,9 +91,23 @@ function logAll(array) {
 
 function help() {
     const bin = require('../help');
-    const usage = 'Usage: minify [options]';
     
-    console.log(usage);
+    console.log('Usage:');
+    console.log('  minify [options]');
+    console.log('    This will read from stdin and output to stdout.');
+    console.log('  minify filePath [options]');
+    console.log('    This will read from a file and output to stdout.');
+    console.log('');
+    console.log('Examples:');
+    console.log('  minify -h');
+    console.log('    Print this message.');
+    console.log('');
+    console.log('  cat hello.js > minify --js > hello.min.js');
+    console.log('    Minify js as part of a pipeline of stream processors.');
+    console.log('');
+    console.log('  minify hello.html --htmlOptions="{\\"removeOptionalTags\\": false}" > hello.min.html');
+    console.log('    Minify an html file, writing it to a new file, without removing optional tags.');
+    console.log('');
     console.log('Options:');
     
     for (const name of Object.keys(bin)) {
@@ -99,3 +115,28 @@ function help() {
     }
 }
 
+function processOptions(cliOptions) {
+    const options = {};
+    const files = [];
+
+    cliOptions.forEach((option) => {
+        const [key, val] = option.split('=');
+        switch (key) {
+            case '--htmlOptions':
+                options['html'] = JSON.parse(val);
+                break;
+            case '--imgOptions':
+                options['img'] = JSON.parse(val);
+                break;
+            case '--jsOptions':
+                options['js'] = JSON.parse(val);
+                break;
+            case '--cssOptions':
+                options['css'] = JSON.parse(val);
+                break;
+            default:
+                files.push(option)
+        }
+    })
+    return [files, options];
+}

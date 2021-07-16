@@ -3,5 +3,9 @@
     "-v, --version              ": "display version and exit",
     "--js                       ": "minify javascript",
     "--css                      ": "minify css",
-    "--html                     ": "minify html"
+    "--html                     ": "minify html",
+    "--htmlOptions=<json>       ": "while minifying from a file, specify a set of options to be passed to the html minifyier",
+    "--imgOptions=<json>        ": "while minifying from a file, specify a set of options to be passed to the img minifyier",
+    "--jsOptions=<json>         ": "while minifying from a file, specify a set of options to be passed to the js minifyier",
+    "--cssOptions=<json>        ": "while minifying from a file, specify a set of options to be passed to the css minifyier"
 }
