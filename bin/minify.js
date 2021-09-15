@@ -3,7 +3,11 @@
 'use strict';
 
 const Pack = require('../package');
+const fs = require('fs');
 const Version = Pack.version;
+
+// currently only look in the directory from which the command was run.
+const configFilePath = process.cwd() + '/.minify.json';
 
 const log = function(...args) {
     console.log(...args);
@@ -31,14 +35,14 @@ function readStd(callback) {
     let chunks = '';
     const read = () => {
         const chunk = stdin.read();
-        
+
         if (chunk)
             return chunks += chunk;
-        
+
         stdin.removeListener('readable', read);
         callback(chunks);
     };
-    
+
     stdin.setEncoding('utf8');
     stdin.addListener('readable', read);
 }
@@ -46,37 +50,47 @@ function readStd(callback) {
 function minify() {
     if (!In || /^(-h|--help)$/.test(In))
         return help();
-    
+
     if (/^--(js|css|html)$/.test(In))
         return readStd(processStream);
-    
+
     if (/^(-v|--version)$/.test(In))
         return log('v' + Version);
-    
-    uglifyFiles(files);
+
+    let options = {};
+    if (fs.existsSync(configFilePath)) {
+        try {
+            options = JSON.parse(fs.readFileSync(configFilePath));
+        } catch (err) {
+            log.error(`Config file at ${configFilePath} could not be parsed with error`);
+            return log.error(err.message);
+        }
+    }
+
+    uglifyFiles(files, options);
 }
 
 async function processStream(chunks) {
     const minify = require('..');
     const tryToCatch = require('try-to-catch');
-    
+
     if (!chunks || !In)
         return;
-    
+
     const name = In.replace('--', '');
-    
+
     const [e, data] = await tryToCatch(minify[name], chunks);
-    
+
     if (e)
         return log.error(e);
-    
+
     log(data);
 }
 
-function uglifyFiles(files) {
+function uglifyFiles(files, options) {
     const minify = require('..');
-    const minifiers = files.map(minify);
-    
+    const minifiers = files.map((file) => minify(file, options));
+
     Promise.all(minifiers)
         .then(logAll)
         .catch(log.error);
@@ -90,10 +104,10 @@ function logAll(array) {
 function help() {
     const bin = require('../help');
     const usage = 'Usage: minify [options]';
-    
+
     console.log(usage);
     console.log('Options:');
-    
+
     for (const name of Object.keys(bin)) {
         console.log('  %s %s', name, bin[name]);
     }
