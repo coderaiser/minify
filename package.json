@@ -47,7 +47,7 @@
     "c8": "^7.5.0",
     "eslint": "^7.0.0",
     "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-putout": "^7.0.2",
+    "eslint-plugin-putout": "^10.1.0",
     "madrun": "^8.6.4",
     "putout": "^20.1.0",
     "supertape": "^5.2.0"
