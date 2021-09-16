@@ -3,6 +3,7 @@
 'use strict';
 
 const Pack = require('../package');
+const {findOptionsFromFile} = require('../lib/options');
 const Version = Pack.version;
 
 const log = function(...args) {
@@ -43,7 +44,7 @@ function readStd(callback) {
     stdin.addListener('readable', read);
 }
 
-function minify() {
+async function minify() {
     if (!In || /^(-h|--help)$/.test(In))
         return help();
     
@@ -53,7 +54,12 @@ function minify() {
     if (/^(-v|--version)$/.test(In))
         return log('v' + Version);
     
-    uglifyFiles(files);
+    const {options, error: optionsError} = await findOptionsFromFile();
+    
+    if (optionsError)
+        return log.error(optionsError.message);
+    
+    uglifyFiles(files, options);
 }
 
 async function processStream(chunks) {
@@ -73,9 +79,9 @@ async function processStream(chunks) {
     log(data);
 }
 
-function uglifyFiles(files) {
+function uglifyFiles(files, options) {
     const minify = require('..');
-    const minifiers = files.map(minify);
+    const minifiers = files.map((file) => minify(file, options));
     
     Promise.all(minifiers)
         .then(logAll)
