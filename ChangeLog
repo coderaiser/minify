@@ -1,3 +1,16 @@
+2021.09.16, v7.1.0
+
+fix:
+- chore(actions) fix:lint -> lint
+
+feature:
+- (minify) add support for .minify.json config file
+- (package) supertape v6.6.0
+- (package) eslint v8.0.0-beta.2
+- (package) eslint-plugin-putout v10.1.0
+- (package) putout v20.1.0
+
+
 2021.05.04, v7.0.2
 
 fix:
