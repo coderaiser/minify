@@ -52,6 +52,12 @@ You can capture the output with the following:
 $ minify hello.js > hello.min.js
 ```
 
+You can also overwrite the source files if you are using minify as part of a pipeline:
+
+```shell
+minify hello.js hello.html --overwrite-source
+```
+
 ### Code Example
 
 `minify` can be used as a `promise`:
