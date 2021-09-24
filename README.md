@@ -91,7 +91,7 @@ if (error)
 
 ## Options
 
-For use in code you can provide options as an object with configurations for `html`, `css`, `js`, and `img` like so:
+For use in code you can provide options as a `minify` `argument` with configurations for `html`, `css`, `js` and `img` similar to:
 
 ```js
 const options = {
