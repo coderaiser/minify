@@ -91,7 +91,7 @@ if (error)
 
 ## Options
 
-The options object accepts configuration for `html`, `css`, `js`, and `img` like so:
+For use in code you can provide options as an object with configurations for `html`, `css`, `js`, and `img` like so:
 
 ```js
 const options = {
@@ -109,6 +109,26 @@ const options = {
     },
 };
 ```
+
+For cli use these options can be provided in a JSON file named `.minify.json` like so: 
+
+```json
+{
+    "html": {
+        "removeAttributeQuotes": false
+    },
+    "css": {
+        "compatibility": "*"
+    },
+    "js": {
+        "ecma": 5
+    },
+    "img": {
+        "maxSize": 4096
+    }
+}
+```
+minify cli uses 'find-up' to locate this file, so it can be present in the working directory or any parent directory.  
 
 Full documentation for options that each file type accepts can be found on the pages of the libraries used by minify to process the files:
 
