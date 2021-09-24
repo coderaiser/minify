@@ -128,7 +128,7 @@ For cli use these options can be provided in a JSON file named `.minify.json` li
     }
 }
 ```
-minify cli uses 'find-up' to locate this file, so it can be present in the working directory or any parent directory.  
+`minify` walking up parent directories to locate and read it’s configuration file `.minify.json`.  
 
 Full documentation for options that each file type accepts can be found on the pages of the libraries used by minify to process the files:
 
