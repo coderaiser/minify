@@ -39,7 +39,7 @@ test('findOptionsFromFile: return a meaningfull error if the options file cannot
     const {options, error} = await findOptionsFromFile({readFile, findOptionsFile});
     
     t.deepEqual(options, undefined);
-    t.deepEqual(error, new Error(`Options file at /filePathMock could not be parsed with error\nUnexpected token } in JSON at position 0`));
+    t.deepEqual(error, Error(`Options file at /filePathMock could not be parsed with error\nUnexpected token } in JSON at position 0`));
     t.deepEqual(findOptionsFile.callCount, 1);
     t.deepEqual(findOptionsFile.args[0], ['.minify.json']);
     t.deepEqual(readFile.callCount, 1);
