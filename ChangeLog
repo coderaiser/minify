@@ -1,3 +1,10 @@
+2021.09.28, v7.2.1
+
+feature:
+- (package) html-minifier-terser v6.0.2
+- (package) find-up v6.1.0
+
+
 2021.09.28, v7.2.0
 
 feature:
