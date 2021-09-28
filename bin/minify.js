@@ -2,8 +2,8 @@
 
 'use strict';
 
+const tryToCatch = require('try-to-catch');
 const Pack = require('../package');
-const {findOptionsFromFile} = require('../lib/options');
 const Version = Pack.version;
 
 const log = function(...args) {
@@ -54,7 +54,8 @@ async function minify() {
     if (/^(-v|--version)$/.test(In))
         return log('v' + Version);
     
-    const {options, error: optionsError} = await findOptionsFromFile();
+    const readOptions = await import('../lib/read-options.mjs');
+    const [optionsError, options] = await tryToCatch(readOptions);
     
     if (optionsError)
         return log.error(optionsError.message);
@@ -64,7 +65,6 @@ async function minify() {
 
 async function processStream(chunks) {
     const minify = require('..');
-    const tryToCatch = require('try-to-catch');
     
     if (!chunks || !In)
         return;
