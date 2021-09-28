@@ -32,11 +32,27 @@ test('js: with alternate options', async (t) => {
         },
     };
     
-    const minifyOutputWithoutOptions = await minify.js(js);
     const minifyOutput = await minify.js(js, options);
     
     t.equal(minifyOutput, expected, 'js output should be equal');
-    t.notEqual(minifyOutput, minifyOutputWithoutOptions, 'options should influence the output');
+    t.end();
+});
+
+test('js: with alternate options: options should influence output', async (t) => {
+    const js = 'function isTrueFalse() { if (true !== false) { return true; } }';
+    
+    const options = {
+        js: {
+            compress: {
+                booleans_as_integers: true,
+            },
+        },
+    };
+    
+    const minifyOutputWithoutOptions = await minify.js(js);
+    const minifyOutput = await minify.js(js, options);
+    
+    t.notDeepEqual(minifyOutput, minifyOutputWithoutOptions, 'options should influence the output');
     t.end();
 });
 
@@ -82,12 +98,26 @@ test('html: with alternate options', async (t) => {
         },
     };
     
-    const minifyOutputWithoutOptions = await minify.html(html);
     const minifyOutput = await minify.html(html, options);
     const htmlMinifierOutput = await htmlMinifier.minify(minifyOutput, options.html);
     
     t.equal(minifyOutput, htmlMinifierOutput, 'html output should be equal');
-    t.notEqual(minifyOutput, minifyOutputWithoutOptions, 'options should influence output');
+    t.end();
+});
+
+test('html: with alternate options: influence', async (t) => {
+    const html = '<html>\n<body>\nhello world\n</body></html>';
+    
+    const options = {
+        html: {
+            removeOptionalTags: false,
+        },
+    };
+    
+    const minifyOutputWithoutOptions = await minify.html(html);
+    const minifyOutput = await minify.html(html, options);
+    
+    t.notDeepEqual(minifyOutput, minifyOutputWithoutOptions, 'options should influence output');
     t.end();
 });
 
@@ -113,12 +143,29 @@ test('css: with alternate options', async (t) => {
         },
     };
     
-    const minifyOutputWithoutOptions = await minify.css(css);
     const minifyOutput = await minify.css(css, options);
     const {styles} = new CleanCSS(options.css).minify(css);
     
     t.equal(minifyOutput, styles, 'css output should be equal');
-    t.notEqual(minifyOutput, minifyOutputWithoutOptions, 'options should influence output');
+    t.end();
+});
+
+test('css: with alternate options: influence', async (t) => {
+    const css = '.gradient { -ms-filter: \'progid:DXImageTransform.Microsoft.Gradient(startColorStr="#ffffff", endColorStr="#000000", GradientType=1)\'; background-image: linear-gradient(to right, #ffffff 0%, #000000 100%); }';
+    const options = {
+        css: {
+            compatibility: {
+                properties: {
+                    ieFilters: true,
+                },
+            },
+        },
+    };
+    
+    const minifyOutputWithoutOptions = await minify.css(css);
+    const minifyOutput = await minify.css(css, options);
+    
+    t.notDeepEqual(minifyOutput, minifyOutputWithoutOptions, 'options should influence output');
     t.end();
 });
 
