@@ -67,7 +67,7 @@ test('html', async (t) => {
     };
     
     const minifyOutput = await minify.html(html);
-    const htmlMinifierOutput = htmlMinifier.minify(html, options);
+    const htmlMinifierOutput = await htmlMinifier.minify(html, options);
     
     t.equal(minifyOutput, htmlMinifierOutput, 'html output should be equal');
     t.end();
@@ -84,7 +84,7 @@ test('html: with alternate options', async (t) => {
     
     const minifyOutputWithoutOptions = await minify.html(html);
     const minifyOutput = await minify.html(html, options);
-    const htmlMinifierOutput = htmlMinifier.minify(minifyOutput, options.html);
+    const htmlMinifierOutput = await htmlMinifier.minify(minifyOutput, options.html);
     
     t.equal(minifyOutput, htmlMinifierOutput, 'html output should be equal');
     t.notEqual(minifyOutput, minifyOutputWithoutOptions, 'options should influence output');
