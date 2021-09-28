@@ -10,7 +10,7 @@ const CleanCSS = require('clean-css');
 const terser = require('terser');
 const htmlMinifier = require('html-minifier-terser');
 
-test('js', async (t) => {
+test('minify: js', async (t) => {
     const js = 'function hello(world) {\nconsole.log(world);\n}';
     
     const minifyOutput = await minify.js(js);
@@ -20,7 +20,7 @@ test('js', async (t) => {
     t.end();
 });
 
-test('js: with alternate options', async (t) => {
+test('minify: js: with alternate options', async (t) => {
     const js = 'function isTrueFalse() { if (true !== false) { return true; } }';
     const expected = 'function isTrueFalse(){return 1}';
     
@@ -38,7 +38,7 @@ test('js: with alternate options', async (t) => {
     t.end();
 });
 
-test('js: with alternate options: options should influence output', async (t) => {
+test('minify: js: with alternate options: options should influence output', async (t) => {
     const js = 'function isTrueFalse() { if (true !== false) { return true; } }';
     
     const options = {
@@ -56,7 +56,7 @@ test('js: with alternate options: options should influence output', async (t) =>
     t.end();
 });
 
-test('html', async (t) => {
+test('minify: html', async (t) => {
     const html = '<html>\n<body>\nhello world\n</body></html>';
     
     const options = {
@@ -89,7 +89,7 @@ test('html', async (t) => {
     t.end();
 });
 
-test('html: with alternate options', async (t) => {
+test('minify: html: with alternate options', async (t) => {
     const html = '<html>\n<body>\nhello world\n</body></html>';
     
     const options = {
@@ -105,7 +105,7 @@ test('html: with alternate options', async (t) => {
     t.end();
 });
 
-test('html: with alternate options: influence', async (t) => {
+test('minify: html: with alternate options: influence', async (t) => {
     const html = '<html>\n<body>\nhello world\n</body></html>';
     
     const options = {
@@ -121,7 +121,7 @@ test('html: with alternate options: influence', async (t) => {
     t.end();
 });
 
-test('css', async (t) => {
+test('minify: css', async (t) => {
     const css = 'color: #FFFFFF';
     
     const minifyOutput = await minify.css(css);
@@ -131,7 +131,7 @@ test('css', async (t) => {
     t.end();
 });
 
-test('css: with alternate options', async (t) => {
+test('minify: css: with alternate options', async (t) => {
     const css = '.gradient { -ms-filter: \'progid:DXImageTransform.Microsoft.Gradient(startColorStr="#ffffff", endColorStr="#000000", GradientType=1)\'; background-image: linear-gradient(to right, #ffffff 0%, #000000 100%); }';
     const options = {
         css: {
@@ -150,7 +150,7 @@ test('css: with alternate options', async (t) => {
     t.end();
 });
 
-test('css: with alternate options: influence', async (t) => {
+test('minify: css: with alternate options: influence', async (t) => {
     const css = '.gradient { -ms-filter: \'progid:DXImageTransform.Microsoft.Gradient(startColorStr="#ffffff", endColorStr="#000000", GradientType=1)\'; background-image: linear-gradient(to right, #ffffff 0%, #000000 100%); }';
     const options = {
         css: {
@@ -169,7 +169,7 @@ test('css: with alternate options: influence', async (t) => {
     t.end();
 });
 
-test('css: base64', async (t) => {
+test('minify: css: base64', async (t) => {
     const dir = `${__dirname}/fixture`;
     const pathToCSS = `${dir}/style.css`;
     const pathToMinifiedCSS = `${dir}/style.min.css`;
@@ -182,7 +182,7 @@ test('css: base64', async (t) => {
     t.end();
 });
 
-test('css: base64 with alternate options', async (t) => {
+test('minify: css: base64 with alternate options', async (t) => {
     const pathToCSS = `${__dirname}/fixture/style.css`;
     const options = {
         img: {
@@ -197,7 +197,7 @@ test('css: base64 with alternate options', async (t) => {
     t.end();
 });
 
-test('css: with errors', async (t) => {
+test('minify: css: with errors', async (t) => {
     const css = '@import "missing.css";';
     
     const [e] = await tryToCatch(minify.css, css);
@@ -206,13 +206,13 @@ test('css: with errors', async (t) => {
     t.end();
 });
 
-test('arguments: no', async (t) => {
+test('minify: arguments: no', async (t) => {
     const [e] = await tryToCatch(minify);
     t.equal(e.message, 'name could not be empty!', 'throw when name empty');
     t.end();
 });
 
-test('unsupported file extension', async (t) => {
+test('minify: unsupported file extension', async (t) => {
     const pathToFile = `${__dirname}/fixture/unsupported.md`;
     
     const [e] = await tryToCatch(minify, pathToFile);
