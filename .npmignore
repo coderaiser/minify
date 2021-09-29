@@ -1,4 +1,5 @@
 .*
+*.spec.*
 test
 coverage
 

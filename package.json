@@ -1,6 +1,6 @@
 {
   "name": "minify",
-  "version": "7.1.0",
+  "version": "7.2.1",
   "description": "Minifier of js, css, html and img",
   "homepage": "http://coderaiser.github.io/minify",
   "author": "coderaiser <mnemonic.enemy@gmail.com> (https://github.com/coderaiser)",
@@ -34,9 +34,11 @@
     "clean-css": "^5.0.1",
     "css-b64-images": "~0.2.5",
     "debug": "^4.1.0",
-    "find-up": "^5.0.0",
-    "html-minifier-terser": "^5.1.1",
+    "find-up": "^6.1.0",
+    "html-minifier-terser": "^6.0.2",
+    "readjson": "^2.2.2",
     "terser": "^5.3.2",
+    "try-catch": "^3.0.0",
     "try-to-catch": "^3.0.0"
   },
   "main": "lib/minify.js",
