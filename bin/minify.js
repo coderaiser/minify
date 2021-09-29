@@ -5,6 +5,7 @@
 const {writeFile} = require('fs/promises');
 const tryToCatch = require('try-to-catch');
 const Pack = require('../package');
+const yargsParser = require("yargs-parser");
 const Version = Pack.version;
 
 const log = function(...args) {
@@ -13,8 +14,8 @@ const log = function(...args) {
 };
 
 const Argv = process.argv;
-const args = Argv.slice(2);
-const [In] = args;
+const args = yargsParser(Argv.slice(2))
+const [In] = args._;
 
 log.error = (e) => {
     console.error(e);
@@ -45,49 +46,17 @@ function readStd(callback) {
     stdin.addListener('readable', read);
 }
 
-function extractFlags(supportedFlags, args) {
-    const flags = {};
-    const files = [];
-
-    // set all flags to false
-    for (const flagName in supportedFlags) {
-        flags[flagName] = false;
-    }
-
-    // Set flags to true if they are in the args, else push the arg as a file
-    for (const arg of args) {
-        let isArgFlag = false;
-        for (const flagName in supportedFlags) {
-            if (supportedFlags[flagName] === arg) {
-                flags[flagName] = true;
-                isArgFlag = true;
-                break;
-            }
-        }
-
-        if (!isArgFlag) {
-            files.push(arg);
-        }
-    }
-
-    return {flags, files};
-}
-
 async function minify(args) {
-    if (!In || /^(-h|--help)$/.test(In))
+    const {hasArg} = await import("../lib/cli.mjs");
+
+    if (!In || hasArg(['h', 'help'], args))
         return help();
 
-    if (/^--(js|css|html)$/.test(In))
+    if (hasArg(['js', 'css', 'html'], args))
         return readStd(processStream);
 
-    if (/^(-v|--version)$/.test(In))
+    if (hasArg(['v', 'version'], args))
         return log('v' + Version);
-
-    const supportedFlags = {
-        overwriteSource: '--overwrite-source',
-    };
-
-    const {flags, files} = extractFlags(supportedFlags, args);
 
     const readOptions = await import('../lib/read-options.mjs');
     const [optionsError, options] = await tryToCatch(readOptions);
@@ -95,7 +64,7 @@ async function minify(args) {
     if (optionsError)
         return log.error(optionsError.message);
 
-    uglifyFiles(files, options, flags);
+    uglifyFiles(args._, options, args);
 }
 
 async function processStream(chunks) {

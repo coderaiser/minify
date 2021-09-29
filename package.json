@@ -39,7 +39,8 @@
     "readjson": "^2.2.2",
     "terser": "^5.3.2",
     "try-catch": "^3.0.0",
-    "try-to-catch": "^3.0.0"
+    "try-to-catch": "^3.0.0",
+    "yargs-parser": "^20.2.9"
   },
   "main": "lib/minify.js",
   "license": "MIT",
