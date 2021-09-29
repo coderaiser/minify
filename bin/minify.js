@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import Pack from '../package';
+import Pack from '../package.json';
 import {findOptionsFromFile} from '../lib/options.js';
 const Version = Pack.version;
 
