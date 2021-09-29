@@ -1,24 +1,24 @@
 #!/usr/bin/env node
 
-'use strict';
-
-const Pack = require('../package');
-const {findOptionsFromFile} = require('../lib/options');
+import Pack from '../package';
+import {findOptionsFromFile} from '../lib/options.js';
 const Version = Pack.version;
 
-const log = function(...args) {
-    console.log(...args);
-    process.stdin.pause();
-};
+class log {
+    constructor(...args) {
+        console.log(...args);
+        process.stdin.pause();
+    }
+    
+    static error(e) {
+        console.error(e);
+        process.stdin.pause();
+    }
+}
 
 const Argv = process.argv;
 const files = Argv.slice(2);
 const [In] = files;
-
-log.error = (e) => {
-    console.error(e);
-    process.stdin.pause();
-};
 
 process.on('uncaughtException', (error) => {
     if (error.code !== 'EPIPE')
@@ -46,7 +46,7 @@ function readStd(callback) {
 
 async function minify() {
     if (!In || /^(-h|--help)$/.test(In))
-        return help();
+        return await help();
     
     if (/^--(js|css|html)$/.test(In))
         return readStd(processStream);
@@ -59,12 +59,12 @@ async function minify() {
     if (optionsError)
         return log.error(optionsError.message);
     
-    uglifyFiles(files, options);
+    await uglifyFiles(files, options);
 }
 
 async function processStream(chunks) {
-    const minify = require('..');
-    const tryToCatch = require('try-to-catch');
+    await import('..');
+    const tryToCatch = await import('try-to-catch');
     
     if (!chunks || !In)
         return;
@@ -79,8 +79,8 @@ async function processStream(chunks) {
     log(data);
 }
 
-function uglifyFiles(files, options) {
-    const minify = require('..');
+async function uglifyFiles(files, options) {
+    const minify = await import('..');
     const minifiers = files.map((file) => minify(file, options));
     
     Promise.all(minifiers)
@@ -93,8 +93,8 @@ function logAll(array) {
         log(item);
 }
 
-function help() {
-    const bin = require('../help');
+async function help() {
+    const bin = await import('../help.json');
     const usage = 'Usage: minify [options]';
     
     console.log(usage);

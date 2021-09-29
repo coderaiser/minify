@@ -1,14 +1,15 @@
-'use strict';
+import {readFile} from 'fs/promises';
 
-const {readFile} = require('fs/promises');
+import minify from '../lib/minify.js';
 
-const minify = require('..');
+import tryToCatch from 'try-to-catch';
+import test from 'supertape';
+import CleanCSS from 'clean-css';
+import * as terser from 'terser';
+import * as htmlMinifier from 'html-minifier-terser';
+import {URL} from 'url';
 
-const tryToCatch = require('try-to-catch');
-const test = require('supertape');
-const CleanCSS = require('clean-css');
-const terser = require('terser');
-const htmlMinifier = require('html-minifier-terser');
+const __dirname = new URL('.', import.meta.url).pathname;
 
 test('js', async (t) => {
     const js = 'function hello(world) {\nconsole.log(world);\n}';
