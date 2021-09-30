@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
-'use strict';
+import tryToCatch from 'try-to-catch';
+import {createCommons} from 'simport';
 
-const tryToCatch = require('try-to-catch');
+const {require} = createCommons(import.meta.url);
+
 const Pack = require('../package');
 const Version = Pack.version;
 
@@ -46,7 +48,7 @@ function readStd(callback) {
 
 async function minify() {
     if (!In || /^(-h|--help)$/.test(In))
-        return help();
+        return await help();
     
     if (/^--(js|css|html)$/.test(In))
         return readStd(processStream);
@@ -60,11 +62,11 @@ async function minify() {
     if (optionsError)
         return log.error(optionsError.message);
     
-    uglifyFiles(files, options);
+    await uglifyFiles(files, options);
 }
 
 async function processStream(chunks) {
-    const minify = require('..');
+    const minify = await import('..');
     
     if (!chunks || !In)
         return;
@@ -79,8 +81,8 @@ async function processStream(chunks) {
     log(data);
 }
 
-function uglifyFiles(files, options) {
-    const minify = require('..');
+async function uglifyFiles(files, options) {
+    const minify = await import('..');
     const minifiers = files.map((file) => minify(file, options));
     
     Promise.all(minifiers)
@@ -93,8 +95,8 @@ function logAll(array) {
         log(item);
 }
 
-function help() {
-    const bin = require('../help');
+async function help() {
+    const bin = require('../help.json');
     const usage = 'Usage: minify [options]';
     
     console.log(usage);

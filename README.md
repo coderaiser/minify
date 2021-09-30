@@ -57,7 +57,7 @@ $ minify hello.js > hello.min.js
 `minify` can be used as a `promise`:
 
 ```js
-const minify = require('minify');
+import minify from 'minify';
 const options = {
     html: {
         removeAttributeQuotes: false,
