@@ -1,3 +1,9 @@
+2021.10.04, v8.0.1
+
+fix:
+- (minify) broken CLI (#86)
+
+
 2021.09.30, v8.0.0
 
 feature:
