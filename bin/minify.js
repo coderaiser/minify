@@ -48,7 +48,7 @@ function readStd(callback) {
 
 async function minify() {
     if (!In || /^(-h|--help)$/.test(In))
-        return await help();
+        return help();
     
     if (/^--(js|css|html)$/.test(In))
         return readStd(processStream);
@@ -66,7 +66,7 @@ async function minify() {
 }
 
 async function processStream(chunks) {
-    const minify = await import('..');
+    const minify = await import('../lib/minify');
     
     if (!chunks || !In)
         return;
@@ -82,7 +82,7 @@ async function processStream(chunks) {
 }
 
 async function uglifyFiles(files, options) {
-    const minify = await import('..');
+    const minify = await import('../lib/minify.js');
     const minifiers = files.map((file) => minify(file, options));
     
     Promise.all(minifiers)
@@ -95,7 +95,7 @@ function logAll(array) {
         log(item);
 }
 
-async function help() {
+function help() {
     const bin = require('../help.json');
     const usage = 'Usage: minify [options]';
     

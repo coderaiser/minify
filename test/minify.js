@@ -9,14 +9,14 @@ import minify from '../lib/minify.js';
 import tryToCatch from 'try-to-catch';
 import test from 'supertape';
 import CleanCSS from 'clean-css';
-import terser from 'terser';
+import {minify as terserMinify} from 'terser';
 import htmlMinifier from 'html-minifier-terser';
 
 test('minify: js', async (t) => {
     const js = 'function hello(world) {\nconsole.log(world);\n}';
     
     const minifyOutput = await minify.js(js);
-    const {code} = await terser.minify(js);
+    const {code} = await terserMinify(js);
     
     t.equal(code, minifyOutput, 'js output should be equal');
     t.end();
