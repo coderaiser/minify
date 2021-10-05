@@ -66,7 +66,7 @@ async function minify() {
 }
 
 async function processStream(chunks) {
-    const minify = await import('../lib/minify');
+    const {minify} = await import('../lib/minify');
     
     if (!chunks || !In)
         return;
@@ -82,7 +82,7 @@ async function processStream(chunks) {
 }
 
 async function uglifyFiles(files, options) {
-    const minify = await import('../lib/minify.js');
+    const {minify} = await import('../lib/minify.js');
     const minifiers = files.map((file) => minify(file, options));
     
     Promise.all(minifiers)

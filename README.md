@@ -52,29 +52,10 @@ You can capture the output with the following:
 $ minify hello.js > hello.min.js
 ```
 
-### Code Example
-
-`minify` can be used as a `promise`:
+`Minify` can be used with `async-await` and [try-to-catch](https://github.com/coderaiser/try-to-catch):
 
 ```js
-import minify from 'minify';
-const options = {
-    html: {
-        removeAttributeQuotes: false,
-        removeOptionalTags: false,
-    },
-};
-
-minify('./client.js', options)
-    .then(console.log)
-    .catch(console.error);
-
-```
-
-Or with `async-await` and [try-to-catch](https://github.com/coderaiser/try-to-catch):
-
-```js
-import minify from 'minify';
+import {minify} from 'minify';
 import tryToCatch from 'try-to-catch';
 const options = {
     html: {

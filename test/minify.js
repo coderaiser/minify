@@ -3,8 +3,7 @@ import {createCommons} from 'simport';
 const {__dirname} = createCommons(import.meta.url);
 
 import {readFile} from 'fs/promises';
-
-import minify from '../lib/minify.js';
+import {minify} from '../lib/minify.js';
 
 import tryToCatch from 'try-to-catch';
 import test from 'supertape';
