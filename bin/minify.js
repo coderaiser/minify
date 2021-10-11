@@ -66,7 +66,7 @@ async function minify() {
 }
 
 async function processStream(chunks) {
-    const {minify} = await import('../lib/minify');
+    const {minify} = await import('../lib/minify.js');
     
     if (!chunks || !In)
         return;
