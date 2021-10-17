@@ -68,6 +68,8 @@ const [error, data] = await tryToCatch(minify, './client.js', options);
 
 if (error)
     return console.error(error.message);
+
+console.log(data);
 ```
 
 ## Options
