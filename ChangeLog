@@ -1,3 +1,12 @@
+2022.02.14, v8.0.4
+
+feature:
+- (package) html-minifier-terser v7.0.0-alpha.1
+- (package) eslint-plugin-putout v13.11.0
+- (package) putout v24.6.0
+- (package) supertape v7.0.0
+
+
 2021.10.17, v8.0.3
 
 fix:
