@@ -1,7 +1,3 @@
-import {createCommons} from 'simport';
-
-const {__dirname} = createCommons(import.meta.url);
-
 import {readFile} from 'fs/promises';
 import {minify} from '../lib/minify.js';
 
@@ -10,6 +6,11 @@ import test from 'supertape';
 import CleanCSS from 'clean-css';
 import {minify as terserMinify} from 'terser';
 import htmlMinifier from 'html-minifier-terser';
+
+import {fileURLToPath} from 'url';
+import {dirname} from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 test('minify: js', async (t) => {
     const js = 'function hello(world) {\nconsole.log(world);\n}';
@@ -133,7 +134,7 @@ test('minify: css', async (t) => {
 });
 
 test('minify: css: with alternate options', async (t) => {
-    const css = '.gradient { -ms-filter: \'progid:DXImageTransform.Microsoft.Gradient(startColorStr="#ffffff", endColorStr="#000000", GradientType=1)\'; background-image: linear-gradient(to right, #ffffff 0%, #000000 100%); }';
+    const css = `.gradient { -ms-filter: 'progid:DXImageTransform.Microsoft.Gradient(startColorStr="#ffffff", endColorStr="#000000", GradientType=1)'; background-image: linear-gradient(to right, #ffffff 0%, #000000 100%); }`;
     const options = {
         css: {
             compatibility: {
@@ -152,7 +153,7 @@ test('minify: css: with alternate options', async (t) => {
 });
 
 test('minify: css: with alternate options: influence', async (t) => {
-    const css = '.gradient { -ms-filter: \'progid:DXImageTransform.Microsoft.Gradient(startColorStr="#ffffff", endColorStr="#000000", GradientType=1)\'; background-image: linear-gradient(to right, #ffffff 0%, #000000 100%); }';
+    const css = `.gradient { -ms-filter: 'progid:DXImageTransform.Microsoft.Gradient(startColorStr="#ffffff", endColorStr="#000000", GradientType=1)'; background-image: linear-gradient(to right, #ffffff 0%, #000000 100%); }`;
     const options = {
         css: {
             compatibility: {
@@ -192,7 +193,7 @@ test('minify: css: base64 with alternate options', async (t) => {
     };
     
     const result = await minify(pathToCSS, options);
-    const expected = '.header{background-url:url(\'ok.png\')}';
+    const expected = `.header{background-url:url('ok.png')}`;
     
     t.equal(result, expected, 'image should not be inlined since options define it as too big');
     t.end();
@@ -209,6 +210,7 @@ test('minify: css: with errors', async (t) => {
 
 test('minify: arguments: no', async (t) => {
     const [e] = await tryToCatch(minify);
+    
     t.equal(e.message, 'name could not be empty!', 'throw when name empty');
     t.end();
 });

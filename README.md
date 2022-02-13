@@ -1,14 +1,12 @@
-# Minify [![License][LicenseIMGURL]][LicenseURL] [![Dependency Status][DependencyStatusIMGURL]][DependencyStatusURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![NPM version][NPMIMGURL]][NPMURL] [![Coverage Status][CoverageIMGURL]][CoverageURL]
+# Minify [![License][LicenseIMGURL]][LicenseURL] [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![NPM version][NPMIMGURL]][NPMURL] [![Coverage Status][CoverageIMGURL]][CoverageURL]
 
 [NPMIMGURL]: https://img.shields.io/npm/v/minify.svg?style=flat
 [BuildStatusURL]: https://github.com/coderaiser/minify/actions
 [BuildStatusIMGURL]: https://github.com/coderaiser/minify/workflows/CI/badge.svg
-[DependencyStatusIMGURL]: https://img.shields.io/david/coderaiser/minify.svg?style=flat
 [LicenseIMGURL]: https://img.shields.io/badge/license-MIT-317BF9.svg?style=flat
 [NPM_INFO_IMG]: https://nodei.co/npm/minify.png?stars
 [NPMURL]: http://npmjs.org/package/minify
 [LicenseURL]: https://tldrlegal.com/license/mit-license "MIT License"
-[DependencyStatusURL]: https://david-dm.org/coderaiser/minify "Dependency Status"
 [CoverageURL]: https://coveralls.io/github/coderaiser/minify?branch=master
 [CoverageIMGURL]: https://coveralls.io/repos/coderaiser/minify/badge.svg?branch=master&service=github
 
@@ -74,7 +72,7 @@ console.log(data);
 
 ## Options
 
-For cli use these options can be provided in a JSON file named `.minify.json` like so: 
+For cli use these options can be provided in a JSON file named `.minify.json` like so:
 
 ```json
 {
@@ -93,7 +91,7 @@ For cli use these options can be provided in a JSON file named `.minify.json` li
 }
 ```
 
-`minify` walking up parent directories to locate and read it’s configuration file `.minify.json`.  
+`minify` walking up parent directories to locate and read it’s configuration file `.minify.json`.
 
 Full documentation for options that each file type accepts can be found on the pages of the libraries used by minify to process the files:
 

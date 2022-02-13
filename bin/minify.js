@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import tryToCatch from 'try-to-catch';
-import {createCommons} from 'simport';
+import {createRequire} from 'module';
 
-const {require} = createCommons(import.meta.url);
+const require = createRequire(import.meta.url);
 
 const Pack = require('../package');
 const Version = Pack.version;
