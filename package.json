@@ -36,7 +36,7 @@
     "css-b64-images": "~0.2.5",
     "debug": "^4.1.0",
     "find-up": "^6.1.0",
-    "html-minifier-terser": "^6.0.2",
+    "html-minifier-terser": "^7.0.0-alpha.1",
     "readjson": "^2.2.2",
     "simport": "^1.2.0",
     "terser": "^5.3.2",
