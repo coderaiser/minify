@@ -23,7 +23,7 @@ npm i minify -g
 
 ### CLI
 
-The bash command below creates a code snippet saved as "hello.js".
+The bash command below creates a code snippet saved as `hello.js`.
 
 Simply copy + paste the code starting with cat, including the EOT on the last line, and press <enter>.
 
