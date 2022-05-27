@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       
-      - name: Install:
+      - name: Install
         run: npm install
         
       - name: Lint
