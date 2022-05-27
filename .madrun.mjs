@@ -2,8 +2,7 @@ import {run} from 'madrun';
 
 export default {
     'test': () => `tape 'test/*.js' 'lib/**/*.spec.{js,mjs}'`,
-    'coverage': () => 'c8 npm test',
-    'report': () => 'c8 report --reporter=lcov',
+    'coverage': () => 'escover npm test',
     'fix:lint': () => run('lint', '--fix'),
     'lint': () => 'putout .',
     'fresh:lint': () => run('lint', '--fresh'),

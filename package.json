@@ -1,5 +1,4 @@
-{
-  "name": "minify",
+{ "name": "minify",
   "version": "8.0.4",
   "description": "Minifier of js, css, html and img",
   "homepage": "http://coderaiser.github.io/minify",
@@ -46,10 +45,10 @@
   "main": "lib/minify.js",
   "license": "MIT",
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "devDependencies": {
-    "c8": "^7.5.0",
+    "escover": "^2.1.2",
     "eslint": "^8.0.0-beta.2",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-putout": "^13.11.0",

@@ -14,24 +14,49 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 14.x
           - 16.x
-          - 17.x
+          - 18.x
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install -f
-      - run: npm run lint
+      
+      - name: Install:
+        run: npm install
+        
+      - name: Lint
+        run: npm run fix:lint
+      
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+        
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        
+      - name: Typos Install
+        run: cargo install typos-cli || echo 'already installed'
+      
+      - name: Typos
+        run: typos --write-changes
+      
+      - uses: EndBug/add-and-commit@v7
+        with:
+          message: chore: ${{ env.NAME }} lint
+          branch: master
+      
       - run: npm run coverage
-      - run: npm run report
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: EndBug/add-and-commit@v7
-        with:
-          message: chore(${{ env.NAME }}) lint
-          branch: master
+      
