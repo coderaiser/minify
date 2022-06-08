@@ -51,7 +51,7 @@ jobs:
       
       - uses: EndBug/add-and-commit@v7
         with:
-          message: chore: ${{ env.NAME }} lint
+          message: 'chore: ${{ env.NAME }} lint'
           branch: master
       
       - run: npm run coverage
