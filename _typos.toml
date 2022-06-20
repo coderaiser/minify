@@ -1,2 +1,2 @@
 [files]
-extend-exclude = ["Changelog"]
+extend-exclude = ["ChangeLog"]
