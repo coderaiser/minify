@@ -29,7 +29,7 @@ process.on('uncaughtException', (error) => {
 
 minify();
 
-function readStd(callback) {
+function readStd(callback, options) {
     const {stdin} = process;
     let chunks = '';
     const read = () => {
@@ -39,7 +39,7 @@ function readStd(callback) {
             return chunks += chunk;
         
         stdin.removeListener('readable', read);
-        callback(chunks);
+        callback(chunks, options);
     };
     
     stdin.setEncoding('utf8');
@@ -50,9 +50,6 @@ async function minify() {
     if (!In || /^(-h|--help)$/.test(In))
         return help();
     
-    if (/^--(js|css|html)$/.test(In))
-        return readStd(processStream);
-    
     if (/^(-v|--version)$/.test(In))
         return log('v' + Version);
     
@@ -62,10 +59,13 @@ async function minify() {
     if (optionsError)
         return log.error(optionsError.message);
     
+    if (/^--(js|css|html)$/.test(In))
+        return readStd(processStream, options);
+
     await uglifyFiles(files, options);
 }
 
-async function processStream(chunks) {
+async function processStream(chunks, options) {
     const {minify} = await import('../lib/minify.js');
     
     if (!chunks || !In)
@@ -73,7 +73,7 @@ async function processStream(chunks) {
     
     const name = In.replace('--', '');
     
-    const [e, data] = await tryToCatch(minify[name], chunks);
+    const [e, data] = await tryToCatch(minify[name], chunks, options);
     
     if (e)
         return log.error(e);
