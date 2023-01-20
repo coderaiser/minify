@@ -61,7 +61,7 @@ async function minify() {
     
     if (/^--(js|css|html)$/.test(In))
         return readStd(processStream, options);
-
+    
     await uglifyFiles(files, options);
 }
 
