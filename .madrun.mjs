@@ -8,4 +8,3 @@ export default {
     'fresh:lint': () => run('lint', '--fresh'),
     'lint:fresh': () => run('lint', '--fresh'),
 };
-

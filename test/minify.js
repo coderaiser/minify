@@ -1,13 +1,11 @@
 import {readFile} from 'fs/promises';
 import {fileURLToPath} from 'url';
 import {dirname} from 'path';
-
 import tryToCatch from 'try-to-catch';
 import test from 'supertape';
 import CleanCSS from 'clean-css';
 import {minify as terserMinify} from 'terser';
 import htmlMinifier from 'html-minifier-terser';
-
 import {minify} from '../lib/minify.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -71,12 +69,10 @@ test('minify: html', async (t) => {
         removeAttributeQuotes: true,
         removeRedundantAttributes: true,
         useShortDoctype: true,
-        removeEmptyAttributes: true,
-        /* оставляем, поскольку у нас
+        removeEmptyAttributes: true, /* оставляем, поскольку у нас
          * в элемент fm генерируеться
          * таблица файлов
-         */
-        removeEmptyElements: false,
+         */removeEmptyElements: false,
         removeOptionalTags: true,
         removeScriptTypeAttributes: true,
         removeStyleLinkTypeAttributes: true,
@@ -136,6 +132,7 @@ test('minify: css', async (t) => {
 
 test('minify: css: with alternate options', async (t) => {
     const css = `.gradient { -ms-filter: 'progid:DXImageTransform.Microsoft.Gradient(startColorStr="#ffffff", endColorStr="#000000", GradientType=1)'; background-image: linear-gradient(to right, #ffffff 0%, #000000 100%); }`;
+    
     const options = {
         css: {
             compatibility: {
@@ -155,6 +152,7 @@ test('minify: css: with alternate options', async (t) => {
 
 test('minify: css: with alternate options: influence', async (t) => {
     const css = `.gradient { -ms-filter: 'progid:DXImageTransform.Microsoft.Gradient(startColorStr="#ffffff", endColorStr="#000000", GradientType=1)'; background-image: linear-gradient(to right, #ffffff 0%, #000000 100%); }`;
+    
     const options = {
         css: {
             compatibility: {
@@ -187,6 +185,7 @@ test('minify: css: base64', async (t) => {
 
 test('minify: css: base64 with alternate options', async (t) => {
     const pathToCSS = `${__dirname}/fixture/style.css`;
+    
     const options = {
         img: {
             maxSize: 512,
@@ -224,4 +223,3 @@ test('minify: unsupported file extension', async (t) => {
     t.equal(e?.message, 'File type "md" not supported.', 'throw when file extension is unsupported');
     t.end();
 });
-

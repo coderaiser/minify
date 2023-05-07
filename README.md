@@ -55,6 +55,7 @@ $ minify hello.js > hello.min.js
 ```js
 import {minify} from 'minify';
 import tryToCatch from 'try-to-catch';
+
 const options = {
     html: {
         removeAttributeQuotes: false,

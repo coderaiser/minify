@@ -32,6 +32,7 @@ minify();
 function readStd(callback, options) {
     const {stdin} = process;
     let chunks = '';
+    
     const read = () => {
         const chunk = stdin.read();
         
@@ -51,7 +52,7 @@ async function minify() {
         return help();
     
     if (/^(-v|--version)$/.test(In))
-        return log('v' + Version);
+        return log(`v${Version}`);
     
     const {readOptions} = await import('../lib/read-options.mjs');
     const [optionsError, options] = await tryToCatch(readOptions);
@@ -85,7 +86,8 @@ async function uglifyFiles(files, options) {
     const {minify} = await import('../lib/minify.js');
     const minifiers = files.map((file) => minify(file, options));
     
-    Promise.all(minifiers)
+    Promise
+        .all(minifiers)
         .then(logAll)
         .catch(log.error);
 }
@@ -106,4 +108,3 @@ function help() {
         console.log('  %s %s', name, bin[name]);
     }
 }
-

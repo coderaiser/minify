@@ -5,7 +5,6 @@
   "homepage": "http://coderaiser.github.io/minify",
   "author": "coderaiser <mnemonic.enemy@gmail.com> (https://github.com/coderaiser)",
   "type": "module",
-  "commitType": "colon",
   "keywords": [
     "minify",
     "minimize",
