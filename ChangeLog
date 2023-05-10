@@ -1,3 +1,11 @@
+2023.05.10, v10.0.0
+
+feature:
+- 5a3e527 minify: js: migrate to @putout/minify from terser
+- 4b31151 package: escover v3.2.3
+- a1651fb package: eslint-plugin-putout v17.5.1
+- 7130ae7 package: putout v29.4.1
+
 2023.01.20, v9.2.0
 
 fix:
