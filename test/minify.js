@@ -4,7 +4,7 @@ import {dirname} from 'path';
 import tryToCatch from 'try-to-catch';
 import test from 'supertape';
 import CleanCSS from 'clean-css';
-import {minify as terserMinify} from 'terser';
+import {minify as putoutMinify} from '@putout/minify';
 import htmlMinifier from 'html-minifier-terser';
 import {minify} from '../lib/minify.js';
 
@@ -15,15 +15,15 @@ test('minify: js', async (t) => {
     const js = 'function hello(world) {\nconsole.log(world);\n}';
     
     const minifyOutput = await minify.js(js);
-    const {code} = await terserMinify(js);
+    const code = await putoutMinify(js);
     
     t.equal(code, minifyOutput, 'js output should be equal');
     t.end();
 });
 
 test('minify: js: with alternate options', async (t) => {
-    const js = 'function isTrueFalse() { if (true !== false) { return true; } }';
-    const expected = 'function isTrueFalse(){return 1}';
+    const js = 'export default function isTrueFalse() { if (true !== false) { return true; } }';
+    const expected = 'export default function isTrueFalse(){return !0;}';
     
     const options = {
         js: {
@@ -36,24 +36,6 @@ test('minify: js: with alternate options', async (t) => {
     const minifyOutput = await minify.js(js, options);
     
     t.equal(minifyOutput, expected, 'js output should be equal');
-    t.end();
-});
-
-test('minify: js: with alternate options: options should influence output', async (t) => {
-    const js = 'function isTrueFalse() { if (true !== false) { return true; } }';
-    
-    const options = {
-        js: {
-            compress: {
-                booleans_as_integers: true,
-            },
-        },
-    };
-    
-    const minifyOutputWithoutOptions = await minify.js(js);
-    const minifyOutput = await minify.js(js, options);
-    
-    t.notDeepEqual(minifyOutput, minifyOutputWithoutOptions, 'options should influence the output');
     t.end();
 });
 

@@ -32,6 +32,7 @@
     "putout": "madrun putout"
   },
   "dependencies": {
+    "@putout/minify": "^1.0.4",
     "clean-css": "^5.0.1",
     "css-b64-images": "~0.2.5",
     "debug": "^4.1.0",
@@ -39,7 +40,6 @@
     "html-minifier-terser": "^7.1.0",
     "readjson": "^2.2.2",
     "simport": "^1.2.0",
-    "terser": "^5.3.2",
     "try-catch": "^3.0.0",
     "try-to-catch": "^3.0.0"
   },
