@@ -22,14 +22,13 @@ test('minify: js', async (t) => {
 });
 
 test('minify: js: with alternate options', async (t) => {
-    const js = 'export default function isTrueFalse() { if (true !== false) { return true; } }';
-    const expected = 'export default function isTrueFalse(){return !0;}';
+    const js = 'const a = 5, b = 6; console.log(a);';
+    const expected = 'const a=5,b=6;';
     
     const options = {
         js: {
-            compress: {
-                booleans_as_integers: true,
-            },
+            removeConsole: true,
+            removeUnusedVariables: false,
         },
     };
     
