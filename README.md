@@ -98,7 +98,7 @@ Full documentation for options that each file type accepts can be found on the p
 
 - HTML: https://github.com/kangax/html-minifier
 - CSS: https://github.com/jakubpawlowicz/clean-css
-- JS: https://github.com/terser/terser
+- JS: [@putout/minify](https://github.com/putoutjs/minify)
 - IMG: https://github.com/Filirom1/css-base64-images
 
 Minify sets a few defaults for HTML that may differ from the base `html-minifier` settings:
