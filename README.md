@@ -49,10 +49,10 @@ You can capture the output with the following:
 ```sh
 $ minify hello.js > hello.min.js
 ```
-    
+
 You can pass input using `cat`:
-    
- ```sh
+
+```sh
 cat << EOT | bin/minify.js --js
 > const hello = 'world';
 >
@@ -61,7 +61,7 @@ cat << EOT | bin/minify.js --js
 > }
 > EOT
 const a='world';for(let i=0;i<a.length;i++)console.log(a[i]); 
- ```
+```
 
 `Minify` can be used with `async-await` and [try-to-catch](https://github.com/coderaiser/try-to-catch):
 
