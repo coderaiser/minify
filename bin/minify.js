@@ -67,14 +67,13 @@ async function minify() {
 }
 
 async function processStream(chunks, options) {
-    const {minify} = await import('../lib/minify.js');
-    
     if (!chunks || !In)
         return;
     
     const name = In.replace('--', '');
+    const {default: minify} = await import(`../lib/${name}.js`);
     
-    const [e, data] = await tryToCatch(minify[name], chunks, options);
+    const [e, data] = await tryToCatch(minify, chunks, options);
     
     if (e)
         return log.error(e);
