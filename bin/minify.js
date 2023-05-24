@@ -27,7 +27,7 @@ process.on('uncaughtException', (error) => {
         log(error);
 });
 
-minify();
+await minify();
 
 function readStd(callback, options) {
     const {stdin} = process;
@@ -60,7 +60,7 @@ async function minify() {
     if (optionsError)
         return log.error(optionsError.message);
     
-    if (/^--(js|css|html)$/.test(In))
+    if (/^--(js|css|html|auto)$/.test(In))
         return readStd(processStream, options);
     
     await uglifyFiles(files, options);

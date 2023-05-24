@@ -3,5 +3,6 @@
     "-v, --version              ": "display version and exit",
     "--js                       ": "minify javascript",
     "--css                      ": "minify css",
-    "--html                     ": "minify html"
+    "--html                     ": "minify html",
+    "--auto                     ": "auto detect format"
 }

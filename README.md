@@ -23,6 +23,17 @@ npm i minify -g
 
 ### CLI
 
+```sh
+Usage: minify [options]
+Options:
+  -h, --help                  display this help and exit
+  -v, --version               display version and exit
+  --js                        minify javascript
+  --css                       minify css
+  --html                      minify html
+  --auto                      auto detect format
+```
+
 The bash command below creates a code snippet saved as `hello.js`.
 
 Simply copy + paste the code starting with cat, including the EOT on the last line, and press <enter>.

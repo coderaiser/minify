@@ -21,6 +21,19 @@ test('minify: js', async (t) => {
     t.end();
 });
 
+test('minify: auto', async (t) => {
+    const js = 'function hello(world) {\nconsole.log(world);\n}';
+    
+    const code = await putoutMinify(js, {
+        removeUnusedVariables: false,
+    });
+    
+    const expected = 'function hello(a){console.log(a)}';
+    
+    t.equal(code, expected);
+    t.end();
+});
+
 test('minify: js: with alternate options', async (t) => {
     const js = 'const a = 5, b = 6; console.log(a);';
     const expected = 'const a=5,b=6;';
