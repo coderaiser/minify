@@ -1,3 +1,8 @@
+2023.05.24, v10.2.0
+
+feature:
+- b1d4ec1 minify: speed up (#96)
+
 2023.05.24, v10.1.0
 
 feature:
