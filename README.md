@@ -97,7 +97,8 @@ For cli use these options can be provided in a JSON file named `.minify.json` li
         "compatibility": "*"
     },
     "js": {
-        "ecma": 5
+        "removeUnusedVariables": true,
+        "removeConsole": false
     },
     "img": {
         "maxSize": 4096
