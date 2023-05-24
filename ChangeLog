@@ -1,3 +1,9 @@
+2023.05.24, v10.1.0
+
+feature:
+- 32bd34e package: eslint-plugin-n v16.0.0
+- 6381f4b minify: add support of --auto
+
 2023.05.10, v10.0.0
 
 feature:
