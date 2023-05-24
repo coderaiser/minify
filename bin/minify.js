@@ -85,11 +85,14 @@ async function processStream(chunks, options) {
 async function uglifyFiles(files, options) {
     const {minify} = await import('../lib/minify.js');
     const minifiers = files.map((file) => minify(file, options));
+    const all = Promise.all.bind(Promise);
     
-    Promise
-        .all(minifiers)
-        .then(logAll)
-        .catch(log.error);
+    const [error, results] = await tryToCatch(all, minifiers);
+    
+    if (error)
+        return log.error(error);
+    
+    logAll(results);
 }
 
 function logAll(array) {
