@@ -121,10 +121,10 @@ For cli use these options can be provided in a JSON file named `.minify.json` li
 
 Full documentation for options that each file type accepts can be found on the pages of the libraries used by minify to process the files:
 
-- HTML: https://github.com/kangax/html-minifier
-- CSS: https://github.com/jakubpawlowicz/clean-css
-- JS: [@putout/minify](https://github.com/putoutjs/minify)
-- IMG: https://github.com/Filirom1/css-base64-images
+- ✅ html: https://github.com/kangax/html-minifier
+- ✅ css: https://github.com/jakubpawlowicz/clean-css
+- ✅ js: [@putout/minify](https://github.com/putoutjs/minify)
+- ✅ img: https://github.com/Filirom1/css-base64-images
 
 Minify sets a few defaults for HTML that may differ from the base `html-minifier` settings:
 
