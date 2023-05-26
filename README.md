@@ -114,7 +114,7 @@ For cli use these options can be provided in a JSON file named `.minify.json` li
     "img": {
         "maxSize": 4096
     },
-    "html": {                                                 {
+    "html": {
         "removeComments": true,
         "removeCommentsFromCDATA": true,
         "removeCDATASectionsFromCDATA": true,
