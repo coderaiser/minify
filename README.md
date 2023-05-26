@@ -11,7 +11,13 @@
 [CoverageIMGURL]: https://coveralls.io/repos/coderaiser/minify/badge.svg?branch=master&service=github
 
 [Minify](http://coderaiser.github.io/minify "Minify") - a minifier of js, css, html and img files.
-To use `minify` as middleware try [Mollify](https://github.com/coderaiser/node-mollify "Mollify").
+
+To get things done **Minify** uses this amazing tools:
+
+- ✅ [html-minifier](https://github.com/kangax/html-minifier);
+- ✅ [clean-css](https://github.com/jakubpawlowicz/clean-css);
+- ✅ [@putout/minify](https://github.com/putoutjs/minify);
+- ✅ [css-base64-images](https://github.com/Filirom1/css-base64-images)
 
 ## Install
 
@@ -101,52 +107,37 @@ For cli use these options can be provided in a JSON file named `.minify.json` li
 
 ```json
 {
-    "html": {
-        "removeAttributeQuotes": false
-    },
-    "css": {
-        "compatibility": "*"
-    },
-    "js": {
+      "js": {
         "removeUnusedVariables": true,
         "removeConsole": false
     },
     "img": {
         "maxSize": 4096
+    },
+    "html": {                                                 {
+        "removeComments": true,
+        "removeCommentsFromCDATA": true,
+        "removeCDATASectionsFromCDATA": true,
+        "collapseWhitespace": true,
+        "collapseBooleanAttributes": true,
+        "removeAttributeQuotes": true,
+        "removeRedundantAttributes": true,
+        "useShortDoctype": true,
+        "removeEmptyAttributes": true,
+        "removeEmptyElements": false,
+        "removeOptionalTags": true,
+        "removeScriptTypeAttributes": true,
+        "removeStyleLinkTypeAttributes": true,
+        "minifyJS": true,
+        "minifyCSS": true
+    },
+    "css": {
+        "compatibility": "*"
     }
 }
 ```
 
 `minify` walking up parent directories to locate and read it’s configuration file `.minify.json`.
-
-Full documentation for options that each file type accepts can be found on the pages of the libraries used by minify to process the files:
-
-- ✅ html: https://github.com/kangax/html-minifier
-- ✅ css: https://github.com/jakubpawlowicz/clean-css
-- ✅ js: [@putout/minify](https://github.com/putoutjs/minify)
-- ✅ img: https://github.com/Filirom1/css-base64-images
-
-Minify sets a few defaults for HTML that may differ from the base `html-minifier` settings:
-
-```json
-{
-    "removeComments": true,
-    "removeCommentsFromCDATA": true,
-    "removeCDATASectionsFromCDATA": true,
-    "collapseWhitespace": true,
-    "collapseBooleanAttributes": true,
-    "removeAttributeQuotes": true,
-    "removeRedundantAttributes": true,
-    "useShortDoctype": true,
-    "removeEmptyAttributes": true,
-    "removeEmptyElements": false,
-    "removeOptionalTags": true,
-    "removeScriptTypeAttributes": true,
-    "removeStyleLinkTypeAttributes": true,
-    "minifyJS": true,
-    "minifyCSS": true
-}
-```
 
 ## License
 
