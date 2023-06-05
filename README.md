@@ -17,7 +17,7 @@ To get things done **Minify** uses this amazing tools:
 - ✅ [@putout/minify](https://github.com/putoutjs/minify);
 - ✅ [html-minifier](https://github.com/kangax/html-minifier);
 - ✅ [clean-css](https://github.com/jakubpawlowicz/clean-css);
-- ✅ [css-base64-images](https://github.com/Filirom1/css-base64-images)
+- ✅ [css-base64-images](https://github.com/Filirom1/css-base64-images);
 
 ## Install
 
