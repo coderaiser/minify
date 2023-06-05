@@ -108,6 +108,7 @@ For cli use these options can be provided in a JSON file named `.minify.json` li
 ```json
 {
     "js": {
+        "mangleClassNames": true,
         "removeUnusedVariables": true,
         "removeConsole": false
     },
