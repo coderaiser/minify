@@ -36,7 +36,6 @@
     "clean-css": "^5.0.1",
     "css-b64-images": "~0.2.5",
     "debug": "^4.1.0",
-    "file-type": "^18.4.0",
     "find-up": "^6.1.0",
     "html-minifier-terser": "^7.1.0",
     "readjson": "^2.2.2",
