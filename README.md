@@ -58,7 +58,7 @@ Use the command `minify` followed by the path to and name of the js file intende
 
 ```sh
 $ minify hello.js
-const hello="world";for(let l=0;l<hello.length;l++)console.log(hello[l]);
+var a='world';for(let i=0;i<a.length;i++)console.log(a[i]);
 ```
 
 You can capture the output with the following:
@@ -77,7 +77,7 @@ cat << EOT | bin/minify.js --js
 >     console.log(hello[i]);
 > }
 > EOT
-const a='world';for(let i=0;i<a.length;i++)console.log(a[i]); 
+var a='world';for(let i=0;i<a.length;i++)console.log(a[i]);
 ```
 
 `Minify` can be used with `async-await` and [try-to-catch](https://github.com/coderaiser/try-to-catch):
