@@ -110,7 +110,8 @@ For cli use these options can be provided in a JSON file named `.minify.json` li
     "js": {
         "mangleClassNames": true,
         "removeUnusedVariables": true,
-        "removeConsole": false
+        "removeConsole": false,
+        "removeUselessSpread": "true
     },
     "img": {
         "maxSize": 4096
