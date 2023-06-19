@@ -10,7 +10,7 @@
 [CoverageURL]: https://coveralls.io/github/coderaiser/minify?branch=master
 [CoverageIMGURL]: https://coveralls.io/repos/coderaiser/minify/badge.svg?branch=master&service=github
 
-[Minify](http://coderaiser.github.io/minify "Minify") - a minifier of js, css, html and img files.
+[Minify](http://coderaiser.github.io/minify "Minify") - a minifier of `js`, `css`, `html` and `img` files.
 
 To get things done **Minify** uses this amazing tools:
 
