@@ -1,3 +1,9 @@
+2023.07.13, v10.3.0
+
+feature:
+- 7d9c969 package: eslint-plugin-putout v18.2.0
+- 6fc1803 package: putout v30.4.1
+
 2023.05.24, v10.2.0
 
 feature:
