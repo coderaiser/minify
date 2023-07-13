@@ -63,10 +63,12 @@ test('minify: html', async (t) => {
         removeAttributeQuotes: true,
         removeRedundantAttributes: true,
         useShortDoctype: true,
-        removeEmptyAttributes: true, /* оставляем, поскольку у нас
+        removeEmptyAttributes: true,
+        /* оставляем, поскольку у нас
          * в элемент fm генерируеться
          * таблица файлов
-         */removeEmptyElements: false,
+         */
+        removeEmptyElements: false,
         removeOptionalTags: true,
         removeScriptTypeAttributes: true,
         removeStyleLinkTypeAttributes: true,
