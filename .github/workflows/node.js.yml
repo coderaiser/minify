@@ -49,7 +49,7 @@ jobs:
           branch: master
         continue-on-error: true
       - name: Coverage
-        run: npm run coverage report
+        run: npm run coverage
       - name: Coveralls
         uses: coverallsapp/github-action@v2
         continue-on-error: true
