@@ -1,3 +1,10 @@
+2023.08.28, v10.4.0
+
+feature:
+- 90b2908 package: @putout/minify v2.0.0
+- d295db5 package: putout v31.7.0
+- 97b55c9 package: eslint-plugin-putout v19.3.0
+
 2023.07.13, v10.3.0
 
 feature:
