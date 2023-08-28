@@ -1,7 +1,19 @@
 #!/usr/bin/env node
 
-import tryToCatch from 'try-to-catch';
-import {createRequire} from 'node:module';
+console.log('xxx');
+
+//import tryToCatch from 'try-to-catch';
+//import {createRequire} from 'node:module';
+
+console.log(tryToCatch);
+
+process.exit();
+import {processArgv} from '../lib/process-argv.js';
+import {readStd} from '../lib/read-std.js';
+
+console.log('xxx');
+processArgv();
+console.log('xxx');
 
 const require = createRequire(import.meta.url);
 
@@ -29,24 +41,6 @@ process.on('uncaughtException', (error) => {
 
 await minify();
 
-function readStd(callback, options) {
-    const {stdin} = process;
-    let chunks = '';
-    
-    const read = () => {
-        const chunk = stdin.read();
-        
-        if (chunk)
-            return chunks += chunk;
-        
-        stdin.removeListener('readable', read);
-        callback(chunks, options);
-    };
-    
-    stdin.setEncoding('utf8');
-    stdin.addListener('readable', read);
-}
-
 async function minify() {
     if (!In || /^(-h|--help)$/.test(In))
         return help();
@@ -60,8 +54,10 @@ async function minify() {
     if (optionsError)
         return log.error(optionsError.message);
     
-    if (/^--(js|css|html|auto)$/.test(In))
-        return readStd(processStream, options);
+    if (/^--(js|css|html|auto)$/.test(In)) {
+        const text = await readStd(processStream);
+        return await processStream(text, options);
+    }
     
     await uglifyFiles(files, options);
 }
