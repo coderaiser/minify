@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "escover": "^3.2.3",
-    "eslint": "^8.0.0-beta.2",
+    "eslint": "^8.48.0",
     "eslint-plugin-n": "^16.0.0",
     "eslint-plugin-putout": "^19.3.0",
     "madrun": "^9.0.3",
