@@ -1,12 +1,10 @@
 #!/usr/bin/env node
 
-import tryToCatch from 'try-to-catch';
 import {createRequire} from 'node:module';
+import process from 'node:process';
+import tryToCatch from 'try-to-catch';
 
-import {processArgv} from '../lib/process-argv.js';
 import {readStd} from '../lib/read-std.js';
-
-processArgv();
 
 const require = createRequire(import.meta.url);
 
