@@ -1,19 +1,12 @@
 #!/usr/bin/env node
 
-console.log('xxx');
+import tryToCatch from 'try-to-catch';
+import {createRequire} from 'node:module';
 
-//import tryToCatch from 'try-to-catch';
-//import {createRequire} from 'node:module';
-
-console.log(tryToCatch);
-
-process.exit();
 import {processArgv} from '../lib/process-argv.js';
 import {readStd} from '../lib/read-std.js';
 
-console.log('xxx');
 processArgv();
-console.log('xxx');
 
 const require = createRequire(import.meta.url);
 
