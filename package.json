@@ -52,7 +52,7 @@
     "escover": "^3.2.3",
     "eslint": "^8.48.0",
     "eslint-plugin-n": "^16.0.0",
-    "eslint-plugin-putout": "^19.3.0",
+    "eslint-plugin-putout": "^20.0.0",
     "madrun": "^9.0.3",
     "putout": "^31.7.0",
     "supertape": "^8.2.0"
