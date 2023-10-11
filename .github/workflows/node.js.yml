@@ -30,9 +30,8 @@ jobs:
         run: bun i --no-save
       - name: Lint
         run: npm run fix:lint
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+      - name: Install Rust
+        run: rustup update
       - uses: actions/cache@v3
         with:
           path: |
