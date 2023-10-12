@@ -30,8 +30,7 @@ npm i minify -g
 For Deno users
 
 ```js
-// inside Js/Ts file
-import { minify } from "npm:minify";
+import {minify} from 'npm:minify';
 ```
 
 ## How to use?
