@@ -21,8 +21,16 @@ To get things done **Minify** uses this amazing tools:
 
 ## Install
 
-```
+For Node users
+
+```sh
 npm i minify -g
+```
+
+For Deno users
+
+```js
+import {minify} from 'npm:minify';
 ```
 
 ## How to use?
