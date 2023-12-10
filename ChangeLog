@@ -1,3 +1,15 @@
+2023.12.10, v11.0.0
+
+feature:
+- 3531373 minify: find-up v7.0.0
+- 0f6ef50 minify: eslint-plugin-putout v21.1.0
+- a0063c8 minify: escover v4.0.0
+- 560579e minify: @putout/minify v3.0.0
+- 355492c minify: madrun v10.0.0
+- 3a58621 minify: putout v34.0.0
+- 919752e package: putout v32.0.6
+- 77c95a9 package: eslint-plugin-putout v20.0.0
+
 2023.08.29, v10.5.2
 
 fix:
