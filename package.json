@@ -49,7 +49,7 @@
     "node": ">=16"
   },
   "devDependencies": {
-    "escover": "^3.2.3",
+    "escover": "^4.0.0",
     "eslint": "^8.48.0",
     "eslint-plugin-n": "^16.0.0",
     "eslint-plugin-putout": "^20.0.0",
