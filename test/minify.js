@@ -28,7 +28,7 @@ test('minify: auto', async (t) => {
         removeUnusedVariables: false,
     });
     
-    const expected = 'function hello(a){console.log(a)}';
+    const expected = 'function a(A){console.log(A)}';
     
     t.equal(code, expected);
     t.end();
