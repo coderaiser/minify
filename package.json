@@ -46,7 +46,7 @@
   "main": "lib/minify.js",
   "license": "MIT",
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "devDependencies": {
     "escover": "^4.0.0",
