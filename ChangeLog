@@ -1,3 +1,12 @@
+2023.12.13, v11.0.1
+
+fix:
+- e29dd3c minify: node v18
+
+feature:
+- 8ff90c5 minify: eslint-plugin-putout v22.1.0
+- 5c815ee minify: supertape v9.0.0
+
 2023.12.10, v11.0.0
 
 feature:
