@@ -7,6 +7,7 @@ import CleanCSS from 'clean-css';
 import {minify as terserMinify} from 'terser';
 import {minify as putoutMinify} from '@putout/minify';
 import htmlMinifier from 'html-minifier-terser';
+
 import {minify} from '../lib/minify.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -29,8 +30,9 @@ test('minify: js: terser', async (t) => {
     const result = await minify.js(js, {
         js: {
             type: 'terser',
-        },
+        }
     });
+    
     
     t.equal(code, result);
     t.end();
@@ -38,14 +40,18 @@ test('minify: js: terser', async (t) => {
 
 test('minify: auto', async (t) => {
     const js = 'function hello(world) {\nconsole.log(world);\n}';
+    const result = await minify.auto(js, {
+        js: {
+            removeUnusedVariables: false,
+        }
+    });
     
-    const code = await putoutMinify(js, {
+    const expected = await putoutMinify(js, {
         removeUnusedVariables: false,
     });
     
-    const expected = 'function a(A){console.log(A)}';
     
-    t.equal(code, expected);
+    t.equal(result, expected);
     t.end();
 });
 
@@ -63,6 +69,18 @@ test('minify: js: with alternate options', async (t) => {
     const minifyOutput = await minify.js(js, options);
     
     t.equal(minifyOutput, expected, 'js output should be equal');
+    t.end();
+});
+
+test('minify: auto: not found', async (t) => {
+    const js = 'hello world';
+    const result = await minify.auto(js, {
+        js: {
+            removeUnusedVariables: false,
+        }
+    });
+    
+    t.equal(js, result);
     t.end();
 });
 
