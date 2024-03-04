@@ -4,6 +4,7 @@ import {dirname} from 'node:path';
 import tryToCatch from 'try-to-catch';
 import test from 'supertape';
 import CleanCSS from 'clean-css';
+import {minify as terserMinify} from 'terser';
 import {minify as putoutMinify} from '@putout/minify';
 import htmlMinifier from 'html-minifier-terser';
 import {minify} from '../lib/minify.js';
@@ -18,6 +19,20 @@ test('minify: js', async (t) => {
     const code = await putoutMinify(js);
     
     t.equal(code, minifyOutput, 'js output should be equal');
+    t.end();
+});
+
+test('minify: js: terser', async (t) => {
+    const js = 'hello(`x`); function hello(world) {\nconsole.log(world);\n}';
+    
+    const {code} = await terserMinify(js);
+    const result = await minify.js(js, {
+        js: {
+            type: 'terser',
+        },
+    });
+    
+    t.equal(code, result);
     t.end();
 });
 

@@ -150,6 +150,26 @@ For cli use these options can be provided in a JSON file named `.minify.json` li
 
 **Minify** walking up parent directories to locate and read it’s configuration file `.minify.json`.
 
+### `js`
+
+In section related to `js` you can choose `type` of minifier:
+- `putout` (default);
+- [`terser`](https://github.com/terser/terser);
+
+When you want to pass [options](https://github.com/terser/terser#minify-options) to `terser`, use section with the same name, `.minify.json` will look this way:
+
+```json
+{
+  "js": {
+    "type": "terser",
+    "terser": {
+      "mangle": false
+    }
+  }
+}
+```
+
+
 ## License
 
 MIT
