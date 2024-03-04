@@ -1,3 +1,9 @@
+2024.03.04, v11.1.0
+
+feature:
+- 65bfc42 minify: putout v35.5.2
+- 1d6ad78 minify: add ability to use terser to minify JavaScript
+
 2023.12.13, v11.0.1
 
 fix:
