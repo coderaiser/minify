@@ -1,3 +1,10 @@
+2024.05.21, v11.2.0
+
+feature:
+- dd36ed2 overrides
+- 7707cea minify: eslint v9.3.0
+- c59f9cd minify: supertape v10.6.0
+
 2024.03.04, v11.1.1
 
 feature:
