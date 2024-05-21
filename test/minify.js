@@ -77,7 +77,7 @@ test('minify: auto: not found', async (t) => {
         },
     });
     
-    t.equal(js, result);
+    t.notOk(result);
     t.end();
 });
 
