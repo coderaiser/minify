@@ -1,3 +1,8 @@
+2024.06.13, v11.2.1
+
+feature:
+- 8fcc539 minify: @putout/minify v4.0.0
+
 2024.05.21, v11.2.0
 
 feature:
