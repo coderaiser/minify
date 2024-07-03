@@ -36,6 +36,7 @@
     "clean-css": "^5.0.1",
     "css-b64-images": "~0.2.5",
     "debug": "^4.1.0",
+    "esbuild": "^0.23.0",
     "find-up": "^7.0.0",
     "html-minifier-terser": "^7.1.0",
     "readjson": "^2.2.2",

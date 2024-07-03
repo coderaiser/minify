@@ -7,6 +7,7 @@ import CleanCSS from 'clean-css';
 import {minify as terserMinify} from 'terser';
 import {minify as putoutMinify} from '@putout/minify';
 import htmlMinifier from 'html-minifier-terser';
+import * as esbuild from 'esbuild';
 import {minify} from '../lib/minify.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -29,6 +30,22 @@ test('minify: js: terser', async (t) => {
     const result = await minify.js(js, {
         js: {
             type: 'terser',
+        },
+    });
+    
+    t.equal(code, result);
+    t.end();
+});
+
+test('minify: js: esbuild', async (t) => {
+    const js = 'const a = 5; if (a) alert()';
+    const {code} = await esbuild.transform(js, {
+        minify: true,
+    });
+    
+    const result = await minify.js(js, {
+        js: {
+            type: 'esbuild',
         },
     });
     

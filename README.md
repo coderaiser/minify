@@ -156,6 +156,7 @@ In section related to `js` you can choose `type` of minifier:
 
 - `putout` (default);
 - [`terser`](https://github.com/terser/terser);
+- [`esbuild`](https://esbuild.github.io/);
 
 When you want to pass [options](https://github.com/terser/terser#minify-options) to `terser`, use section with the same name, `.minify.json` will look this way:
 
