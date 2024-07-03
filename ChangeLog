@@ -1,3 +1,8 @@
+2024.07.03, v11.3.0
+
+feature:
+- 01883ba minify: js: add support of esbuild
+
 2024.06.13, v11.2.1
 
 feature:
