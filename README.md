@@ -155,8 +155,9 @@ For cli use these options can be provided in a JSON file named `.minify.json` li
 In section related to `js` you can choose `type` of minifier:
 
 - `putout` (default);
-- [`terser`](https://github.com/terser/terser);
+- [`terser`](https://github.com/terser/terser#minify-options);
 - [`esbuild`](https://esbuild.github.io/);
+- [`swc`](https://swc.rs/docs/configuration/minification);
 
 When you want to pass [options](https://github.com/terser/terser#minify-options) to `terser`, use section with the same name, `.minify.json` will look this way:
 

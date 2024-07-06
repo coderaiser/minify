@@ -8,10 +8,18 @@ import {minify as terserMinify} from 'terser';
 import {minify as putoutMinify} from '@putout/minify';
 import htmlMinifier from 'html-minifier-terser';
 import * as esbuild from 'esbuild';
+import swc from '@swc/core';
 import {minify} from '../lib/minify.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+test('minify: not found', async (t) => {
+    const [error] = await tryToCatch(minify, 'hello.xxx');
+    
+    t.equal(error.message, 'File type "xxx" not supported.');
+    t.end();
+});
 
 test('minify: js', async (t) => {
     const js = 'function hello(world) {\nconsole.log(world);\n}';
@@ -46,6 +54,22 @@ test('minify: js: esbuild', async (t) => {
     const result = await minify.js(js, {
         js: {
             type: 'esbuild',
+        },
+    });
+    
+    t.equal(code, result);
+    t.end();
+});
+
+test('minify: js: swc', async (t) => {
+    const js = `import foo from '@src/app'; console.log(foo);`;
+    const {code} = await swc.minify(js, {
+        module: true,
+    });
+    
+    const result = await minify.js(js, {
+        js: {
+            type: 'swc',
         },
     });
     

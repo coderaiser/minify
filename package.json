@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@putout/minify": "^4.0.0",
+    "@swc/core": "^1.6.7",
     "clean-css": "^5.0.1",
     "css-b64-images": "~0.2.5",
     "debug": "^4.1.0",
