@@ -54,7 +54,7 @@
   "devDependencies": {
     "escover": "^4.0.0",
     "eslint": "^9.3.0",
-    "eslint-plugin-putout": "^22.1.0",
+    "eslint-plugin-putout": "^23.1.0",
     "madrun": "^10.0.0",
     "putout": "^36.5.1",
     "supertape": "^10.6.0"
