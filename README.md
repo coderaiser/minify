@@ -118,13 +118,13 @@ For cli use these options can be provided in a JSON file named `.minify.json` li
     "js": {
         "type": "putout",
         "putout": {
-          "quote": "'",
-          "mangle": true,
-          "mangleClassNames": true,
-          "removeUnusedVariables": true,
-          "removeConsole": false,
-          "removeUselessSpread": true
-      }
+            "quote": "'",
+            "mangle": true,
+            "mangleClassNames": true,
+            "removeUnusedVariables": true,
+            "removeConsole": false,
+            "removeUselessSpread": true
+        }
     },
     "img": {
         "maxSize": 4096
