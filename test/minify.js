@@ -4,6 +4,7 @@ import {dirname} from 'node:path';
 import tryToCatch from 'try-to-catch';
 import test from 'supertape';
 import CleanCSS from 'clean-css';
+import {transform as lightningcssTransform} from 'lightningcss';
 import {minify as terserMinify} from 'terser';
 import {minify as putoutMinify} from '@putout/minify';
 import htmlMinifier from 'html-minifier-terser';
@@ -197,21 +198,78 @@ test('minify: css', async (t) => {
     t.end();
 });
 
+test('minify: css: options', async (t) => {
+    const options = {
+        level: {
+            1: {
+                specialComments: false,
+            },
+        },
+    };
+    
+    const css = `
+        body {
+            color: red;
+        }
+        
+        /*!
+         * comments
+         * comments
+         * comments
+         * comments
+         * comments
+         */
+     `;
+    
+    const minifyOutput = await minify.css(css, {
+        css: {
+            'type': 'clean-css',
+            'clean-css': options,
+        },
+    });
+    
+    const {styles} = new CleanCSS(options).minify(css);
+    
+    t.equal(minifyOutput, styles, 'css output should be equal');
+    t.end();
+});
+
+test('minify: css: lightningcss', async (t) => {
+    const css = '.foo { color: red }';
+    
+    const minifyOutput = await minify.css(css, {
+        type: 'lightningcss',
+    });
+    
+    const {code} = lightningcssTransform({
+        code: Buffer.from(css),
+        minify: true,
+    });
+    
+    const result = String(code);
+    
+    t.equal(result, minifyOutput, 'css output should be equal');
+    t.end();
+});
+
 test('minify: css: with alternate options', async (t) => {
     const css = `.gradient { -ms-filter: 'progid:DXImageTransform.Microsoft.Gradient(startColorStr="#ffffff", endColorStr="#000000", GradientType=1)'; background-image: linear-gradient(to right, #ffffff 0%, #000000 100%); }`;
     
     const options = {
         css: {
-            compatibility: {
-                properties: {
-                    ieFilters: true,
+            type: 'clean-css',
+            'clean-css': {
+                compatibility: {
+                    properties: {
+                        ieFilters: true,
+                    },
                 },
-            },
+            }
         },
     };
     
     const minifyOutput = await minify.css(css, options);
-    const {styles} = new CleanCSS(options.css).minify(css);
+    const {styles} = new CleanCSS(options.css['clean-css']).minify(css);
     
     t.equal(minifyOutput, styles, 'css output should be equal');
     t.end();
@@ -222,11 +280,14 @@ test('minify: css: with alternate options: influence', async (t) => {
     
     const options = {
         css: {
-            compatibility: {
-                properties: {
-                    ieFilters: true,
+            type: 'clean-css',
+            'clean-css': {
+                compatibility: {
+                    properties: {
+                        ieFilters: true,
+                    },
                 },
-            },
+            }
         },
     };
     
