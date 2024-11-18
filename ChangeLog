@@ -1,3 +1,9 @@
+2024.11.18, v12.0.0
+
+feature:
+- 3f40172 minify: esbuild v0.24.0
+- 16f69c3 minify: add ability to configure css (#130)
+
 2024.09.12, v11.4.1
 
 feature:
