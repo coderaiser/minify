@@ -17,6 +17,7 @@ To get things done **Minify** uses this amazing tools:
 - ✅ [@putout/minify](https://github.com/putoutjs/minify);
 - ✅ [html-minifier](https://github.com/kangax/html-minifier);
 - ✅ [clean-css](https://github.com/jakubpawlowicz/clean-css);
+- ✅ [lightningcss](https://lightningcss.dev/);
 - ✅ [css-base64-images](https://github.com/Filirom1/css-base64-images);
 
 ## Install
@@ -147,7 +148,10 @@ For cli use these options can be provided in a JSON file named `.minify.json` li
         "minifyCSS": true
     },
     "css": {
-        "compatibility": "*"
+        "type": "clean-css",
+        "clean-css": {
+            "compatibility": "*"
+        }
     }
 }
 ```
@@ -158,7 +162,7 @@ For cli use these options can be provided in a JSON file named `.minify.json` li
 
 In section related to `js` you can choose `type` of minifier:
 
-- `putout` (default);
+- [`putout`](https://github.com/coderaiser/putout); (default);
 - [`terser`](https://github.com/terser/terser#minify-options);
 - [`esbuild`](https://esbuild.github.io/);
 - [`swc`](https://swc.rs/docs/configuration/minification);
