@@ -239,7 +239,7 @@ test('minify: css: lightningcss', async (t) => {
     const minifyOutput = await minify.css(css, {
         css: {
             type: 'lightningcss',
-        }
+        },
     });
     
     const {code} = lightningcssTransform({
@@ -258,14 +258,14 @@ test('minify: css: with alternate options', async (t) => {
     
     const options = {
         css: {
-            type: 'clean-css',
+            'type': 'clean-css',
             'clean-css': {
                 compatibility: {
                     properties: {
                         ieFilters: true,
                     },
                 },
-            }
+            },
         },
     };
     
@@ -281,14 +281,14 @@ test('minify: css: with alternate options: influence', async (t) => {
     
     const options = {
         css: {
-            type: 'clean-css',
+            'type': 'clean-css',
             'clean-css': {
                 compatibility: {
                     properties: {
                         ieFilters: true,
                     },
                 },
-            }
+            },
         },
     };
     
