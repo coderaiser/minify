@@ -236,9 +236,10 @@ test('minify: css: options', async (t) => {
 
 test('minify: css: lightningcss', async (t) => {
     const css = '.foo { color: red }';
-    
     const minifyOutput = await minify.css(css, {
-        type: 'lightningcss',
+        css: {
+            type: 'lightningcss',
+        }
     });
     
     const {code} = lightningcssTransform({
