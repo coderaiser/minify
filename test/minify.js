@@ -82,7 +82,9 @@ test('minify: auto', async (t) => {
     const js = 'function hello(world) {\nconsole.log(world);\n}';
     const result = await minify.auto(js, {
         js: {
-            removeUnusedVariables: false,
+            putout: {
+                removeUnusedVariables: false,
+            },
         },
     });
     
@@ -100,8 +102,10 @@ test('minify: js: with alternate options', async (t) => {
     
     const options = {
         js: {
-            removeConsole: true,
-            removeUnusedVariables: false,
+            putout: {
+                removeConsole: true,
+                removeUnusedVariables: false,
+            },
         },
     };
     
@@ -115,7 +119,9 @@ test('minify: auto: not found', async (t) => {
     const js = 'hello world';
     const result = await minify.auto(js, {
         js: {
-            removeUnusedVariables: false,
+            putout: {
+                removeUnusedVariables: false,
+            },
         },
     });
     
