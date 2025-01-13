@@ -1,3 +1,11 @@
+2025.01.13, v12.0.1
+
+fix:
+- 51ec950 correct putout options (#134)
+
+feature:
+- 600bbc6 minify: putout v37.8.2
+
 2024.11.18, v12.0.0
 
 feature:
