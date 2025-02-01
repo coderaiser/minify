@@ -10,6 +10,7 @@ import {minify as putoutMinify} from '@putout/minify';
 import htmlMinifier from 'html-minifier-terser';
 import * as esbuild from 'esbuild';
 import swc from '@swc/core';
+import montag from 'montag';
 import {minify} from '../lib/minify.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -241,7 +242,21 @@ test('minify: css: options', async (t) => {
 });
 
 test('minify: css: lightningcss', async (t) => {
-    const css = '.foo { color: red }';
+    const css = montag`
+        .tidy_swap {
+          margin-block-end: 0.5em;
+          padding: 0.125em;
+          
+          color: var(--submit-color);
+          background: var(--submit-background);
+          
+          &:is(:hover, :focus) {
+            color: var(--submit-background);
+            background: var(--submit-color);
+          }
+        }
+    `;
+    
     const minifyOutput = await minify.css(css, {
         css: {
             type: 'lightningcss',
