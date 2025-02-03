@@ -1,3 +1,10 @@
+2025.02.03, v13.0.0
+
+feature:
+- 5d7c3a8 minify: css: set lightningcss as default minifier
+- 093cd38 minify: eslint-plugin-putout v24.0.0
+- 6c6b44b minify: putout v38.0.2
+
 2025.02.02, v12.1.0
 
 fix:
