@@ -196,12 +196,16 @@ test('minify: html: with alternate options: influence', async (t) => {
 });
 
 test('minify: css', async (t) => {
-    const css = 'color: #FFFFFF';
+    const css = montag`
+        body {
+            color: '#FFFFFF';
+        }
+    `;
     
-    const minifyOutput = await minify.css(css);
-    const {styles} = new CleanCSS().minify(css);
+    const result = await minify.css(css);
+    const expected = 'body{color:"#FFFFFF"}';
     
-    t.equal(minifyOutput, styles, 'css output should be equal');
+    t.equal(result, expected);
     t.end();
 });
 
@@ -325,7 +329,12 @@ test('minify: css: base64', async (t) => {
     const pathToCSS = `${dir}/style.css`;
     const pathToMinifiedCSS = `${dir}/style.min.css`;
     
-    const outputCSS = await minify(pathToCSS);
+    const outputCSS = await minify(pathToCSS, {
+        css: {
+            type: 'clean-css',
+        },
+    });
+    
     const result = `${outputCSS}\n`;
     const expected = await readFile(pathToMinifiedCSS, 'utf8');
     
@@ -340,6 +349,9 @@ test('minify: css: base64 with alternate options', async (t) => {
         img: {
             maxSize: 512,
         },
+        css: {
+            type: 'clean-css',
+        },
     };
     
     const result = await minify(pathToCSS, options);
@@ -352,7 +364,11 @@ test('minify: css: base64 with alternate options', async (t) => {
 test('minify: css: with errors', async (t) => {
     const css = '@import "missing.css";';
     
-    const [e] = await tryToCatch(minify.css, css);
+    const [e] = await tryToCatch(minify.css, css, {
+        css: {
+            type: 'clean-css',
+        },
+    });
     
     t.equal(e, 'Ignoring local @import of "missing.css" as resource is missing.', 'throw when clean-css reports an error');
     t.end();
