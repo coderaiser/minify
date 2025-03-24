@@ -1,3 +1,3 @@
-import {safeAlign} from 'eslint-plugin-putout/config';
+import {safeAlign} from 'eslint-plugin-putout';
 
 export default safeAlign;
