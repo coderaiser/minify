@@ -1,3 +1,14 @@
+2025.03.24, v14.0.0
+
+feature:
+- 575152c minify: drop support of node < 20
+- adb0f91 minify: supertape v11.0.3
+- 36fc306 minify: putout v39.0.11
+- e6897d7 minify: madrun v11.0.0
+- d202e06 minify: eslint-plugin-putout v26.1.0
+- 890c675 minify: @putout/minify v5.0.0
+- 860da27 minify: esbuild v0.25.1
+
 2025.02.03, v13.0.0
 
 feature:
