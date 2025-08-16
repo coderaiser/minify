@@ -7,7 +7,7 @@ import CleanCSS from 'clean-css';
 import {transform as lightningcssTransform} from 'lightningcss';
 import {minify as terserMinify} from 'terser';
 import {minify as putoutMinify} from '@putout/minify';
-import htmlMinifier from 'html-minifier-terser';
+import htmlMinifier from 'html-minifier-next';
 import * as esbuild from 'esbuild';
 import swc from '@swc/core';
 import montag from 'montag';
