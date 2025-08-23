@@ -12,10 +12,10 @@
 
 [Minify](http://coderaiser.github.io/minify "Minify") - a minifier of `js`, `css`, `html` and `img` files.
 
-To get things done **Minify** uses this amazing tools:
+To get things done **Minify** uses these amazing tools:
 
 - ✅ [@putout/minify](https://github.com/putoutjs/minify);
-- ✅ [html-minifier](https://github.com/kangax/html-minifier);
+- ✅ [html-minifier-next](https://github.com/j9t/html-minifier-next);
 - ✅ [clean-css](https://github.com/jakubpawlowicz/clean-css);
 - ✅ [lightningcss](https://lightningcss.dev/);
 - ✅ [css-base64-images](https://github.com/Filirom1/css-base64-images);
