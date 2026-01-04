@@ -93,7 +93,7 @@ var a='world';for(let i=0;i<a.length;i++)console.log(a[i]);
 
 ```js
 import {minify} from 'minify';
-import tryToCatch from 'try-to-catch';
+import {tryToCatch} from 'try-to-catch';
 
 const options = {
     html: {

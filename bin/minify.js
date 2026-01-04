@@ -2,7 +2,7 @@
 
 import {createRequire} from 'node:module';
 import process from 'node:process';
-import tryToCatch from 'try-to-catch';
+import {tryToCatch} from 'try-to-catch';
 import {readStd} from '../lib/read-std.js';
 
 const require = createRequire(import.meta.url);

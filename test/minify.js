@@ -1,7 +1,8 @@
 import {readFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {dirname} from 'node:path';
-import tryToCatch from 'try-to-catch';
+import {Buffer} from 'node:buffer';
+import {tryToCatch} from 'try-to-catch';
 import test from 'supertape';
 import CleanCSS from 'clean-css';
 import {transform as lightningcssTransform} from 'lightningcss';
