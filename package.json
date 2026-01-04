@@ -54,7 +54,7 @@
     "node": ">=22"
   },
   "devDependencies": {
-    "escover": "^4.0.0",
+    "escover": "^5.0.1",
     "eslint": "^9.3.0",
     "eslint-plugin-putout": "^28.0.4",
     "madrun": "^11.0.0",
