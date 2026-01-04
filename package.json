@@ -45,7 +45,7 @@
     "readjson": "^2.2.2",
     "simport": "^1.2.0",
     "terser": "^5.28.1",
-    "try-catch": "^3.0.0",
+    "try-catch": "^4.0.7",
     "try-to-catch": "^3.0.0"
   },
   "main": "lib/minify.js",
