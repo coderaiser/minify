@@ -32,7 +32,7 @@
     "putout": "madrun putout"
   },
   "dependencies": {
-    "@putout/minify": "^5.0.0",
+    "@putout/minify": "^6.0.0",
     "@swc/core": "^1.6.7",
     "clean-css": "^5.0.1",
     "css-b64-images": "~0.2.5",
