@@ -1,3 +1,20 @@
+2026.01.04, v15.0.0
+
+feature:
+- b78c3c1 minify: try-to-catch v4.0.3
+- 91066af minify: try-catch v4.0.7
+- 3cc8d50 minify: supertape v12.0.0
+- 28fb7a8 minify: putout v41.5.3
+- 215e3da minify: madrun v12.1.0
+- 38879c8 minify: html-minifier-next v4.16.4
+- 243205a minify: find-up v8.0.0
+- 73c285e minify: eslint-plugin-putout v29.2.4
+- fb077c1 minify: escover v5.0.1
+- 4a678bf minify: esbuild v0.27.2
+- 5822a4e minify: @putout/minify v6.0.0
+- 8e2dd7b minify: drop support of node < 22
+- f8966bd minify: eslint-plugin-putout v28.0.4
+
 2025.08.18, v14.1.0
 
 feature:
