@@ -39,7 +39,7 @@
     "debug": "^4.1.0",
     "esbuild": "^0.27.2",
     "find-up": "^8.0.0",
-    "html-minifier-next": "^1.1.4",
+    "html-minifier-next": "^4.16.4",
     "lightningcss": "^1.28.1",
     "montag": "^1.2.1",
     "readjson": "^2.2.2",
