@@ -1,3 +1,8 @@
+2026.01.11, v15.0.1
+
+feature:
+- eec8ebe minify: simport: drop
+
 2026.01.04, v15.0.0
 
 feature:
