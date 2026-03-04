@@ -47,6 +47,7 @@ Options:
   --css                       minify css
   --html                      minify html
   --auto                      auto detect format
+  --fail-on-error             exit with code 1 when minification fails
 ```
 
 The bash command below creates a code snippet saved as `hello.js`.
@@ -74,6 +75,14 @@ You can capture the output with the following:
 
 ```sh
 $ minify hello.js > hello.min.js
+```
+
+Use `--fail-on-error` to get a non-zero exit code when minification fails (useful in build scripts and CI):
+
+```sh
+$ minify broken.js --fail-on-error > broken.min.js
+$ echo $?
+1
 ```
 
 You can pass input using `cat`:
