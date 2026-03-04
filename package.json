@@ -57,7 +57,7 @@
     "eslint": "^10.0.2",
     "eslint-plugin-putout": "^31.0.2",
     "madrun": "^13.0.0",
-    "putout": "^41.5.3",
+    "putout": "^42.0.25",
     "supertape": "^12.0.0"
   },
   "publishConfig": {
