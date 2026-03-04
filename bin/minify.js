@@ -25,7 +25,7 @@ log.error = (e) => {
     console.error(e);
     process.stdin.pause();
     process.exit(1);
-
+    
     if (failOnError)
         process.exit(1);
 };
