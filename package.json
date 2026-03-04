@@ -24,12 +24,11 @@
   "scripts": {
     "test": "madrun test",
     "coverage": "madrun coverage",
-    "report": "madrun report",
-    "lint": "madrun lint",
+    "coverage:escover": "madrun coverage:escover",
     "fix:lint": "madrun fix:lint",
-    "lint:bin": "madrun lint:bin",
-    "lint:lib": "madrun lint:lib",
-    "putout": "madrun putout"
+    "lint": "madrun lint",
+    "fresh:lint": "madrun fresh:lint",
+    "lint:fresh": "madrun lint:fresh"
   },
   "dependencies": {
     "@putout/minify": "^6.0.0",
@@ -53,6 +52,7 @@
     "node": ">=22"
   },
   "devDependencies": {
+    "escover": "^6.0.0",
     "eslint": "^10.0.2",
     "eslint-plugin-putout": "^31.0.2",
     "madrun": "^13.0.0",
