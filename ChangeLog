@@ -1,3 +1,18 @@
+2026.03.04, v15.1.1
+
+fix:
+- 6d8f851 help: simplify
+
+feature:
+- 6dcaeca we should know if minification fail (#145)
+- 36488e8 minify: superc8 v12.2.4
+- f293b52 minify: putout v42.0.25
+- b31f2ff minify: madrun v13.0.0
+- b6a5057 minify: html-minifier-next v5.1.5
+- a4ab156 minify: eslint-plugin-putout v31.0.2
+- 8ddaab1 minify: eslint v10.0.2
+- d348430 minify: escover v6.0.0
+
 2026.03.04, v15.1.0
 
 feature:
