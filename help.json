@@ -4,5 +4,6 @@
     "--js                       ": "minify javascript",
     "--css                      ": "minify css",
     "--html                     ": "minify html",
-    "--auto                     ": "auto detect format"
+    "--auto                     ": "auto detect format",
+    "--fail-on-error            ": "exit with code 1 when minification fails"
 }

@@ -16,13 +16,18 @@ const log = function(...args) {
 };
 
 const Argv = process.argv;
-const files = Argv.slice(2);
+const allArgs = Argv.slice(2);
+const failOnError = allArgs.includes('--fail-on-error');
+const files = allArgs.filter((f) => f !== '--fail-on-error');
 const [In] = files;
 
 log.error = (e) => {
     console.error(e);
     process.stdin.pause();
     process.exit(1);
+
+    if (failOnError)
+        process.exit(1);
 };
 
 process.on('uncaughtException', (error) => {
