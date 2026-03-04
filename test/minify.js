@@ -117,6 +117,27 @@ test('minify: js: with alternate options', async (t) => {
     t.end();
 });
 
+test('minify: js: options: oxc', async (t) => {
+    const js = 'debugger;const a = 5, b = 6; console.log(a);';
+    const expected = 'debugger;const a=5,b=6;console.log(5);';
+    
+    const options = {
+        js: {
+            type: 'oxc',
+            oxc: {
+                compress: {
+                    dropDebugger: false,
+                },
+            },
+        },
+    };
+    
+    const minifyOutput = await minify.js(js, options);
+    
+    t.equal(minifyOutput, expected, 'js output should be equal');
+    t.end();
+});
+
 test('minify: auto: not found', async (t) => {
     const js = 'hello world';
     const result = await minify.auto(js, {

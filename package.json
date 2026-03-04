@@ -41,6 +41,7 @@
     "html-minifier-next": "^5.1.5",
     "lightningcss": "^1.28.1",
     "montag": "^1.2.1",
+    "oxc-minify": "^0.116.0",
     "readjson": "^2.2.2",
     "terser": "^5.28.1",
     "try-catch": "^4.0.7",
