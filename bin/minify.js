@@ -22,6 +22,7 @@ const [In] = files;
 log.error = (e) => {
     console.error(e);
     process.stdin.pause();
+    process.exit(1);
 };
 
 process.on('uncaughtException', (error) => {

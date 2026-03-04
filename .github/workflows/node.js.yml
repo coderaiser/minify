@@ -47,7 +47,7 @@ jobs:
         run: typos --write-changes
       - uses: EndBug/add-and-commit@v9
         with:
-          message: "chore: ${{ env.NAME }} lint"
+          message: "chore: ${{ env.NAME }}: actions: lint ☘️"
           branch: master
         continue-on-error: true
       - name: Coverage

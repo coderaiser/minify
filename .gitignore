@@ -1,8 +1,10 @@
-package-lock.json
-node_modules
-npm-debug.log
-coverage
-
 *.swp
-yarn-error.log
+*.log
+*.lock
+
 .idea
+
+package-lock.json
+
+node_modules
+coverage
