@@ -1,10 +1,12 @@
-.*
 *.spec.*
-test
-coverage
+*.config.*
+*.log
+*.loc
+
+.*
 
 CONTRIBUTING.md
-yarn-error.log
 
+test
+coverage
 _*
-*.config.*
