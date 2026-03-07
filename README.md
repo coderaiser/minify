@@ -47,7 +47,6 @@ Options:
   --css                       minify css
   --html                      minify html
   --auto                      auto detect format
-  --fail-on-error             exit with code 1 when minification fails
 ```
 
 The bash command below creates a code snippet saved as `hello.js`.
