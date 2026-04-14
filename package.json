@@ -38,7 +38,7 @@
     "debug": "^4.1.0",
     "esbuild": "^0.28.0",
     "find-up": "^8.0.0",
-    "html-minifier-next": "^5.1.5",
+    "html-minifier-next": "^6.1.2",
     "lightningcss": "^1.28.1",
     "montag": "^1.2.1",
     "oxc-minify": "^0.116.0",
