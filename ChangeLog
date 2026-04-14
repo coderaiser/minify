@@ -1,3 +1,10 @@
+2026.04.14, v15.2.1
+
+feature:
+- 051adaa minify: oxc-minify v0.125.0
+- 6978772 minify: html-minifier-next v6.1.2
+- 8cb8a0a minify: esbuild v0.28.0
+
 2026.03.04, v15.2.0
 
 feature:
