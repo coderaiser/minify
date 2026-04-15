@@ -3,7 +3,7 @@
 import {createRequire} from 'node:module';
 import process from 'node:process';
 import {tryToCatch} from 'try-to-catch';
-import {readStd} from '../lib/read-std.js';
+import {readStdin} from 'redstd';
 
 const require = createRequire(import.meta.url);
 
@@ -51,7 +51,7 @@ async function minify() {
         return log.error(optionsError.message);
     
     if (/^--(js|css|html|auto)$/.test(In)) {
-        const text = await readStd(processStream);
+        const text = await readStdin();
         return await processStream(text, options);
     }
     

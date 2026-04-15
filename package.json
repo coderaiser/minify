@@ -43,6 +43,7 @@
     "montag": "^1.2.1",
     "oxc-minify": "^0.125.0",
     "readjson": "^2.2.2",
+    "redstd": "^1.0.1",
     "terser": "^5.28.1",
     "try-catch": "^4.0.7",
     "try-to-catch": "^4.0.3"
