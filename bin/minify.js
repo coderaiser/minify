@@ -44,7 +44,7 @@ async function minify() {
     if (/^(-v|--version)$/.test(In))
         return log(`v${Version}`);
     
-    const {readOptions} = await import('../lib/read-options.mjs');
+    const {readOptions} = await import('../lib/read-options.js');
     const [optionsError, options] = await tryToCatch(readOptions);
     
     if (optionsError)
