@@ -1,3 +1,8 @@
+2026.04.15, v15.3.1
+
+feature:
+- 91e63b9 minify: mjs -> js
+
 2026.04.15, v15.3.0
 
 feature:
