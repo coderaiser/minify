@@ -40,7 +40,7 @@
     "find-up": "^8.0.0",
     "html-minifier-next": "^9.1.2",
     "lightningcss": "^1.28.1",
-    "montag": "^1.2.1",
+    "montag": "^2.0.3",
     "oxc-minify": "^0.125.0",
     "readjson": "^2.2.2",
     "redstd": "^1.0.1",
