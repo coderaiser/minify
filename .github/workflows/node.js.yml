@@ -1,4 +1,6 @@
 name: CI
+permissions:
+  contents: write
 on:
   push:
     branches:
@@ -16,36 +18,26 @@ jobs:
         node-version:
           - 22.x
           - 24.x
-          - 25.x
+          - 26.x
+          - ">= 27.0.0-alpha.0 <= 27.x"
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install
         run: bun i --no-save
       - name: Lint
         run: npm run fix:lint
-      - name: Install Rust
-        run: rustup update
-      - uses: actions/cache@v5
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      - name: Typos Install
-        run: cargo install typos-cli || echo 'already installed'
       - name: Typos
-        run: typos --write-changes
-      - uses: EndBug/add-and-commit@v9
+        uses: coderaiser/typos.ai@v1.1.8
+        with:
+          key: ${{ secrets.TYPOS_AI_KEY }}
+      - uses: EndBug/add-and-commit@v10
         with:
           message: "chore: ${{ env.NAME }}: actions: lint ☘️"
           branch: master

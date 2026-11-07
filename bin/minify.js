@@ -75,7 +75,12 @@ async function processStream(chunks, options) {
 
 async function uglifyFiles(files, options) {
     const {minify} = await import('../lib/minify.js');
-    const minifiers = files.map((file) => minify(file, options));
+    const minifiers = [];
+    
+    for (const file of files) {
+        minifiers.push(minify(file, options));
+    }
+    
     const all = Promise.all.bind(Promise);
     
     const [error, results] = await tryToCatch(all, minifiers);

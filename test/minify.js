@@ -11,7 +11,7 @@ import {minify as putoutMinify} from '@putout/minify';
 import htmlMinifier from 'html-minifier-next';
 import * as esbuild from 'esbuild';
 import swc from '@swc/core';
-import montag from 'montag';
+import {montag} from 'montag';
 import {minify} from '../lib/minify.js';
 
 const __filename = fileURLToPath(import.meta.url);
